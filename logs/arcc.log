@@ -1,0 +1,1302 @@
+      INFO | User-specified directory: ../newton
+      INFO | Now in /Users/john/Documents/sigai/newton
+     DEBUG | Beginning to operate on sigai.student49-keys.tgz
+     DEBUG | Extracted to sigai.student49-keys
+     DEBUG | 	sigai.student49_id_rsa_1.ppk -> sigai.student49.ppk
+     DEBUG | 	sigai.student49_id_rsa_1 -> sigai.student49.pem
+     DEBUG | 	sigai.student49_passphrase_1.txt -> sigai.student49_pass.txt
+     DEBUG | 	sigai.student49_id_rsa_1.pub -> sigai.student49.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student49.pem
+     DEBUG | 		writing sigai.student49.ppk
+     DEBUG | 		writing sigai.student49.pem.pub
+     DEBUG | 		writing sigai.student49_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student48-keys.tgz
+     DEBUG | Extracted to sigai.student48-keys
+     DEBUG | 	sigai.student48_id_rsa_1.ppk -> sigai.student48.ppk
+     DEBUG | 	sigai.student48_passphrase_1.txt -> sigai.student48_pass.txt
+     DEBUG | 	sigai.student48_id_rsa_1 -> sigai.student48.pem
+     DEBUG | 	sigai.student48_id_rsa_1.pub -> sigai.student48.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student48.pem
+     DEBUG | 		writing sigai.student48.ppk
+     DEBUG | 		writing sigai.student48.pem.pub
+     DEBUG | 		writing sigai.student48_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student34-keys.tgz
+     DEBUG | Extracted to sigai.student34-keys
+     DEBUG | 	sigai.student34_id_rsa_1 -> sigai.student34.pem
+     DEBUG | 	sigai.student34_id_rsa_1.ppk -> sigai.student34.ppk
+     DEBUG | 	sigai.student34_passphrase_1.txt -> sigai.student34_pass.txt
+     DEBUG | 	sigai.student34_id_rsa_1.pub -> sigai.student34.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student34.pem
+     DEBUG | 		writing sigai.student34.ppk
+     DEBUG | 		writing sigai.student34.pem.pub
+     DEBUG | 		writing sigai.student34_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student35-keys.tgz
+     DEBUG | Extracted to sigai.student35-keys
+     DEBUG | 	sigai.student35_id_rsa_1.ppk -> sigai.student35.ppk
+     DEBUG | 	sigai.student35_id_rsa_1 -> sigai.student35.pem
+     DEBUG | 	sigai.student35_id_rsa_1.pub -> sigai.student35.pem.pub
+     DEBUG | 	sigai.student35_passphrase_1.txt -> sigai.student35_pass.txt
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student35.pem
+     DEBUG | 		writing sigai.student35.ppk
+     DEBUG | 		writing sigai.student35.pem.pub
+     DEBUG | 		writing sigai.student35_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student43-keys.tgz
+     DEBUG | Extracted to sigai.student43-keys
+     DEBUG | 	sigai.student43_passphrase_1.txt -> sigai.student43_pass.txt
+     DEBUG | 	sigai.student43_id_rsa_1.ppk -> sigai.student43.ppk
+     DEBUG | 	sigai.student43_id_rsa_1 -> sigai.student43.pem
+     DEBUG | 	sigai.student43_id_rsa_1.pub -> sigai.student43.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student43.pem
+     DEBUG | 		writing sigai.student43.ppk
+     DEBUG | 		writing sigai.student43.pem.pub
+     DEBUG | 		writing sigai.student43_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student42-keys.tgz
+     DEBUG | Extracted to sigai.student42-keys
+     DEBUG | 	sigai.student42_id_rsa_1 -> sigai.student42.pem
+     DEBUG | 	sigai.student42_passphrase_1.txt -> sigai.student42_pass.txt
+     DEBUG | 	sigai.student42_id_rsa_1.ppk -> sigai.student42.ppk
+     DEBUG | 	sigai.student42_id_rsa_1.pub -> sigai.student42.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student42.pem
+     DEBUG | 		writing sigai.student42.ppk
+     DEBUG | 		writing sigai.student42.pem.pub
+     DEBUG | 		writing sigai.student42_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student29-keys.tgz
+     DEBUG | Extracted to sigai.student29-keys
+     DEBUG | 	sigai.student29_passphrase_1.txt -> sigai.student29_pass.txt
+     DEBUG | 	sigai.student29_id_rsa_1 -> sigai.student29.pem
+     DEBUG | 	sigai.student29_id_rsa_1.pub -> sigai.student29.pem.pub
+     DEBUG | 	sigai.student29_id_rsa_1.ppk -> sigai.student29.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student29.pem
+     DEBUG | 		writing sigai.student29.ppk
+     DEBUG | 		writing sigai.student29.pem.pub
+     DEBUG | 		writing sigai.student29_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student28-keys.tgz
+     DEBUG | Extracted to sigai.student28-keys
+     DEBUG | 	sigai.student28_passphrase_1.txt -> sigai.student28_pass.txt
+     DEBUG | 	sigai.student28_id_rsa_1.pub -> sigai.student28.pem.pub
+     DEBUG | 	sigai.student28_id_rsa_1 -> sigai.student28.pem
+     DEBUG | 	sigai.student28_id_rsa_1.ppk -> sigai.student28.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student28.pem
+     DEBUG | 		writing sigai.student28.ppk
+     DEBUG | 		writing sigai.student28.pem.pub
+     DEBUG | 		writing sigai.student28_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student17-keys.tgz
+     DEBUG | Extracted to sigai.student17-keys
+     DEBUG | 	sigai.student17_passphrase_1.txt -> sigai.student17_pass.txt
+     DEBUG | 	sigai.student17_id_rsa_1 -> sigai.student17.pem
+     DEBUG | 	sigai.student17_id_rsa_1.ppk -> sigai.student17.ppk
+     DEBUG | 	sigai.student17_id_rsa_1.pub -> sigai.student17.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student17.pem
+     DEBUG | 		writing sigai.student17.ppk
+     DEBUG | 		writing sigai.student17.pem.pub
+     DEBUG | 		writing sigai.student17_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student16-keys.tgz
+     DEBUG | Extracted to sigai.student16-keys
+     DEBUG | 	sigai.student16_passphrase_1.txt -> sigai.student16_pass.txt
+     DEBUG | 	sigai.student16_id_rsa_1.ppk -> sigai.student16.ppk
+     DEBUG | 	sigai.student16_id_rsa_1 -> sigai.student16.pem
+     DEBUG | 	sigai.student16_id_rsa_1.pub -> sigai.student16.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student16.pem
+     DEBUG | 		writing sigai.student16.ppk
+     DEBUG | 		writing sigai.student16.pem.pub
+     DEBUG | 		writing sigai.student16_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student4-keys.tgz
+     DEBUG | Extracted to sigai.student4-keys
+     DEBUG | 	sigai.student4_id_rsa_1.pub -> sigai.student4.pem.pub
+     DEBUG | 	sigai.student4_passphrase_1.txt -> sigai.student4_pass.txt
+     DEBUG | 	sigai.student4_id_rsa_1 -> sigai.student4.pem
+     DEBUG | 	sigai.student4_id_rsa_1.ppk -> sigai.student4.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student4.pem
+     DEBUG | 		writing sigai.student4.ppk
+     DEBUG | 		writing sigai.student4.pem.pub
+     DEBUG | 		writing sigai.student4_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student5-keys.tgz
+     DEBUG | Extracted to sigai.student5-keys
+     DEBUG | 	sigai.student5_passphrase_1.txt -> sigai.student5_pass.txt
+     DEBUG | 	sigai.student5_id_rsa_1.pub -> sigai.student5.pem.pub
+     DEBUG | 	sigai.student5_id_rsa_1 -> sigai.student5.pem
+     DEBUG | 	sigai.student5_id_rsa_1.ppk -> sigai.student5.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student5.pem
+     DEBUG | 		writing sigai.student5.ppk
+     DEBUG | 		writing sigai.student5.pem.pub
+     DEBUG | 		writing sigai.student5_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student23-keys.tgz
+     DEBUG | Extracted to sigai.student23-keys
+     DEBUG | 	sigai.student23_id_rsa_1.pub -> sigai.student23.pem.pub
+     DEBUG | 	sigai.student23_passphrase_1.txt -> sigai.student23_pass.txt
+     DEBUG | 	sigai.student23_id_rsa_1 -> sigai.student23.pem
+     DEBUG | 	sigai.student23_id_rsa_1.ppk -> sigai.student23.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student23.pem
+     DEBUG | 		writing sigai.student23.ppk
+     DEBUG | 		writing sigai.student23.pem.pub
+     DEBUG | 		writing sigai.student23_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student22-keys.tgz
+     DEBUG | Extracted to sigai.student22-keys
+     DEBUG | 	sigai.student22_passphrase_1.txt -> sigai.student22_pass.txt
+     DEBUG | 	sigai.student22_id_rsa_1.pub -> sigai.student22.pem.pub
+     DEBUG | 	sigai.student22_id_rsa_1 -> sigai.student22.pem
+     DEBUG | 	sigai.student22_id_rsa_1.ppk -> sigai.student22.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student22.pem
+     DEBUG | 		writing sigai.student22.ppk
+     DEBUG | 		writing sigai.student22.pem.pub
+     DEBUG | 		writing sigai.student22_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student10-keys.tgz
+     DEBUG | Extracted to sigai.student10-keys
+     DEBUG | 	sigai.student10_id_rsa_1 -> sigai.student10.pem
+     DEBUG | 	sigai.student10_id_rsa_1.ppk -> sigai.student10.ppk
+     DEBUG | 	sigai.student10_passphrase_1.txt -> sigai.student10_pass.txt
+     DEBUG | 	sigai.student10_id_rsa_1.pub -> sigai.student10.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student10.pem
+     DEBUG | 		writing sigai.student10.ppk
+     DEBUG | 		writing sigai.student10.pem.pub
+     DEBUG | 		writing sigai.student10_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student11-keys.tgz
+     DEBUG | Extracted to sigai.student11-keys
+     DEBUG | 	sigai.student11_id_rsa_1 -> sigai.student11.pem
+     DEBUG | 	sigai.student11_id_rsa_1.ppk -> sigai.student11.ppk
+     DEBUG | 	sigai.student11_passphrase_1.txt -> sigai.student11_pass.txt
+     DEBUG | 	sigai.student11_id_rsa_1.pub -> sigai.student11.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student11.pem
+     DEBUG | 		writing sigai.student11.ppk
+     DEBUG | 		writing sigai.student11.pem.pub
+     DEBUG | 		writing sigai.student11_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student3-keys.tgz
+     DEBUG | Extracted to sigai.student3-keys
+     DEBUG | 	sigai.student3_id_rsa_1.pub -> sigai.student3.pem.pub
+     DEBUG | 	sigai.student3_id_rsa_1 -> sigai.student3.pem
+     DEBUG | 	sigai.student3_id_rsa_1.ppk -> sigai.student3.ppk
+     DEBUG | 	sigai.student3_passphrase_1.txt -> sigai.student3_pass.txt
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student3.pem
+     DEBUG | 		writing sigai.student3.ppk
+     DEBUG | 		writing sigai.student3.pem.pub
+     DEBUG | 		writing sigai.student3_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student2-keys.tgz
+     DEBUG | Extracted to sigai.student2-keys
+     DEBUG | 	sigai.student2_id_rsa_1 -> sigai.student2.pem
+     DEBUG | 	sigai.student2_id_rsa_1.pub -> sigai.student2.pem.pub
+     DEBUG | 	sigai.student2_id_rsa_1.ppk -> sigai.student2.ppk
+     DEBUG | 	sigai.student2_passphrase_1.txt -> sigai.student2_pass.txt
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student2.pem
+     DEBUG | 		writing sigai.student2.ppk
+     DEBUG | 		writing sigai.student2.pem.pub
+     DEBUG | 		writing sigai.student2_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student24-keys.tgz
+     DEBUG | Extracted to sigai.student24-keys
+     DEBUG | 	sigai.student24_id_rsa_1.pub -> sigai.student24.pem.pub
+     DEBUG | 	sigai.student24_id_rsa_1 -> sigai.student24.pem
+     DEBUG | 	sigai.student24_id_rsa_1.ppk -> sigai.student24.ppk
+     DEBUG | 	sigai.student24_passphrase_1.txt -> sigai.student24_pass.txt
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student24.pem
+     DEBUG | 		writing sigai.student24.ppk
+     DEBUG | 		writing sigai.student24.pem.pub
+     DEBUG | 		writing sigai.student24_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student25-keys.tgz
+     DEBUG | Extracted to sigai.student25-keys
+     DEBUG | 	sigai.student25_id_rsa_1 -> sigai.student25.pem
+     DEBUG | 	sigai.student25_id_rsa_1.pub -> sigai.student25.pem.pub
+     DEBUG | 	sigai.student25_id_rsa_1.ppk -> sigai.student25.ppk
+     DEBUG | 	sigai.student25_passphrase_1.txt -> sigai.student25_pass.txt
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student25.pem
+     DEBUG | 		writing sigai.student25.ppk
+     DEBUG | 		writing sigai.student25.pem.pub
+     DEBUG | 		writing sigai.student25_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student9-keys.tgz
+     DEBUG | Extracted to sigai.student9-keys
+     DEBUG | 	sigai.student9_id_rsa_1 -> sigai.student9.pem
+     DEBUG | 	sigai.student9_id_rsa_1.pub -> sigai.student9.pem.pub
+     DEBUG | 	sigai.student9_passphrase_1.txt -> sigai.student9_pass.txt
+     DEBUG | 	sigai.student9_id_rsa_1.ppk -> sigai.student9.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student9.pem
+     DEBUG | 		writing sigai.student9.ppk
+     DEBUG | 		writing sigai.student9.pem.pub
+     DEBUG | 		writing sigai.student9_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student8-keys.tgz
+     DEBUG | Extracted to sigai.student8-keys
+     DEBUG | 	sigai.student8_id_rsa_1 -> sigai.student8.pem
+     DEBUG | 	sigai.student8_id_rsa_1.pub -> sigai.student8.pem.pub
+     DEBUG | 	sigai.student8_passphrase_1.txt -> sigai.student8_pass.txt
+     DEBUG | 	sigai.student8_id_rsa_1.ppk -> sigai.student8.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student8.pem
+     DEBUG | 		writing sigai.student8.ppk
+     DEBUG | 		writing sigai.student8.pem.pub
+     DEBUG | 		writing sigai.student8_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student39-keys.tgz
+     DEBUG | Extracted to sigai.student39-keys
+     DEBUG | 	sigai.student39_id_rsa_1.ppk -> sigai.student39.ppk
+     DEBUG | 	sigai.student39_passphrase_1.txt -> sigai.student39_pass.txt
+     DEBUG | 	sigai.student39_id_rsa_1 -> sigai.student39.pem
+     DEBUG | 	sigai.student39_id_rsa_1.pub -> sigai.student39.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student39.pem
+     DEBUG | 		writing sigai.student39.ppk
+     DEBUG | 		writing sigai.student39.pem.pub
+     DEBUG | 		writing sigai.student39_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student38-keys.tgz
+     DEBUG | Extracted to sigai.student38-keys
+     DEBUG | 	sigai.student38_id_rsa_1 -> sigai.student38.pem
+     DEBUG | 	sigai.student38_id_rsa_1.ppk -> sigai.student38.ppk
+     DEBUG | 	sigai.student38_passphrase_1.txt -> sigai.student38_pass.txt
+     DEBUG | 	sigai.student38_id_rsa_1.pub -> sigai.student38.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student38.pem
+     DEBUG | 		writing sigai.student38.ppk
+     DEBUG | 		writing sigai.student38.pem.pub
+     DEBUG | 		writing sigai.student38_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student33-keys.tgz
+     DEBUG | Extracted to sigai.student33-keys
+     DEBUG | 	sigai.student33_id_rsa_1 -> sigai.student33.pem
+     DEBUG | 	sigai.student33_id_rsa_1.ppk -> sigai.student33.ppk
+     DEBUG | 	sigai.student33_passphrase_1.txt -> sigai.student33_pass.txt
+     DEBUG | 	sigai.student33_id_rsa_1.pub -> sigai.student33.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student33.pem
+     DEBUG | 		writing sigai.student33.ppk
+     DEBUG | 		writing sigai.student33.pem.pub
+     DEBUG | 		writing sigai.student33_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student32-keys.tgz
+     DEBUG | Extracted to sigai.student32-keys
+     DEBUG | 	sigai.student32_id_rsa_1 -> sigai.student32.pem
+     DEBUG | 	sigai.student32_passphrase_1.txt -> sigai.student32_pass.txt
+     DEBUG | 	sigai.student32_id_rsa_1.ppk -> sigai.student32.ppk
+     DEBUG | 	sigai.student32_id_rsa_1.pub -> sigai.student32.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student32.pem
+     DEBUG | 		writing sigai.student32.ppk
+     DEBUG | 		writing sigai.student32.pem.pub
+     DEBUG | 		writing sigai.student32_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student44-keys.tgz
+     DEBUG | Extracted to sigai.student44-keys
+     DEBUG | 	sigai.student44_id_rsa_1 -> sigai.student44.pem
+     DEBUG | 	sigai.student44_id_rsa_1.ppk -> sigai.student44.ppk
+     DEBUG | 	sigai.student44_passphrase_1.txt -> sigai.student44_pass.txt
+     DEBUG | 	sigai.student44_id_rsa_1.pub -> sigai.student44.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student44.pem
+     DEBUG | 		writing sigai.student44.ppk
+     DEBUG | 		writing sigai.student44.pem.pub
+     DEBUG | 		writing sigai.student44_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student45-keys.tgz
+     DEBUG | Extracted to sigai.student45-keys
+     DEBUG | 	sigai.student45_id_rsa_1 -> sigai.student45.pem
+     DEBUG | 	sigai.student45_id_rsa_1.ppk -> sigai.student45.ppk
+     DEBUG | 	sigai.student45_passphrase_1.txt -> sigai.student45_pass.txt
+     DEBUG | 	sigai.student45_id_rsa_1.pub -> sigai.student45.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student45.pem
+     DEBUG | 		writing sigai.student45.ppk
+     DEBUG | 		writing sigai.student45.pem.pub
+     DEBUG | 		writing sigai.student45_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student20-keys.tgz
+     DEBUG | Extracted to sigai.student20-keys
+     DEBUG | 	sigai.student20_id_rsa_1.ppk -> sigai.student20.ppk
+     DEBUG | 	sigai.student20_passphrase_1.txt -> sigai.student20_pass.txt
+     DEBUG | 	sigai.student20_id_rsa_1 -> sigai.student20.pem
+     DEBUG | 	sigai.student20_id_rsa_1.pub -> sigai.student20.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student20.pem
+     DEBUG | 		writing sigai.student20.ppk
+     DEBUG | 		writing sigai.student20.pem.pub
+     DEBUG | 		writing sigai.student20_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student21-keys.tgz
+     DEBUG | Extracted to sigai.student21-keys
+     DEBUG | 	sigai.student21_id_rsa_1 -> sigai.student21.pem
+     DEBUG | 	sigai.student21_passphrase_1.txt -> sigai.student21_pass.txt
+     DEBUG | 	sigai.student21_id_rsa_1.pub -> sigai.student21.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student21.pem
+     ERROR | Failed to write `sigai.student21.ppk`
+     DEBUG | 		writing sigai.student21.pem.pub
+     DEBUG | 		writing sigai.student21_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student14-keys.tgz
+     DEBUG | Extracted to sigai.student14-keys
+     DEBUG | 	sigai.student14_id_rsa_1.pub -> sigai.student14.pem.pub
+     DEBUG | 	sigai.student14_id_rsa_1.ppk -> sigai.student14.ppk
+     DEBUG | 	sigai.student14_passphrase_1.txt -> sigai.student14_pass.txt
+     DEBUG | 	sigai.student14_id_rsa_1 -> sigai.student14.pem
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student14.pem
+     DEBUG | 		writing sigai.student14.ppk
+     DEBUG | 		writing sigai.student14.pem.pub
+     DEBUG | 		writing sigai.student14_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student15-keys.tgz
+     DEBUG | Extracted to sigai.student15-keys
+     DEBUG | 	sigai.student15_id_rsa_1.pub -> sigai.student15.pem.pub
+     DEBUG | 	sigai.student15_id_rsa_1.ppk -> sigai.student15.ppk
+     DEBUG | 	sigai.student15_passphrase_1.txt -> sigai.student15_pass.txt
+     DEBUG | 	sigai.student15_id_rsa_1 -> sigai.student15.pem
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student15.pem
+     DEBUG | 		writing sigai.student15.ppk
+     DEBUG | 		writing sigai.student15.pem.pub
+     DEBUG | 		writing sigai.student15_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student7-keys.tgz
+     DEBUG | Extracted to sigai.student7-keys
+     DEBUG | 	sigai.student7_id_rsa_1.ppk -> sigai.student7.ppk
+     DEBUG | 	sigai.student7_passphrase_1.txt -> sigai.student7_pass.txt
+     DEBUG | 	sigai.student7_id_rsa_1.pub -> sigai.student7.pem.pub
+     DEBUG | 	sigai.student7_id_rsa_1 -> sigai.student7.pem
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student7.pem
+     DEBUG | 		writing sigai.student7.ppk
+     DEBUG | 		writing sigai.student7.pem.pub
+     DEBUG | 		writing sigai.student7_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student6-keys.tgz
+     DEBUG | Extracted to sigai.student6-keys
+     DEBUG | 	sigai.student6_id_rsa_1.ppk -> sigai.student6.ppk
+     DEBUG | 	sigai.student6_passphrase_1.txt -> sigai.student6_pass.txt
+     DEBUG | 	sigai.student6_id_rsa_1 -> sigai.student6.pem
+     DEBUG | 	sigai.student6_id_rsa_1.pub -> sigai.student6.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student6.pem
+     DEBUG | 		writing sigai.student6.ppk
+     DEBUG | 		writing sigai.student6.pem.pub
+     DEBUG | 		writing sigai.student6_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student37-keys.tgz
+     DEBUG | Extracted to sigai.student37-keys
+     DEBUG | 	sigai.student37_id_rsa_1.pub -> sigai.student37.pem.pub
+     DEBUG | 	sigai.student37_passphrase_1.txt -> sigai.student37_pass.txt
+     DEBUG | 	sigai.student37_id_rsa_1.ppk -> sigai.student37.ppk
+     DEBUG | 	sigai.student37_id_rsa_1 -> sigai.student37.pem
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student37.pem
+     DEBUG | 		writing sigai.student37.ppk
+     DEBUG | 		writing sigai.student37.pem.pub
+     DEBUG | 		writing sigai.student37_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student36-keys.tgz
+     DEBUG | Extracted to sigai.student36-keys
+     DEBUG | 	sigai.student36_id_rsa_1.pub -> sigai.student36.pem.pub
+     DEBUG | 	sigai.student36_passphrase_1.txt -> sigai.student36_pass.txt
+     DEBUG | 	sigai.student36_id_rsa_1.ppk -> sigai.student36.ppk
+     DEBUG | 	sigai.student36_id_rsa_1 -> sigai.student36.pem
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student36.pem
+     DEBUG | 		writing sigai.student36.ppk
+     DEBUG | 		writing sigai.student36.pem.pub
+     DEBUG | 		writing sigai.student36_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student40-keys.tgz
+     DEBUG | Extracted to sigai.student40-keys
+     DEBUG | 	sigai.student40_id_rsa_1.pub -> sigai.student40.pem.pub
+     DEBUG | 	sigai.student40_id_rsa_1.ppk -> sigai.student40.ppk
+     DEBUG | 	sigai.student40_id_rsa_1 -> sigai.student40.pem
+     DEBUG | 	sigai.student40_passphrase_1.txt -> sigai.student40_pass.txt
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student40.pem
+     DEBUG | 		writing sigai.student40.ppk
+     DEBUG | 		writing sigai.student40.pem.pub
+     DEBUG | 		writing sigai.student40_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student41-keys.tgz
+     DEBUG | Extracted to sigai.student41-keys
+     DEBUG | 	sigai.student41_id_rsa_1.pub -> sigai.student41.pem.pub
+     DEBUG | 	sigai.student41_passphrase_1.txt -> sigai.student41_pass.txt
+     DEBUG | 	sigai.student41_id_rsa_1.ppk -> sigai.student41.ppk
+     DEBUG | 	sigai.student41_id_rsa_1 -> sigai.student41.pem
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student41.pem
+     DEBUG | 		writing sigai.student41.ppk
+     DEBUG | 		writing sigai.student41.pem.pub
+     DEBUG | 		writing sigai.student41_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student30-keys.tgz
+     DEBUG | Extracted to sigai.student30-keys
+     DEBUG | 	sigai.student30_id_rsa_1.pub -> sigai.student30.pem.pub
+     DEBUG | 	sigai.student30_id_rsa_1 -> sigai.student30.pem
+     DEBUG | 	sigai.student30_id_rsa_1.ppk -> sigai.student30.ppk
+     DEBUG | 	sigai.student30_passphrase_1.txt -> sigai.student30_pass.txt
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student30.pem
+     DEBUG | 		writing sigai.student30.ppk
+     DEBUG | 		writing sigai.student30.pem.pub
+     DEBUG | 		writing sigai.student30_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student31-keys.tgz
+     DEBUG | Extracted to sigai.student31-keys
+     DEBUG | 	sigai.student31_id_rsa_1.pub -> sigai.student31.pem.pub
+     DEBUG | 	sigai.student31_id_rsa_1 -> sigai.student31.pem
+     DEBUG | 	sigai.student31_id_rsa_1.ppk -> sigai.student31.ppk
+     DEBUG | 	sigai.student31_passphrase_1.txt -> sigai.student31_pass.txt
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student31.pem
+     DEBUG | 		writing sigai.student31.ppk
+     DEBUG | 		writing sigai.student31.pem.pub
+     DEBUG | 		writing sigai.student31_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student47-keys.tgz
+     DEBUG | Extracted to sigai.student47-keys
+     DEBUG | 	sigai.student47_passphrase_1.txt -> sigai.student47_pass.txt
+     DEBUG | 	sigai.student47_id_rsa_1.pub -> sigai.student47.pem.pub
+     DEBUG | 	sigai.student47_id_rsa_1 -> sigai.student47.pem
+     DEBUG | 	sigai.student47_id_rsa_1.ppk -> sigai.student47.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student47.pem
+     DEBUG | 		writing sigai.student47.ppk
+     DEBUG | 		writing sigai.student47.pem.pub
+     DEBUG | 		writing sigai.student47_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student46-keys.tgz
+     DEBUG | Extracted to sigai.student46-keys
+     DEBUG | 	sigai.student46_id_rsa_1.pub -> sigai.student46.pem.pub
+     DEBUG | 	sigai.student46_passphrase_1.txt -> sigai.student46_pass.txt
+     DEBUG | 	sigai.student46_id_rsa_1 -> sigai.student46.pem
+     DEBUG | 	sigai.student46_id_rsa_1.ppk -> sigai.student46.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student46.pem
+     DEBUG | 		writing sigai.student46.ppk
+     DEBUG | 		writing sigai.student46.pem.pub
+     DEBUG | 		writing sigai.student46_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student27-keys.tgz
+     DEBUG | Extracted to sigai.student27-keys
+     DEBUG | 	sigai.student27_id_rsa_1.ppk -> sigai.student27.ppk
+     DEBUG | 	sigai.student27_passphrase_1.txt -> sigai.student27_pass.txt
+     DEBUG | 	sigai.student27_id_rsa_1 -> sigai.student27.pem
+     DEBUG | 	sigai.student27_id_rsa_1.pub -> sigai.student27.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student27.pem
+     DEBUG | 		writing sigai.student27.ppk
+     DEBUG | 		writing sigai.student27.pem.pub
+     DEBUG | 		writing sigai.student27_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student26-keys.tgz
+     DEBUG | Extracted to sigai.student26-keys
+     DEBUG | 	sigai.student26_passphrase_1.txt -> sigai.student26_pass.txt
+     DEBUG | 	sigai.student26_id_rsa_1.ppk -> sigai.student26.ppk
+     DEBUG | 	sigai.student26_id_rsa_1 -> sigai.student26.pem
+     DEBUG | 	sigai.student26_id_rsa_1.pub -> sigai.student26.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student26.pem
+     DEBUG | 		writing sigai.student26.ppk
+     DEBUG | 		writing sigai.student26.pem.pub
+     DEBUG | 		writing sigai.student26_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student50-keys.tgz
+     DEBUG | Extracted to sigai.student50-keys
+     DEBUG | 	sigai.student50_id_rsa_1.ppk -> sigai.student50.ppk
+     DEBUG | 	sigai.student50_id_rsa_1 -> sigai.student50.pem
+     DEBUG | 	sigai.student50_passphrase_1.txt -> sigai.student50_pass.txt
+     DEBUG | 	sigai.student50_id_rsa_1.pub -> sigai.student50.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student50.pem
+     DEBUG | 		writing sigai.student50.ppk
+     DEBUG | 		writing sigai.student50.pem.pub
+     DEBUG | 		writing sigai.student50_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student19-keys.tgz
+     DEBUG | Extracted to sigai.student19-keys
+     DEBUG | 	sigai.student19_id_rsa_1.pub -> sigai.student19.pem.pub
+     DEBUG | 	sigai.student19_passphrase_1.txt -> sigai.student19_pass.txt
+     DEBUG | 	sigai.student19_id_rsa_1 -> sigai.student19.pem
+     DEBUG | 	sigai.student19_id_rsa_1.ppk -> sigai.student19.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student19.pem
+     DEBUG | 		writing sigai.student19.ppk
+     DEBUG | 		writing sigai.student19.pem.pub
+     DEBUG | 		writing sigai.student19_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student18-keys.tgz
+     DEBUG | Extracted to sigai.student18-keys
+     DEBUG | 	sigai.student18_passphrase_1.txt -> sigai.student18_pass.txt
+     DEBUG | 	sigai.student18_id_rsa_1.pub -> sigai.student18.pem.pub
+     DEBUG | 	sigai.student18_id_rsa_1 -> sigai.student18.pem
+     DEBUG | 	sigai.student18_id_rsa_1.ppk -> sigai.student18.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student18.pem
+     DEBUG | 		writing sigai.student18.ppk
+     DEBUG | 		writing sigai.student18.pem.pub
+     DEBUG | 		writing sigai.student18_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student13-keys.tgz
+     DEBUG | Extracted to sigai.student13-keys
+     DEBUG | 	sigai.student13_id_rsa_1.pub -> sigai.student13.pem.pub
+     DEBUG | 	sigai.student13_passphrase_1.txt -> sigai.student13_pass.txt
+     DEBUG | 	sigai.student13_id_rsa_1.ppk -> sigai.student13.ppk
+     DEBUG | 	sigai.student13_id_rsa_1 -> sigai.student13.pem
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student13.pem
+     DEBUG | 		writing sigai.student13.ppk
+     DEBUG | 		writing sigai.student13.pem.pub
+     DEBUG | 		writing sigai.student13_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student12-keys.tgz
+     DEBUG | Extracted to sigai.student12-keys
+     DEBUG | 	sigai.student12_id_rsa_1.pub -> sigai.student12.pem.pub
+     DEBUG | 	sigai.student12_passphrase_1.txt -> sigai.student12_pass.txt
+     DEBUG | 	sigai.student12_id_rsa_1.ppk -> sigai.student12.ppk
+     DEBUG | 	sigai.student12_id_rsa_1 -> sigai.student12.pem
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student12.pem
+     DEBUG | 		writing sigai.student12.ppk
+     DEBUG | 		writing sigai.student12.pem.pub
+     DEBUG | 		writing sigai.student12_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student1-keys.tgz
+     DEBUG | Extracted to sigai.student1-keys
+     DEBUG | 	sigai.student1_passphrase_1.txt -> sigai.student1_pass.txt
+     DEBUG | 	sigai.student1_id_rsa_1.ppk -> sigai.student1.ppk
+     DEBUG | 	sigai.student1_id_rsa_1 -> sigai.student1.pem
+     DEBUG | 	sigai.student1_id_rsa_1.pub -> sigai.student1.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.zip`
+     DEBUG | 		writing sigai.student1.pem
+     DEBUG | 		writing sigai.student1.ppk
+     DEBUG | 		writing sigai.student1.pem.pub
+     DEBUG | 		writing sigai.student1_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+      INFO | User-specified directory: ../newton
+      INFO | Now in /Users/john/Documents/sigai/newton
+     DEBUG | Beginning to operate on sigai.student49-keys.tgz
+     DEBUG | Extracted to sigai.student49-keys
+     DEBUG | 	sigai.student49_id_rsa_1.ppk -> sigai.student49.ppk
+     DEBUG | 	sigai.student49_id_rsa_1 -> sigai.student49.pem
+     DEBUG | 	sigai.student49_passphrase_1.txt -> sigai.student49_pass.txt
+     DEBUG | 	sigai.student49_id_rsa_1.pub -> sigai.student49.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student49.zip`
+     DEBUG | 		writing sigai.student49.pem
+     DEBUG | 		writing sigai.student49.ppk
+     DEBUG | 		writing sigai.student49.pem.pub
+     DEBUG | 		writing sigai.student49_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student48-keys.tgz
+     DEBUG | Extracted to sigai.student48-keys
+     DEBUG | 	sigai.student48_id_rsa_1.ppk -> sigai.student48.ppk
+     DEBUG | 	sigai.student48_passphrase_1.txt -> sigai.student48_pass.txt
+     DEBUG | 	sigai.student48_id_rsa_1 -> sigai.student48.pem
+     DEBUG | 	sigai.student48_id_rsa_1.pub -> sigai.student48.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student48.zip`
+     DEBUG | 		writing sigai.student48.pem
+     DEBUG | 		writing sigai.student48.ppk
+     DEBUG | 		writing sigai.student48.pem.pub
+     DEBUG | 		writing sigai.student48_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student34-keys.tgz
+     DEBUG | Extracted to sigai.student34-keys
+     DEBUG | 	sigai.student34_id_rsa_1 -> sigai.student34.pem
+     DEBUG | 	sigai.student34_id_rsa_1.ppk -> sigai.student34.ppk
+     DEBUG | 	sigai.student34_passphrase_1.txt -> sigai.student34_pass.txt
+     DEBUG | 	sigai.student34_id_rsa_1.pub -> sigai.student34.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student34.zip`
+     DEBUG | 		writing sigai.student34.pem
+     DEBUG | 		writing sigai.student34.ppk
+     DEBUG | 		writing sigai.student34.pem.pub
+     DEBUG | 		writing sigai.student34_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student35-keys.tgz
+     DEBUG | Extracted to sigai.student35-keys
+     DEBUG | 	sigai.student35_id_rsa_1.ppk -> sigai.student35.ppk
+     DEBUG | 	sigai.student35_id_rsa_1 -> sigai.student35.pem
+     DEBUG | 	sigai.student35_id_rsa_1.pub -> sigai.student35.pem.pub
+     DEBUG | 	sigai.student35_passphrase_1.txt -> sigai.student35_pass.txt
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student35.zip`
+     DEBUG | 		writing sigai.student35.pem
+     DEBUG | 		writing sigai.student35.ppk
+     DEBUG | 		writing sigai.student35.pem.pub
+     DEBUG | 		writing sigai.student35_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student43-keys.tgz
+     DEBUG | Extracted to sigai.student43-keys
+     DEBUG | 	sigai.student43_passphrase_1.txt -> sigai.student43_pass.txt
+     DEBUG | 	sigai.student43_id_rsa_1.ppk -> sigai.student43.ppk
+     DEBUG | 	sigai.student43_id_rsa_1 -> sigai.student43.pem
+     DEBUG | 	sigai.student43_id_rsa_1.pub -> sigai.student43.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student43.zip`
+     DEBUG | 		writing sigai.student43.pem
+     DEBUG | 		writing sigai.student43.ppk
+     DEBUG | 		writing sigai.student43.pem.pub
+     DEBUG | 		writing sigai.student43_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student42-keys.tgz
+     DEBUG | Extracted to sigai.student42-keys
+     DEBUG | 	sigai.student42_id_rsa_1 -> sigai.student42.pem
+     DEBUG | 	sigai.student42_passphrase_1.txt -> sigai.student42_pass.txt
+     DEBUG | 	sigai.student42_id_rsa_1.ppk -> sigai.student42.ppk
+     DEBUG | 	sigai.student42_id_rsa_1.pub -> sigai.student42.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student42.zip`
+     DEBUG | 		writing sigai.student42.pem
+     DEBUG | 		writing sigai.student42.ppk
+     DEBUG | 		writing sigai.student42.pem.pub
+     DEBUG | 		writing sigai.student42_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student29-keys.tgz
+     DEBUG | Extracted to sigai.student29-keys
+     DEBUG | 	sigai.student29_passphrase_1.txt -> sigai.student29_pass.txt
+     DEBUG | 	sigai.student29_id_rsa_1 -> sigai.student29.pem
+     DEBUG | 	sigai.student29_id_rsa_1.pub -> sigai.student29.pem.pub
+     DEBUG | 	sigai.student29_id_rsa_1.ppk -> sigai.student29.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student29.zip`
+     DEBUG | 		writing sigai.student29.pem
+     DEBUG | 		writing sigai.student29.ppk
+     DEBUG | 		writing sigai.student29.pem.pub
+     DEBUG | 		writing sigai.student29_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student28-keys.tgz
+     DEBUG | Extracted to sigai.student28-keys
+     DEBUG | 	sigai.student28_passphrase_1.txt -> sigai.student28_pass.txt
+     DEBUG | 	sigai.student28_id_rsa_1.pub -> sigai.student28.pem.pub
+     DEBUG | 	sigai.student28_id_rsa_1 -> sigai.student28.pem
+     DEBUG | 	sigai.student28_id_rsa_1.ppk -> sigai.student28.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student28.zip`
+     DEBUG | 		writing sigai.student28.pem
+     DEBUG | 		writing sigai.student28.ppk
+     DEBUG | 		writing sigai.student28.pem.pub
+     DEBUG | 		writing sigai.student28_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student17-keys.tgz
+     DEBUG | Extracted to sigai.student17-keys
+     DEBUG | 	sigai.student17_passphrase_1.txt -> sigai.student17_pass.txt
+     DEBUG | 	sigai.student17_id_rsa_1 -> sigai.student17.pem
+     DEBUG | 	sigai.student17_id_rsa_1.ppk -> sigai.student17.ppk
+     DEBUG | 	sigai.student17_id_rsa_1.pub -> sigai.student17.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student17.zip`
+     DEBUG | 		writing sigai.student17.pem
+     DEBUG | 		writing sigai.student17.ppk
+     DEBUG | 		writing sigai.student17.pem.pub
+     DEBUG | 		writing sigai.student17_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student16-keys.tgz
+     DEBUG | Extracted to sigai.student16-keys
+     DEBUG | 	sigai.student16_passphrase_1.txt -> sigai.student16_pass.txt
+     DEBUG | 	sigai.student16_id_rsa_1.ppk -> sigai.student16.ppk
+     DEBUG | 	sigai.student16_id_rsa_1 -> sigai.student16.pem
+     DEBUG | 	sigai.student16_id_rsa_1.pub -> sigai.student16.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student16.zip`
+     DEBUG | 		writing sigai.student16.pem
+     DEBUG | 		writing sigai.student16.ppk
+     DEBUG | 		writing sigai.student16.pem.pub
+     DEBUG | 		writing sigai.student16_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student4-keys.tgz
+     DEBUG | Extracted to sigai.student4-keys
+     DEBUG | 	sigai.student4_id_rsa_1.pub -> sigai.student4.pem.pub
+     DEBUG | 	sigai.student4_passphrase_1.txt -> sigai.student4_pass.txt
+     DEBUG | 	sigai.student4_id_rsa_1 -> sigai.student4.pem
+     DEBUG | 	sigai.student4_id_rsa_1.ppk -> sigai.student4.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student4.zip`
+     DEBUG | 		writing sigai.student4.pem
+     DEBUG | 		writing sigai.student4.ppk
+     DEBUG | 		writing sigai.student4.pem.pub
+     DEBUG | 		writing sigai.student4_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student5-keys.tgz
+     DEBUG | Extracted to sigai.student5-keys
+     DEBUG | 	sigai.student5_passphrase_1.txt -> sigai.student5_pass.txt
+     DEBUG | 	sigai.student5_id_rsa_1.pub -> sigai.student5.pem.pub
+     DEBUG | 	sigai.student5_id_rsa_1 -> sigai.student5.pem
+     DEBUG | 	sigai.student5_id_rsa_1.ppk -> sigai.student5.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student5.zip`
+     DEBUG | 		writing sigai.student5.pem
+     DEBUG | 		writing sigai.student5.ppk
+     DEBUG | 		writing sigai.student5.pem.pub
+     DEBUG | 		writing sigai.student5_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student23-keys.tgz
+     DEBUG | Extracted to sigai.student23-keys
+     DEBUG | 	sigai.student23_id_rsa_1.pub -> sigai.student23.pem.pub
+     DEBUG | 	sigai.student23_passphrase_1.txt -> sigai.student23_pass.txt
+     DEBUG | 	sigai.student23_id_rsa_1 -> sigai.student23.pem
+     DEBUG | 	sigai.student23_id_rsa_1.ppk -> sigai.student23.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student23.zip`
+     DEBUG | 		writing sigai.student23.pem
+     DEBUG | 		writing sigai.student23.ppk
+     DEBUG | 		writing sigai.student23.pem.pub
+     DEBUG | 		writing sigai.student23_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student22-keys.tgz
+     DEBUG | Extracted to sigai.student22-keys
+     DEBUG | 	sigai.student22_passphrase_1.txt -> sigai.student22_pass.txt
+     DEBUG | 	sigai.student22_id_rsa_1.pub -> sigai.student22.pem.pub
+     DEBUG | 	sigai.student22_id_rsa_1 -> sigai.student22.pem
+     DEBUG | 	sigai.student22_id_rsa_1.ppk -> sigai.student22.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student22.zip`
+     DEBUG | 		writing sigai.student22.pem
+     DEBUG | 		writing sigai.student22.ppk
+     DEBUG | 		writing sigai.student22.pem.pub
+     DEBUG | 		writing sigai.student22_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student10-keys.tgz
+     DEBUG | Extracted to sigai.student10-keys
+     DEBUG | 	sigai.student10_id_rsa_1 -> sigai.student10.pem
+     DEBUG | 	sigai.student10_id_rsa_1.ppk -> sigai.student10.ppk
+     DEBUG | 	sigai.student10_passphrase_1.txt -> sigai.student10_pass.txt
+     DEBUG | 	sigai.student10_id_rsa_1.pub -> sigai.student10.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student10.zip`
+     DEBUG | 		writing sigai.student10.pem
+     DEBUG | 		writing sigai.student10.ppk
+     DEBUG | 		writing sigai.student10.pem.pub
+     DEBUG | 		writing sigai.student10_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student11-keys.tgz
+     DEBUG | Extracted to sigai.student11-keys
+     DEBUG | 	sigai.student11_id_rsa_1 -> sigai.student11.pem
+     DEBUG | 	sigai.student11_id_rsa_1.ppk -> sigai.student11.ppk
+     DEBUG | 	sigai.student11_passphrase_1.txt -> sigai.student11_pass.txt
+     DEBUG | 	sigai.student11_id_rsa_1.pub -> sigai.student11.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student11.zip`
+     DEBUG | 		writing sigai.student11.pem
+     DEBUG | 		writing sigai.student11.ppk
+     DEBUG | 		writing sigai.student11.pem.pub
+     DEBUG | 		writing sigai.student11_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student3-keys.tgz
+     DEBUG | Extracted to sigai.student3-keys
+     DEBUG | 	sigai.student3_id_rsa_1.pub -> sigai.student3.pem.pub
+     DEBUG | 	sigai.student3_id_rsa_1 -> sigai.student3.pem
+     DEBUG | 	sigai.student3_id_rsa_1.ppk -> sigai.student3.ppk
+     DEBUG | 	sigai.student3_passphrase_1.txt -> sigai.student3_pass.txt
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student3.zip`
+     DEBUG | 		writing sigai.student3.pem
+     DEBUG | 		writing sigai.student3.ppk
+     DEBUG | 		writing sigai.student3.pem.pub
+     DEBUG | 		writing sigai.student3_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student2-keys.tgz
+     DEBUG | Extracted to sigai.student2-keys
+     DEBUG | 	sigai.student2_id_rsa_1 -> sigai.student2.pem
+     DEBUG | 	sigai.student2_id_rsa_1.pub -> sigai.student2.pem.pub
+     DEBUG | 	sigai.student2_id_rsa_1.ppk -> sigai.student2.ppk
+     DEBUG | 	sigai.student2_passphrase_1.txt -> sigai.student2_pass.txt
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student2.zip`
+     DEBUG | 		writing sigai.student2.pem
+     DEBUG | 		writing sigai.student2.ppk
+     DEBUG | 		writing sigai.student2.pem.pub
+     DEBUG | 		writing sigai.student2_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student24-keys.tgz
+     DEBUG | Extracted to sigai.student24-keys
+     DEBUG | 	sigai.student24_id_rsa_1.pub -> sigai.student24.pem.pub
+     DEBUG | 	sigai.student24_id_rsa_1 -> sigai.student24.pem
+     DEBUG | 	sigai.student24_id_rsa_1.ppk -> sigai.student24.ppk
+     DEBUG | 	sigai.student24_passphrase_1.txt -> sigai.student24_pass.txt
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student24.zip`
+     DEBUG | 		writing sigai.student24.pem
+     DEBUG | 		writing sigai.student24.ppk
+     DEBUG | 		writing sigai.student24.pem.pub
+     DEBUG | 		writing sigai.student24_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student25-keys.tgz
+     DEBUG | Extracted to sigai.student25-keys
+     DEBUG | 	sigai.student25_id_rsa_1 -> sigai.student25.pem
+     DEBUG | 	sigai.student25_id_rsa_1.pub -> sigai.student25.pem.pub
+     DEBUG | 	sigai.student25_id_rsa_1.ppk -> sigai.student25.ppk
+     DEBUG | 	sigai.student25_passphrase_1.txt -> sigai.student25_pass.txt
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student25.zip`
+     DEBUG | 		writing sigai.student25.pem
+     DEBUG | 		writing sigai.student25.ppk
+     DEBUG | 		writing sigai.student25.pem.pub
+     DEBUG | 		writing sigai.student25_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student9-keys.tgz
+     DEBUG | Extracted to sigai.student9-keys
+     DEBUG | 	sigai.student9_id_rsa_1 -> sigai.student9.pem
+     DEBUG | 	sigai.student9_id_rsa_1.pub -> sigai.student9.pem.pub
+     DEBUG | 	sigai.student9_passphrase_1.txt -> sigai.student9_pass.txt
+     DEBUG | 	sigai.student9_id_rsa_1.ppk -> sigai.student9.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student9.zip`
+     DEBUG | 		writing sigai.student9.pem
+     DEBUG | 		writing sigai.student9.ppk
+     DEBUG | 		writing sigai.student9.pem.pub
+     DEBUG | 		writing sigai.student9_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student8-keys.tgz
+     DEBUG | Extracted to sigai.student8-keys
+     DEBUG | 	sigai.student8_id_rsa_1 -> sigai.student8.pem
+     DEBUG | 	sigai.student8_id_rsa_1.pub -> sigai.student8.pem.pub
+     DEBUG | 	sigai.student8_passphrase_1.txt -> sigai.student8_pass.txt
+     DEBUG | 	sigai.student8_id_rsa_1.ppk -> sigai.student8.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student8.zip`
+     DEBUG | 		writing sigai.student8.pem
+     DEBUG | 		writing sigai.student8.ppk
+     DEBUG | 		writing sigai.student8.pem.pub
+     DEBUG | 		writing sigai.student8_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student39-keys.tgz
+     DEBUG | Extracted to sigai.student39-keys
+     DEBUG | 	sigai.student39_id_rsa_1.ppk -> sigai.student39.ppk
+     DEBUG | 	sigai.student39_passphrase_1.txt -> sigai.student39_pass.txt
+     DEBUG | 	sigai.student39_id_rsa_1 -> sigai.student39.pem
+     DEBUG | 	sigai.student39_id_rsa_1.pub -> sigai.student39.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student39.zip`
+     DEBUG | 		writing sigai.student39.pem
+     DEBUG | 		writing sigai.student39.ppk
+     DEBUG | 		writing sigai.student39.pem.pub
+     DEBUG | 		writing sigai.student39_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student38-keys.tgz
+     DEBUG | Extracted to sigai.student38-keys
+     DEBUG | 	sigai.student38_id_rsa_1 -> sigai.student38.pem
+     DEBUG | 	sigai.student38_id_rsa_1.ppk -> sigai.student38.ppk
+     DEBUG | 	sigai.student38_passphrase_1.txt -> sigai.student38_pass.txt
+     DEBUG | 	sigai.student38_id_rsa_1.pub -> sigai.student38.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student38.zip`
+     DEBUG | 		writing sigai.student38.pem
+     DEBUG | 		writing sigai.student38.ppk
+     DEBUG | 		writing sigai.student38.pem.pub
+     DEBUG | 		writing sigai.student38_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student33-keys.tgz
+     DEBUG | Extracted to sigai.student33-keys
+     DEBUG | 	sigai.student33_id_rsa_1 -> sigai.student33.pem
+     DEBUG | 	sigai.student33_id_rsa_1.ppk -> sigai.student33.ppk
+     DEBUG | 	sigai.student33_passphrase_1.txt -> sigai.student33_pass.txt
+     DEBUG | 	sigai.student33_id_rsa_1.pub -> sigai.student33.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student33.zip`
+     DEBUG | 		writing sigai.student33.pem
+     DEBUG | 		writing sigai.student33.ppk
+     DEBUG | 		writing sigai.student33.pem.pub
+     DEBUG | 		writing sigai.student33_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student32-keys.tgz
+     DEBUG | Extracted to sigai.student32-keys
+     DEBUG | 	sigai.student32_id_rsa_1 -> sigai.student32.pem
+     DEBUG | 	sigai.student32_passphrase_1.txt -> sigai.student32_pass.txt
+     DEBUG | 	sigai.student32_id_rsa_1.ppk -> sigai.student32.ppk
+     DEBUG | 	sigai.student32_id_rsa_1.pub -> sigai.student32.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student32.zip`
+     DEBUG | 		writing sigai.student32.pem
+     DEBUG | 		writing sigai.student32.ppk
+     DEBUG | 		writing sigai.student32.pem.pub
+     DEBUG | 		writing sigai.student32_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student44-keys.tgz
+     DEBUG | Extracted to sigai.student44-keys
+     DEBUG | 	sigai.student44_id_rsa_1 -> sigai.student44.pem
+     DEBUG | 	sigai.student44_id_rsa_1.ppk -> sigai.student44.ppk
+     DEBUG | 	sigai.student44_passphrase_1.txt -> sigai.student44_pass.txt
+     DEBUG | 	sigai.student44_id_rsa_1.pub -> sigai.student44.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student44.zip`
+     DEBUG | 		writing sigai.student44.pem
+     DEBUG | 		writing sigai.student44.ppk
+     DEBUG | 		writing sigai.student44.pem.pub
+     DEBUG | 		writing sigai.student44_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student45-keys.tgz
+     DEBUG | Extracted to sigai.student45-keys
+     DEBUG | 	sigai.student45_id_rsa_1 -> sigai.student45.pem
+     DEBUG | 	sigai.student45_id_rsa_1.ppk -> sigai.student45.ppk
+     DEBUG | 	sigai.student45_passphrase_1.txt -> sigai.student45_pass.txt
+     DEBUG | 	sigai.student45_id_rsa_1.pub -> sigai.student45.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student45.zip`
+     DEBUG | 		writing sigai.student45.pem
+     DEBUG | 		writing sigai.student45.ppk
+     DEBUG | 		writing sigai.student45.pem.pub
+     DEBUG | 		writing sigai.student45_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student20-keys.tgz
+     DEBUG | Extracted to sigai.student20-keys
+     DEBUG | 	sigai.student20_id_rsa_1.ppk -> sigai.student20.ppk
+     DEBUG | 	sigai.student20_passphrase_1.txt -> sigai.student20_pass.txt
+     DEBUG | 	sigai.student20_id_rsa_1 -> sigai.student20.pem
+     DEBUG | 	sigai.student20_id_rsa_1.pub -> sigai.student20.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student20.zip`
+     DEBUG | 		writing sigai.student20.pem
+     DEBUG | 		writing sigai.student20.ppk
+     DEBUG | 		writing sigai.student20.pem.pub
+     DEBUG | 		writing sigai.student20_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student21-keys.tgz
+     DEBUG | Extracted to sigai.student21-keys
+     DEBUG | 	sigai.student21_id_rsa_1 -> sigai.student21.pem
+     DEBUG | 	sigai.student21_passphrase_1.txt -> sigai.student21_pass.txt
+     DEBUG | 	sigai.student21_id_rsa_1.pub -> sigai.student21.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student21.zip`
+     DEBUG | 		writing sigai.student21.pem
+     ERROR | Failed to write `sigai.student21.ppk`
+     DEBUG | 		writing sigai.student21.pem.pub
+     DEBUG | 		writing sigai.student21_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student14-keys.tgz
+     DEBUG | Extracted to sigai.student14-keys
+     DEBUG | 	sigai.student14_id_rsa_1.pub -> sigai.student14.pem.pub
+     DEBUG | 	sigai.student14_id_rsa_1.ppk -> sigai.student14.ppk
+     DEBUG | 	sigai.student14_passphrase_1.txt -> sigai.student14_pass.txt
+     DEBUG | 	sigai.student14_id_rsa_1 -> sigai.student14.pem
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student14.zip`
+     DEBUG | 		writing sigai.student14.pem
+     DEBUG | 		writing sigai.student14.ppk
+     DEBUG | 		writing sigai.student14.pem.pub
+     DEBUG | 		writing sigai.student14_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student15-keys.tgz
+     DEBUG | Extracted to sigai.student15-keys
+     DEBUG | 	sigai.student15_id_rsa_1.pub -> sigai.student15.pem.pub
+     DEBUG | 	sigai.student15_id_rsa_1.ppk -> sigai.student15.ppk
+     DEBUG | 	sigai.student15_passphrase_1.txt -> sigai.student15_pass.txt
+     DEBUG | 	sigai.student15_id_rsa_1 -> sigai.student15.pem
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student15.zip`
+     DEBUG | 		writing sigai.student15.pem
+     DEBUG | 		writing sigai.student15.ppk
+     DEBUG | 		writing sigai.student15.pem.pub
+     DEBUG | 		writing sigai.student15_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student7-keys.tgz
+     DEBUG | Extracted to sigai.student7-keys
+     DEBUG | 	sigai.student7_id_rsa_1.ppk -> sigai.student7.ppk
+     DEBUG | 	sigai.student7_passphrase_1.txt -> sigai.student7_pass.txt
+     DEBUG | 	sigai.student7_id_rsa_1.pub -> sigai.student7.pem.pub
+     DEBUG | 	sigai.student7_id_rsa_1 -> sigai.student7.pem
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student7.zip`
+     DEBUG | 		writing sigai.student7.pem
+     DEBUG | 		writing sigai.student7.ppk
+     DEBUG | 		writing sigai.student7.pem.pub
+     DEBUG | 		writing sigai.student7_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student6-keys.tgz
+     DEBUG | Extracted to sigai.student6-keys
+     DEBUG | 	sigai.student6_id_rsa_1.ppk -> sigai.student6.ppk
+     DEBUG | 	sigai.student6_passphrase_1.txt -> sigai.student6_pass.txt
+     DEBUG | 	sigai.student6_id_rsa_1 -> sigai.student6.pem
+     DEBUG | 	sigai.student6_id_rsa_1.pub -> sigai.student6.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student6.zip`
+     DEBUG | 		writing sigai.student6.pem
+     DEBUG | 		writing sigai.student6.ppk
+     DEBUG | 		writing sigai.student6.pem.pub
+     DEBUG | 		writing sigai.student6_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student37-keys.tgz
+     DEBUG | Extracted to sigai.student37-keys
+     DEBUG | 	sigai.student37_id_rsa_1.pub -> sigai.student37.pem.pub
+     DEBUG | 	sigai.student37_passphrase_1.txt -> sigai.student37_pass.txt
+     DEBUG | 	sigai.student37_id_rsa_1.ppk -> sigai.student37.ppk
+     DEBUG | 	sigai.student37_id_rsa_1 -> sigai.student37.pem
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student37.zip`
+     DEBUG | 		writing sigai.student37.pem
+     DEBUG | 		writing sigai.student37.ppk
+     DEBUG | 		writing sigai.student37.pem.pub
+     DEBUG | 		writing sigai.student37_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student36-keys.tgz
+     DEBUG | Extracted to sigai.student36-keys
+     DEBUG | 	sigai.student36_id_rsa_1.pub -> sigai.student36.pem.pub
+     DEBUG | 	sigai.student36_passphrase_1.txt -> sigai.student36_pass.txt
+     DEBUG | 	sigai.student36_id_rsa_1.ppk -> sigai.student36.ppk
+     DEBUG | 	sigai.student36_id_rsa_1 -> sigai.student36.pem
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student36.zip`
+     DEBUG | 		writing sigai.student36.pem
+     DEBUG | 		writing sigai.student36.ppk
+     DEBUG | 		writing sigai.student36.pem.pub
+     DEBUG | 		writing sigai.student36_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student40-keys.tgz
+     DEBUG | Extracted to sigai.student40-keys
+     DEBUG | 	sigai.student40_id_rsa_1.pub -> sigai.student40.pem.pub
+     DEBUG | 	sigai.student40_id_rsa_1.ppk -> sigai.student40.ppk
+     DEBUG | 	sigai.student40_id_rsa_1 -> sigai.student40.pem
+     DEBUG | 	sigai.student40_passphrase_1.txt -> sigai.student40_pass.txt
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student40.zip`
+     DEBUG | 		writing sigai.student40.pem
+     DEBUG | 		writing sigai.student40.ppk
+     DEBUG | 		writing sigai.student40.pem.pub
+     DEBUG | 		writing sigai.student40_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student41-keys.tgz
+     DEBUG | Extracted to sigai.student41-keys
+     DEBUG | 	sigai.student41_id_rsa_1.pub -> sigai.student41.pem.pub
+     DEBUG | 	sigai.student41_passphrase_1.txt -> sigai.student41_pass.txt
+     DEBUG | 	sigai.student41_id_rsa_1.ppk -> sigai.student41.ppk
+     DEBUG | 	sigai.student41_id_rsa_1 -> sigai.student41.pem
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student41.zip`
+     DEBUG | 		writing sigai.student41.pem
+     DEBUG | 		writing sigai.student41.ppk
+     DEBUG | 		writing sigai.student41.pem.pub
+     DEBUG | 		writing sigai.student41_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student30-keys.tgz
+     DEBUG | Extracted to sigai.student30-keys
+     DEBUG | 	sigai.student30_id_rsa_1.pub -> sigai.student30.pem.pub
+     DEBUG | 	sigai.student30_id_rsa_1 -> sigai.student30.pem
+     DEBUG | 	sigai.student30_id_rsa_1.ppk -> sigai.student30.ppk
+     DEBUG | 	sigai.student30_passphrase_1.txt -> sigai.student30_pass.txt
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student30.zip`
+     DEBUG | 		writing sigai.student30.pem
+     DEBUG | 		writing sigai.student30.ppk
+     DEBUG | 		writing sigai.student30.pem.pub
+     DEBUG | 		writing sigai.student30_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student31-keys.tgz
+     DEBUG | Extracted to sigai.student31-keys
+     DEBUG | 	sigai.student31_id_rsa_1.pub -> sigai.student31.pem.pub
+     DEBUG | 	sigai.student31_id_rsa_1 -> sigai.student31.pem
+     DEBUG | 	sigai.student31_id_rsa_1.ppk -> sigai.student31.ppk
+     DEBUG | 	sigai.student31_passphrase_1.txt -> sigai.student31_pass.txt
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student31.zip`
+     DEBUG | 		writing sigai.student31.pem
+     DEBUG | 		writing sigai.student31.ppk
+     DEBUG | 		writing sigai.student31.pem.pub
+     DEBUG | 		writing sigai.student31_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student47-keys.tgz
+     DEBUG | Extracted to sigai.student47-keys
+     DEBUG | 	sigai.student47_passphrase_1.txt -> sigai.student47_pass.txt
+     DEBUG | 	sigai.student47_id_rsa_1.pub -> sigai.student47.pem.pub
+     DEBUG | 	sigai.student47_id_rsa_1 -> sigai.student47.pem
+     DEBUG | 	sigai.student47_id_rsa_1.ppk -> sigai.student47.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student47.zip`
+     DEBUG | 		writing sigai.student47.pem
+     DEBUG | 		writing sigai.student47.ppk
+     DEBUG | 		writing sigai.student47.pem.pub
+     DEBUG | 		writing sigai.student47_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student46-keys.tgz
+     DEBUG | Extracted to sigai.student46-keys
+     DEBUG | 	sigai.student46_id_rsa_1.pub -> sigai.student46.pem.pub
+     DEBUG | 	sigai.student46_passphrase_1.txt -> sigai.student46_pass.txt
+     DEBUG | 	sigai.student46_id_rsa_1 -> sigai.student46.pem
+     DEBUG | 	sigai.student46_id_rsa_1.ppk -> sigai.student46.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student46.zip`
+     DEBUG | 		writing sigai.student46.pem
+     DEBUG | 		writing sigai.student46.ppk
+     DEBUG | 		writing sigai.student46.pem.pub
+     DEBUG | 		writing sigai.student46_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student27-keys.tgz
+     DEBUG | Extracted to sigai.student27-keys
+     DEBUG | 	sigai.student27_id_rsa_1.ppk -> sigai.student27.ppk
+     DEBUG | 	sigai.student27_passphrase_1.txt -> sigai.student27_pass.txt
+     DEBUG | 	sigai.student27_id_rsa_1 -> sigai.student27.pem
+     DEBUG | 	sigai.student27_id_rsa_1.pub -> sigai.student27.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student27.zip`
+     DEBUG | 		writing sigai.student27.pem
+     DEBUG | 		writing sigai.student27.ppk
+     DEBUG | 		writing sigai.student27.pem.pub
+     DEBUG | 		writing sigai.student27_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student26-keys.tgz
+     DEBUG | Extracted to sigai.student26-keys
+     DEBUG | 	sigai.student26_passphrase_1.txt -> sigai.student26_pass.txt
+     DEBUG | 	sigai.student26_id_rsa_1.ppk -> sigai.student26.ppk
+     DEBUG | 	sigai.student26_id_rsa_1 -> sigai.student26.pem
+     DEBUG | 	sigai.student26_id_rsa_1.pub -> sigai.student26.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student26.zip`
+     DEBUG | 		writing sigai.student26.pem
+     DEBUG | 		writing sigai.student26.ppk
+     DEBUG | 		writing sigai.student26.pem.pub
+     DEBUG | 		writing sigai.student26_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student50-keys.tgz
+     DEBUG | Extracted to sigai.student50-keys
+     DEBUG | 	sigai.student50_id_rsa_1.ppk -> sigai.student50.ppk
+     DEBUG | 	sigai.student50_id_rsa_1 -> sigai.student50.pem
+     DEBUG | 	sigai.student50_passphrase_1.txt -> sigai.student50_pass.txt
+     DEBUG | 	sigai.student50_id_rsa_1.pub -> sigai.student50.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student50.zip`
+     DEBUG | 		writing sigai.student50.pem
+     DEBUG | 		writing sigai.student50.ppk
+     DEBUG | 		writing sigai.student50.pem.pub
+     DEBUG | 		writing sigai.student50_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student19-keys.tgz
+     DEBUG | Extracted to sigai.student19-keys
+     DEBUG | 	sigai.student19_id_rsa_1.pub -> sigai.student19.pem.pub
+     DEBUG | 	sigai.student19_passphrase_1.txt -> sigai.student19_pass.txt
+     DEBUG | 	sigai.student19_id_rsa_1 -> sigai.student19.pem
+     DEBUG | 	sigai.student19_id_rsa_1.ppk -> sigai.student19.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student19.zip`
+     DEBUG | 		writing sigai.student19.pem
+     DEBUG | 		writing sigai.student19.ppk
+     DEBUG | 		writing sigai.student19.pem.pub
+     DEBUG | 		writing sigai.student19_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student18-keys.tgz
+     DEBUG | Extracted to sigai.student18-keys
+     DEBUG | 	sigai.student18_passphrase_1.txt -> sigai.student18_pass.txt
+     DEBUG | 	sigai.student18_id_rsa_1.pub -> sigai.student18.pem.pub
+     DEBUG | 	sigai.student18_id_rsa_1 -> sigai.student18.pem
+     DEBUG | 	sigai.student18_id_rsa_1.ppk -> sigai.student18.ppk
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student18.zip`
+     DEBUG | 		writing sigai.student18.pem
+     DEBUG | 		writing sigai.student18.ppk
+     DEBUG | 		writing sigai.student18.pem.pub
+     DEBUG | 		writing sigai.student18_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student13-keys.tgz
+     DEBUG | Extracted to sigai.student13-keys
+     DEBUG | 	sigai.student13_id_rsa_1.pub -> sigai.student13.pem.pub
+     DEBUG | 	sigai.student13_passphrase_1.txt -> sigai.student13_pass.txt
+     DEBUG | 	sigai.student13_id_rsa_1.ppk -> sigai.student13.ppk
+     DEBUG | 	sigai.student13_id_rsa_1 -> sigai.student13.pem
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student13.zip`
+     DEBUG | 		writing sigai.student13.pem
+     DEBUG | 		writing sigai.student13.ppk
+     DEBUG | 		writing sigai.student13.pem.pub
+     DEBUG | 		writing sigai.student13_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student12-keys.tgz
+     DEBUG | Extracted to sigai.student12-keys
+     DEBUG | 	sigai.student12_id_rsa_1.pub -> sigai.student12.pem.pub
+     DEBUG | 	sigai.student12_passphrase_1.txt -> sigai.student12_pass.txt
+     DEBUG | 	sigai.student12_id_rsa_1.ppk -> sigai.student12.ppk
+     DEBUG | 	sigai.student12_id_rsa_1 -> sigai.student12.pem
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student12.zip`
+     DEBUG | 		writing sigai.student12.pem
+     DEBUG | 		writing sigai.student12.ppk
+     DEBUG | 		writing sigai.student12.pem.pub
+     DEBUG | 		writing sigai.student12_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
+     DEBUG | Beginning to operate on sigai.student1-keys.tgz
+     DEBUG | Extracted to sigai.student1-keys
+     DEBUG | 	sigai.student1_passphrase_1.txt -> sigai.student1_pass.txt
+     DEBUG | 	sigai.student1_id_rsa_1.ppk -> sigai.student1.ppk
+     DEBUG | 	sigai.student1_id_rsa_1 -> sigai.student1.pem
+     DEBUG | 	sigai.student1_id_rsa_1.pub -> sigai.student1.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student1.zip`
+     DEBUG | 		writing sigai.student1.pem
+     DEBUG | 		writing sigai.student1.ppk
+     DEBUG | 		writing sigai.student1.pem.pub
+     DEBUG | 		writing sigai.student1_pass.txt
+     DEBUG | 		writing conf
+      INFO | CLEANING UP
