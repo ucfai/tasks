@@ -7,6 +7,7 @@ import pathlib
 import tarfile, zipfile
 import logging
 import shutil
+import datetime
 
 course_title = "course.sigai"
 student_name = "sigai.student"
@@ -34,6 +35,8 @@ def main(args):
     
     logging.basicConfig(format="%(levelname)10s | %(message)s",
                         filename="logs/arcc.log", level=logging.DEBUG)
+    
+    logging.info("Last run: `{}`".format(datetime.datetime.today()))
 
     logging.info("User-specified directory: {}".format(args.directory))
     
