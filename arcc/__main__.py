@@ -70,7 +70,8 @@ def main(args):
             
         os.chdir(key.stem)
         
-        contents = {k: pathlib.Path(v.substitute(dict(student=student))) for k, v in keys_content.items()}
+        contents = {k: pathlib.Path(v.substitute(dict(student=student)))
+                    for k, v in keys_content.items()}
         this_dir = [pathlib.Path(d) for d in os.listdir(".")]
         
         for file_ in this_dir:
@@ -104,9 +105,9 @@ def main(args):
 
 if __name__ == "__main__":
     parser = ArgumentParser(description="Handles bulk-modification of files "
-                                        "needed for access to the ARCC resources "
-                                        "at the Institute for Simulation and "
-                                        "Training at UCF.")
+                                        "needed for access to the ARCC "
+                                        "resources at the Institute for "
+                                        "Simulation and Training at UCF.")
     
     parser.add_argument("--directory", "-d", required=True)
     
