@@ -1,7 +1,9 @@
 name: sigai-auto-admin
 channels:
   - defaults
+  - conda-forge
 dependencies:
+  - travis-encrypt=0.7.2
   - appdirs=1.4.3=py37h28b3542_0
   - appnope=0.1.0=py37_0
   - asn1crypto=0.24.0=py37_0

@@ -137,8 +137,7 @@ c.NotebookApp.allow_root = True
 #  This allows adding javascript/css to be available from the notebook server
 #  machine, or overriding individual files in the IPython
 c.NotebookApp.extra_static_paths = [
-    "/notebooks",
-    "/notebooks/__admin__/lib/anims",
+    "/cvnd",
 ]
 
 ## Extra paths to search for serving jinja templates.
@@ -202,7 +201,7 @@ c.NotebookApp.ip = '0.0.0.0'
 #c.NotebookApp.nbserver_extensions = {}
 
 ## The directory to use for notebooks and kernels.
-c.NotebookApp.notebook_dir = '/notebooks'
+c.NotebookApp.notebook_dir = '/cvnd'
 
 ## Whether to open in a browser after starting. The specific browser used is
 #  platform dependent and determined by the python standard library `webbrowser`
@@ -234,7 +233,7 @@ c.NotebookApp.port = 8888
 #c.NotebookApp.port_retries = 50
 
 ## DISABLED: use %pylab or %matplotlib in the notebook to enable matplotlib.
-#c.NotebookApp.pylab = 'disabled'
+c.NotebookApp.pylab = 'enabled'
 
 ## (sec) Time window used to  check the message and data rate limits.
 #c.NotebookApp.rate_limit_window = 3
@@ -548,7 +547,7 @@ c.NotebookApp.token = ''
 #c.ContentsManager.files_handler_params = {}
 
 ## Glob patterns to hide in file and directory listings.
-#c.ContentsManager.hide_globs = ['__pycache__', '*.pyc', '*.pyo', '.DS_Store', '*.so', '*.dylib', '*~']
+c.ContentsManager.hide_globs = ['__pycache__', '*.pyc', '*.pyo', '.DS_Store', '*.so', '*.dylib', '*~']
 
 ## Python callable or importstring thereof
 #
