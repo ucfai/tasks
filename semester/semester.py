@@ -2,28 +2,27 @@ from pathlib import Path
 import logging
 
 from . import sm_utils
+from admin import res_semester as res
 
-from string import Template
 import shutil
 
-ErrFoundFile = Template("Found `${name}/${file}`. Let's not continue, "
-                        "to avoid overriding.")
-ErrNotFoundFile = Template("Couldn't find `${name}/${file}.${ext}`. Please "
-                           "restart from `make` command - NOTE this overwrites"
-                           "any changes you may have made.")
 
-SuccessTouchd = Template("Successfully touch'd `${name}/${file}.${ext}`.")
+ErrFoundFile = "Found `{name}/{file}`. Let's not continue, to avoid overriding."
+ErrNotFoundFile = "Couldn't find `{name}/{file}`. Please restart from " \
+                  "`make` command - NOTE this overwrites any changes you may " \
+                  "have made."
+
+SuccessTouchd = "Successfully touch'd `{name}/{file}`."
 
 
 class Semester:
     coordinators = None
     
-    def __init__(self, name_, topic_, cwd):
-        self.year = int("20" + name_[-2:])
-        self.name = name_
-        self.topic = topic_
+    def __init__(self, cwd):
+        self.name = sm_utils.which()
+        self.year = int("20" + self.name[-2:])
         
-        self.workdir = Path(cwd).joinpath(self.topic).joinpath(self.name)
+        self.workdir = Path(cwd).joinpath(self.name)
         if self.workdir.is_dir():
             msg = "Uhh... looks like `{}` already exists. Tread " \
                   "carefully.".format(self.name)
@@ -43,66 +42,72 @@ class Semester:
             "nbs"    : self.notebooks,
             "year"   : self.year,
             "workdir": self.workdir,
-            "sched"  : None
+            "sched"  : self.file_sched,
         }
     
-    def _make(self):
-        subs_ = {
-            "name": self.name,
-            "file": self.file_sched.name,
-        }
+    def make_skeleton(self):
+        self.__validate_skeleton_presence()
         
-        # Syllabus
-        assert not self.file_sched.exists(), ErrFoundFile.substitute(subs_)
-        shutil.copyfile("templates/" + self.file_sched.name, self.file_sched)
-        logging.info(SuccessTouchd.substitute(subs_))
+        name = self.name
+        
+        file = self.file_sched.name
+        shutil.copyfile(res["templates"].joinpath(self.file_sched.name),
+                        self.file_sched)
+        
+        logging.info(SuccessTouchd.format(name=name, file=file))
         
         # Coordinators
-        subs_["file"] = self.file_admin.name
-        assert not self.file_admin.exists(), ErrFoundFile.substitute(subs_)
-        shutil.copyfile("templates/" + self.file_admin.name, self.file_admin)
-        logging.info(SuccessTouchd.substitute(subs_))
+        file = self.file_admin.name
+        shutil.copyfile(res["templates"].joinpath(self.file_admin.name),
+                        self.file_admin)
+        
+        logging.info(SuccessTouchd.format(name=name, file=file))
         
         # Conda
-        subs_["file"] = self.file_conda.name
-        assert not self.file_conda.exists(), ErrFoundFile.substitute(subs_)
-        shutil.copyfile("templates/" + self.file_conda.name, self.file_conda)
-        logging.info(SuccessTouchd.substitute(subs_))
-        sm_utils.write_conda()
+        file = self.file_conda.name
+        conda_file = self.file_conda.name.replace(self.name, "semester")
+        shutil.copyfile(res["templates"].joinpath(conda_file),
+                        self.file_conda)
+        
+        logging.info(SuccessTouchd.format(name=name, file=file))
+        sm_utils.write_conda(self.file_conda)
         
         # SLURM
-        subs_["file"] = self.file_slurm.name
-        assert not self.file_slurm.exists(), ErrFoundFile.substitute(subs_)
-        shutil.copyfile("templates/" + self.file_slurm.name, self.file_slurm)
-        logging.info(SuccessTouchd.substitute(subs_))
-        sm_utils.write_slurm()
+        file = self.file_slurm.name
+        shutil.copyfile(res["templates"].joinpath(self.file_slurm.name),
+                        self.file_slurm)
         
-        input("Waiting for you to edit `{}/{{syllabus, coordinators}}."
-              "yml. (Press `Enter` once done.) [You can always come back "
-              "later, just be sure to run `update` instead!)".format(self.name))
+        logging.info(SuccessTouchd.format(name=name, file=file))
+        sm_utils.write_slurm(self.file_slurm)
         
+    def make_notebooks(self):
+        self.__validate_skeleton_presence(prepnbs=True)
         sm_utils.gen_notebook("make", **self.gen_nb_args)
     
-    def _update(self):
-        subs_ = {
-            "name": self.name,
-            "file": "syllabus",
-            "ext" : "yml"
-        }
+    def __validate_skeleton_presence(self, prepnbs=False):
+        name = self.name
+        file = self.file_sched.name
         
-        assert self.file_sched.exists(), ErrNotFoundFile.substitute(subs_)
-        
-        subs_["file"] = "coordinators"
-        assert self.file_admin.exists(), ErrNotFoundFile.substitute(subs_)
-        
-        subs_["file"] = self.name + ".env"
-        assert self.file_conda.exists(), ErrNotFoundFile.substitute(subs_)
-        
-        subs_["file"] = self.name
-        subs_["ext"] = "slurm"
-        assert self.file_slurm.exists(), ErrNotFoundFile.substitute(subs_)
-        
-        sm_utils.gen_notebook("update")
+        assert not self.file_sched.exists(), \
+            ErrFoundFile.format(name=name, file=file)
+
+        file = self.file_admin.name
+        assert not self.file_admin.exists(), \
+            ErrFoundFile.format(name=name, file=file)
+
+        if not prepnbs:
+            file = self.file_conda.name
+            assert not self.file_conda.exists(), \
+                ErrFoundFile.format(name=name, file=file)
     
-    def _jekyll(self):
+            file = self.file_slurm.name
+            assert not self.file_slurm.exists(), \
+                ErrFoundFile.format(name=name, file=file)
+    
+    def make_jekyll_posts(self):
+        
         pass
+
+    def update_skeleton(self, file):
+        self.__validate_skeleton_presence(prepnbs=True)
+        sm_utils.gen_notebook("update", **self.gen_nb_args)
