@@ -30,3 +30,466 @@
       INFO | Successfully touch'd `fa18/coordinators.yml`.
       INFO | Successfully touch'd `fa18/fa18.env.yml`.
       INFO | Successfully touch'd `fa18/jupyter_notebooks.slurm`.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .
+     DEBUG | Applying preprocessor: TagRemovePreprocessor
+     DEBUG | Applying preprocessor: RegexRemovePreprocessor
+     DEBUG | Applying preprocessor: coalesce_streams
+     DEBUG | Applying preprocessor: CSSHTMLHeaderPreprocessor
+     DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
+     DEBUG | Attempting to load template basic
+     DEBUG |     template_path: .

@@ -5,6 +5,7 @@ from . import sm_utils
 from admin import res_semester as res
 
 import shutil
+import yaml
 
 
 ErrFoundFile = "Found `{name}/{file}`. Let's not continue, to avoid overriding."
@@ -39,10 +40,11 @@ class Semester:
         self.notebooks = {}
         
         self.gen_nb_args = {
-            "nbs"    : self.notebooks,
-            "year"   : self.year,
-            "workdir": self.workdir,
-            "sched"  : self.file_sched,
+            "semester": self.name,
+            "nbs"     : self.notebooks,
+            "year"    : self.year,
+            "workdir" : self.workdir,
+            "sched"   : self.file_sched,
         }
     
     def make_skeleton(self):
@@ -82,17 +84,22 @@ class Semester:
         
     def make_notebooks(self):
         self.__validate_skeleton_presence(prepnbs=True)
+        
+        Semester.coordinators = yaml.load(open(self.file_admin, "r"))
+        
         sm_utils.gen_notebook("make", **self.gen_nb_args)
     
     def __validate_skeleton_presence(self, prepnbs=False):
         name = self.name
         file = self.file_sched.name
-        
-        assert not self.file_sched.exists(), \
+
+        sched_exists = self.file_sched.exists() if prepnbs else not self.file_sched.exists()
+        assert sched_exists, \
             ErrFoundFile.format(name=name, file=file)
 
         file = self.file_admin.name
-        assert not self.file_admin.exists(), \
+        admin_exists = self.file_admin.exists() if prepnbs else not self.file_admin.exists()
+        assert admin_exists, \
             ErrFoundFile.format(name=name, file=file)
 
         if not prepnbs:
@@ -105,9 +112,13 @@ class Semester:
                 ErrFoundFile.format(name=name, file=file)
     
     def make_jekyll_posts(self):
+        Semester.coordinators = yaml.load(open(self.file_admin, "r"))
         
-        pass
+        sm_utils.gen_jekyll_posts(**self.gen_nb_args)
 
-    def update_skeleton(self, file):
+    def update_notebooks(self):
         self.__validate_skeleton_presence(prepnbs=True)
+
+        Semester.coordinators = yaml.load(open(self.file_admin, "r"))
+        
         sm_utils.gen_notebook("update", **self.gen_nb_args)

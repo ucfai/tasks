@@ -4,16 +4,31 @@ import yaml
 from admin import notebooks
 from admin import res_semester as res
 
-def gen_notebook(mode, sched, year, workdir, nbs):
+
+def gen_notebook(mode, semester, sched, year, workdir, nbs):
     for unit in yaml.load(open(sched, "r")):
         for meet in unit["list"]:
             nb_name = notebooks.nb_utils.name(meet, year)
             if mode is "make":
-                workdir.joinpath(nb_name).mkdir()
+                workdir.joinpath(nb_name).mkdir(exist_ok=True)
             
-            nbs[nb_name] = notebooks.N(nb_name, unit, meet)
+            nbs[nb_name] = notebooks.N(nb_name, unit, meet, semester)
             eval("nbs[nb_name]._" + mode)()
             notebooks.nb_utils.write(nbs[nb_name])
+      
+            
+import pathlib
+
+
+def gen_jekyll_posts(semester, sched, year, workdir, nbs):
+    docs = pathlib.Path("./docs")
+    
+    for unit in yaml.load(open(sched, "r")):
+        for meet in unit["list"]:
+            nb_name = notebooks.nb_utils.name(meet, year)
+            
+            nbs[nb_name] = notebooks.N(nb_name, unit, meet, semester)
+            nbs[nb_name]._jekyll(docs)
 
 
 def write_slurm(file):

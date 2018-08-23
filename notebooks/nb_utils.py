@@ -39,15 +39,16 @@ def heading(nb, date, meet):
 def metadata(date, meet, unit):
     return {
         "sigai": {
-            "authors": [
+            "authors"    : [
                 {
                     "github": gh,
-                    "name"  : semester.S.coordinators[gh]["name"],
+                    "name"  : semester.S.coordinators[gh]["nam"],
                 } for gh in meet["inst"]
             ],
-            "title"  : meet["name"],
-            "date"   : date.isoformat(),
-            "unit"   : {
+            "description": meet["desc"].strip(),
+            "title"      : meet["name"],
+            "date"       : date.isoformat(),
+            "unit"       : {
                 "name"  : unit["name"],
                 "number": unit["unit"]
             }
@@ -64,10 +65,6 @@ def name(entry, year):
     return "-".join([str(dt.date(year, mm, dd)), entry["file"]])
 
 
-import pathlib
-
-
 def write(nb):
-    assert isinstance(nb.name, pathlib.Path)
     with open(nb.name, "w") as _:
         nbf.write(nb.nb, _)
