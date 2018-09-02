@@ -650,3 +650,60 @@
      DEBUG | 		writing sigai.student1_pass.txt
      DEBUG | 		writing conf
       INFO | CLEANING UP
+      INFO | Last run: `2018-08-29 17:13:00.010129`
+      INFO | User-specified directory: ../newton
+      INFO | Now in /Users/john/Documents/sigai/newton
+     DEBUG | Beginning to operate on sigai.student49-keys.tgz
+     DEBUG | Extracted to sigai.student49-keys
+     DEBUG | 	sigai.student49_id_rsa_1.ppk -> sigai.student49.ppk
+     DEBUG | 	sigai.student49_id_rsa_1 -> sigai.student49.pem
+     DEBUG | 	sigai.student49_passphrase_1.txt -> sigai.student49_pass.txt
+     DEBUG | 	sigai.student49_id_rsa_1.pub -> sigai.student49.pem.pub
+      INFO | Last run: `2018-08-29 17:13:14.157375`
+      INFO | User-specified directory: ../newton
+      INFO | Now in /Users/john/Documents/sigai/newton
+     DEBUG | Beginning to operate on sigai.student49-keys.tgz
+     DEBUG | Extracted to sigai.student49-keys
+     DEBUG | 	sigai.student49_pass.txt -> sigai.student49_pass.txt
+     DEBUG | 	sigai.student49_id_rsa_1.ppk -> sigai.student49.ppk
+     DEBUG | 	sigai.student49_id_rsa_1 -> sigai.student49.pem
+     DEBUG | 	sigai.student49_passphrase_1.txt -> sigai.student49_pass.txt
+     DEBUG | 	sigai.student49.pem.pub -> sigai.student49.pem.pub
+     DEBUG | 	sigai.student49_id_rsa_1.pub -> sigai.student49.pem.pub
+     DEBUG | 	sigai.student49.ppk -> sigai.student49.ppk
+     DEBUG | 	sigai.student49.pem -> sigai.student49.pem
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student49.zip`
+     ERROR | Failed to write `sigai.student49.pem`
+     ERROR | Failed to write `sigai.student49.ppk`
+     ERROR | Failed to write `sigai.student49.pem.pub`
+     ERROR | Failed to write `sigai.student49_pass.txt`
+     DEBUG | 		writing conf
+      INFO | Last run: `2018-08-29 17:13:39.261682`
+      INFO | User-specified directory: ../newton
+      INFO | Now in /Users/john/Documents/sigai/newton
+     DEBUG | Beginning to operate on sigai.student49-keys.tgz
+     DEBUG | Extracted to sigai.student49-keys
+     DEBUG | 	sigai.student49_pass.txt -> sigai.student49_pass.txt
+     DEBUG | 	sigai.student49 -> sigai.student49.pem
+      INFO | Last run: `2018-08-29 17:14:08.374409`
+      INFO | User-specified directory: ../newton
+      INFO | Now in /Users/john/Documents/sigai/newton
+     DEBUG | Beginning to operate on sigai.student49-keys.tgz
+     DEBUG | Extracted to sigai.student49-keys
+     DEBUG | 	sigai.student49_id_rsa_1.ppk -> sigai.student49.ppk
+     DEBUG | 	sigai.student49_id_rsa_1 -> sigai.student49.pem
+     DEBUG | 	sigai.student49_passphrase_1.txt -> sigai.student49_pass.txt
+     DEBUG | 	sigai.student49_id_rsa_1.pub -> sigai.student49.pem.pub
+     DEBUG | Writing zipfile `/Users/john/Documents/sigai/newton/sigai.student49.zip`
+     ERROR | Failed to write `sigai.student49.pem`
+     ERROR | Failed to write `sigai.student49.ppk`
+     ERROR | Failed to write `sigai.student49.pem.pub`
+     ERROR | Failed to write `sigai.student49_pass.txt`
+     DEBUG | 		writing conf
+      INFO | Last run: `2018-08-29 17:16:15.418235`
+      INFO | User-specified directory: ../newton
+      INFO | Now in /Users/john/Documents/sigai/newton
+     DEBUG | Beginning to operate on sigai.student49-keys.tgz
+     DEBUG | Extracted to sigai.student49-keys
+     DEBUG | 	sigai.student49_pass.txt -> sigai.student49_pass.txt
+     DEBUG | 	sigai.student49 -> sigai.student49.pem
