@@ -2,10 +2,10 @@
 Host            sigai.newton
 HostName        newton.ist.ucf.edu
 User            ${student}
-IdentityFile    ${student}.pem
+IdentityFile    ~/.ssh/${student}.pem
 
 ## stokes ----------------------------------------------------------------------
 Host            sigai.stokes
 HostName        stokes.ist.ucf.edu
 User            ${student}
-IdentityFile    ${student}.pem
+IdentityFile    ~/.ssh/${student}.pem
