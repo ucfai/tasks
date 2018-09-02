@@ -86,9 +86,11 @@ def main(args):
             logging.debug("\t{} -> {}".format(str(file_), str(contents[look])))
             file_.rename(contents[look])
             
+        pathlib.Path(student).mkdir(exist_ok=True)
+        os.chdir(student)
         zip_ = pathlib.Path(student + ".zip")
         logging.debug("Writing zipfile `{}`".format(str(here.joinpath(zip_))))
-        with zipfile.ZipFile(here.joinpath(zip_), mode="w") as zip_:
+        with zipfile.ZipFile(zip_, mode="w") as zip_:
             for new in contents.values():
                 try:
                     zip_.write(new)
@@ -96,6 +98,17 @@ def main(args):
                 except FileNotFoundError:
                     logging.error("Failed to write `{}`".format(str(new)))
             zip_.writestr("/config", conf)
+            logging.debug("\t\twriting conf")
+
+        tar_ = pathlib.Path(student + ".tar")
+        with tarfile.TarFile(tar_, mode="w") as tar_:
+            for new in contents.values():
+                try:
+                    tar_.add(new)
+                    logging.debug("\t\twriting {}".format(str(new)))
+                except FileNotFoundError:
+                    logging.error("Failed to write: `{}`".format(str(new)))
+            tar_.add(config)
             logging.debug("\t\twriting conf")
             
         os.chdir(here)
