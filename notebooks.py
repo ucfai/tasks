@@ -12,7 +12,7 @@ from pathlib import Path
 
 import nbformat as nbf
 
-import nb_utils
+from admin import nb_utils
 
 from nbconvert import HTMLExporter
 

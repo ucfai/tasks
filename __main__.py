@@ -2,7 +2,7 @@ from argparse import ArgumentParser
 import os
 import logging
 
-import semester
+from admin import semester
 
 if __name__ == "__main__":
     cwd = os.getcwd()

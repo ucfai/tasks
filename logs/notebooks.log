@@ -493,3 +493,4 @@
      DEBUG | Applying preprocessor: HighlightMagicsPreprocessor
      DEBUG | Attempting to load template basic
      DEBUG |     template_path: .
+   WARNING | Uhh... looks like `fa18` already exists. Tread carefully.

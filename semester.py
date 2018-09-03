@@ -1,6 +1,4 @@
-"""This module generates the template-ized Jupyter Notebooks we used for every
-lecture and adds in metadata to be used when converting given Notebooks into
-corresponding HTML to be posted on the web.
+"""This module generates the template-ized Jupyter Notebooks we used for every lecture and adds in metadata to be used when converting given Notebooks into corresponding HTML to be posted on the web.
 """
 
 __author__ = "John Muchovej <j+sigai@ionlights.org>"
@@ -10,10 +8,8 @@ __version__ = "0.1"
 from pathlib import Path
 import logging
 
-import sm_utils
+from admin import sm_utils
 from admin import res_semester as res
-
-from collections import namedtuple
 
 import shutil
 import yaml
@@ -54,7 +50,7 @@ class Semester:
             "nbs"     : self.notebooks,
             "year"    : self.year,
             "workdir" : self.workdir,
-            "sched"   : self.file.sched,
+            "sched"   : self.file_sched,
         }
 
 
