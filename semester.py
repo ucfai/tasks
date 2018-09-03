@@ -136,11 +136,11 @@ def make_banners(semester):
             nb_name = nb_utils.name(meet, semester.year)
             out = semester.workdir.joinpath(nb_name).joinpath("banner.jpg")
             
-            # res = requests.get(meet["covr"], stream=True)
-            # ext = imghdr.what(h=res.raw)
-            # cov = semester.workdir.joinpath(nb_name).joinpath("cover." + ext)
-            # with open(cov, "wb") as f:
-            #     shutil.copyfileobj(res.raw, f)
+            res = requests.get(meet["covr"], stream=True)
+            ext = imghdr.what(h=res.raw)
+            cov = semester.workdir.joinpath(nb_name).joinpath("cover." + ext)
+            with open(cov, "wb") as f:
+                shutil.copyfileobj(res.raw, f)
         
             mm, dd = map(int, meet["date"].split("/"))
             banner_args["date"] = dt.date(semester.year, mm, dd).strftime("%b %d")
