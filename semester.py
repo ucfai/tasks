@@ -38,7 +38,7 @@ class Semester:
     coordinators = None
     
     def __init__(self, cwd):
-        self.name = sm_utils.which()
+        self.name = which()
         self.year = int("20" + self.name[-2:])
         
         self.workdir = Path(cwd).joinpath(self.name)
@@ -68,7 +68,25 @@ class Semester:
         if call_ is not "jekyll_posts":
             self.__validate_skeleton_presence(prepnbs=(call_ in ["skeleton", "notebooks"]))
             
-        eval("self.__make_" + call_)
+        calls = {
+            "skeleton"    : self.__make_skeleton,
+            "notebooks"   : self.__make_notebooks,
+            "jekyll_posts": self.__make_jekyll_posts,
+            "banners"     : self.__make_banners,
+        }
+        
+        calls[call_]()
+        
+    def update(self, call_, specific=None):
+        calls = {
+            "skeleton" : self.__update_skeleton,
+            "notebooks": self.__update_notebooks,
+        }
+    
+        if specific is not None:
+            calls[call_](specific)
+        else:
+            calls[call_]()
     
     def __make_skeleton(self):
         name = self.name
@@ -93,12 +111,7 @@ class Semester:
     def __make_jekyll_posts(self):
         # docs = Path("./docs")
         
-        for unit in yaml.load(open(self._file_sched, "r"))["teach"]:
-            for meet in unit["list"]:
-                nb_name = notebooks.name(meet, self.year)
-                
-                self.notebooks[nb_name] = Notebook(nb_name, unit, meet, self.admin)
-                self.notebooks[nb_name].call("jekyll")
+        self.__gen_notebook("jekyll")
     
     def __make_banners(self):
         banner = Template(open(utils.res_gen("sem", "event-banner.html"), "r").read())
@@ -149,30 +162,35 @@ class Semester:
     
     def __update_notebooks(self):
         self.__gen_notebook("update")
+        
+    def __update_skeleton(self):
+        pass
     
     def __validate_skeleton_presence(self, prepnbs=False):
         files = [self._file_sched, self._file_admin]
         for file in files:
             existence = (not file.exists()) or (prepnbs and file.exists())
             if not existence:
-                ErrFoundFile.format(name=self.name, file=file.name)
+                ErrFoundFile.render(name=self.name, file=file.name)
         
         if not prepnbs:
             files = [self._file_conda, self._file_slurm]
             for file in files:
                 if not file.exists():
-                    ErrFoundFile.format(name=self.name, file=file.name)
+                    ErrFoundFile.render(name=self.name, file=file.name)
     
     def __gen_notebook(self, mode):
         for unit in self.sched:
             for meet in unit["list"]:
                 nb_name = notebooks.name(meet, self.year)
-                self.workdir.joinpath(nb_name).mkdir(exist_ok=True)
-                
-                coords = {gh: v["name"] for gh, v in self.admin if gh in meet["inst"]}
-                self.notebooks[nb_name] = Notebook(nb_name, unit, meet, coords)
+                if mode != "jekyll":
+                    self.workdir.joinpath(nb_name).mkdir(exist_ok=True)
+
+                coords = {gh: v["nam"] for gh, v in self.admin.items() if gh in meet["inst"]}
+                self.notebooks[nb_name] = Notebook(nb_name, unit, meet, self.name, coords)
                 self.notebooks[nb_name].call(mode)
-                self.notebooks[nb_name].write()
+                if mode != "jekyll":
+                    self.notebooks[nb_name].write()
                 
     def __write_file(self, lookup, file):
         def slurm(file):

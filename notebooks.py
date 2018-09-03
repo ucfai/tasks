@@ -36,14 +36,20 @@ class Notebook:
         self.nb = None
     
     def call(self, call_, outdir=None):
+        calls = {
+            "make"  : self.__make,
+            "update": self.__update,
+            "jekyll": self.__jekyll,
+        }
+        
         if outdir is not None:
-            eval("self.__" + call_)(outdir)
+            calls[call_](outdir=outdir)
         else:
-            eval("self.__" + call_)
+            calls[call_]()
     
     def __make(self):
         try:
-            self.nb = nbf.read(str(self.sem.joinpath(self.name)), as_version=4)
+            self.nb = nbf.read(str(self.sem.joinpath(self.filename)), as_version=4)
             reading = True
         except FileNotFoundError:
             reading = False
@@ -59,14 +65,14 @@ class Notebook:
                        , None)
             self.nb["cells"][idx] = heading(self.nb, self.date, self.meet)
         
-        self.name = self.sem.joinpath(self.name)
+        self.filename = self.sem.joinpath(self.filename)
     
     def __update(self):
-        self._make()
+        self.__make()
     
     def __jekyll(self, outdir=Path("./docs")):
         # nbconv_tpl = utils.res_gen("ntbk", "sigai-markdown.tpl")
-        self.nb = nbf.read(str(self.sem.joinpath(self.name)), as_version=4)
+        self.nb = nbf.read(str(self.sem.joinpath(self.filename)), as_version=4)
         
         html = HTMLExporter()
         html.template_file = "basic"
@@ -82,13 +88,13 @@ class Notebook:
         
         body, _ = html.from_notebook_node(self.nb)
         
-        post_folder = outdir.joinpath("_posts").joinpath(self.name).parent
+        post_folder = outdir.joinpath("_posts").joinpath(self.filename).parent
         post_folder.mkdir(exist_ok=True)
 
         shutil.copyfile(self.sem.joinpath(self.path).joinpath("banner.jpg"),
                         post_folder.joinpath("banner.jpg"))
         
-        output = outdir.joinpath("_posts").joinpath(self.name.with_suffix(".md"))
+        output = outdir.joinpath("_posts").joinpath(self.filename.with_suffix(".md"))
         with open(output, "w") as f:
             f.write("---\n")
             f.write(f"title: \"{sigai['title']}\"\n")
@@ -101,7 +107,7 @@ class Notebook:
     
     def write(self):
         assert self.nb is not None, "Looks like I'm a non-existent Notebook! :o"
-        with(self.filename, "w") as _:
+        with open(self.filename, "w") as _:
             nbf.write(self.nb, _)
 
 
@@ -116,13 +122,13 @@ def heading(nb, date, meet):
     author_tuple = [(a["name"], a["github"])
                     for a in nb["metadata"]["sigai"]["authors"]]
     
-    curr_nb_heading = nb_heading.safe_substitute({
-        "title"  : meet["name"],
-        "authors": ", ".join(
-                [author_templ.render(name=inst, gh=git).decode()
+    curr_nb_heading = nb_heading.render(
+        title=meet["name"],
+        authors=", ".join(
+                [author_templ.render(name=inst, gh=git)
                  for inst, git in author_tuple]),
-        "date"   : date.strftime("%m %b %Y"),
-    })
+        date=date.strftime("%m %b %Y"),
+    )
     
     curr_nb_metadata = {
         "name": meet["name"],
