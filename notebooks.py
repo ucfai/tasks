@@ -2,6 +2,7 @@
 lecture and adds in metadata to be used when converting given Notebooks into
 corresponding HTML to be posted on the web.
 """
+import shutil
 
 __author__ = "John Muchovej <j+sigai@ionlights.org>"
 __maintainer__ = "SIGAI@UCF, <admins@ucfsigai.org>"
@@ -20,6 +21,7 @@ import datetime as dt
 class Notebook:
     def __init__(self, name_, unit_, meet_, sem_, coordinators_):
         self.sem = Path(sem_)
+        self.path = Path(name_)
         self.filename = Path(name_).joinpath(name_ + ".ipynb")
         self.unit = unit_
         self.meet = meet_
@@ -80,7 +82,12 @@ class Notebook:
         
         body, _ = html.from_notebook_node(self.nb)
         
-        outdir.joinpath("_posts").joinpath(self.name).parent.mkdir(exist_ok=True)
+        post_folder = outdir.joinpath("_posts").joinpath(self.name).parent
+        post_folder.mkdir(exist_ok=True)
+
+        shutil.copyfile(self.sem.joinpath(self.path).joinpath("banner.jpg"),
+                        post_folder.joinpath("banner.jpg"))
+        
         output = outdir.joinpath("_posts").joinpath(self.name.with_suffix(".md"))
         with open(output, "w") as f:
             f.write("---\n")
