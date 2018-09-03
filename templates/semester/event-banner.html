@@ -1,14 +1,4 @@
 <head>
-    <script type="text/javascript">
-        function resizeTitle() {
-            var title = document.getElementById("title");
-            var container = document.getElementById("title-container");
-
-            var padding = (container.offsetHeight - title.offsetHeight) / 2;
-            title.style.padding = `${padding} 0`;
-        }
-    </script>
-
     <style>
         body {
             margin: 0;
@@ -16,8 +6,8 @@
         }
 
         div.banner {
-            height: 1005px;
             width: 1920px;
+            height: 1005px;
             background: #262d33;
             position: relative;
             overflow: hidden;
@@ -118,4 +108,27 @@
             <img id="mtbanner" src="${cover}" />
         </div>
     </div>
+
+    <script>
+        function resizeTitle() {
+            var banner_h2s = 90;
+            var banner_logo = 143;
+            var banner_padding = 36;
+
+            var banner = document.getElementsByClassName("banner")[0];
+
+            var title = document.getElementById("title");
+            console.log("title " + title.offsetHeight)
+
+            var container = document.getElementById("title-container");
+            container.style.height = banner.offsetHeight - 2 * banner_padding - 2 * banner_h2s - banner_logo;
+
+            console.log("container " + container.offsetHeight)
+
+
+            var padding = ((container.offsetHeight - title.offsetHeight) / 2);
+            title.style.marginTop = padding;
+            title.style.marginBottom = padding;
+        }
+    </script>
 </body>
