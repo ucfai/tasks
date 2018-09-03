@@ -1,15 +1,19 @@
+"""This module generates the template-ized Jupyter Notebooks we used for every
+lecture and adds in metadata to be used when converting given Notebooks into
+corresponding HTML to be posted on the web.
+"""
+
+__author__ = "John Muchovej <j+sigai@ionlights.org>"
+__maintainer__ = "SIGAI@UCF, <admins@ucfsigai.org>"
+__version__ = "0.1"
+
 import datetime as dt
-import os
-import subprocess
 from pathlib import Path
 
 import nbformat as nbf
 
-from . import nb_utils
+import nb_utils
 
-from admin import res_semester as res
-import nbconvert
-import pathlib
 from nbconvert import HTMLExporter
 
 

@@ -2,7 +2,7 @@ import nbformat as nbf
 
 from string import Template
 
-from admin import semester
+from semester import Semester
 
 nb_heading = Template("""# ${title}
 ---
@@ -42,7 +42,7 @@ def metadata(date, meet, unit):
             "authors"    : [
                 {
                     "github": gh,
-                    "name"  : semester.S.coordinators[gh]["nam"],
+                    "name"  : Semester.coordinators[gh]["nam"],
                 } for gh in meet["inst"]
             ],
             "description": meet["desc"].strip(),

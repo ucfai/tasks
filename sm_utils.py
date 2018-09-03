@@ -1,4 +1,4 @@
-from jinja2 import Template
+from string import Template
 import yaml
 
 from admin import notebooks
@@ -16,6 +16,43 @@ def gen_notebook(mode, semester, sched, year, workdir, nbs):
             eval("nbs[nb_name]._" + mode)()
             notebooks.nb_utils.write(nbs[nb_name])
       
+      
+import imgkit
+
+def gen_banners(semester, sched, year, workdir, nbs):
+    banner = Template(open(res["templates"].joinpath("banner.html"), "r"))
+    syllabus = yaml.load(open(sched, "r"))
+
+    banner_args = {
+        "weekday": syllabus["week_day"],
+        "time": syllabus["meet_time"],
+        "room": syllabus["room"],
+        "date": None,
+        "title": None,
+        "cover": None,
+    }
+    for unit in syllabus["list"]:
+        for meet in unit["list"]:
+            nb_name = nb_utils.name(meet, year)
+            out = workdir.joinpath(nb_name).joinpath("banner.jpg")
+            res = requests.get(meet["cover"], stream=True)
+
+            ext = imghdr.what(h=res.raw)
+
+            cov = workdir.joinpath(nb_name).joinpath("cover." + ext)
+
+            with open(cov, "wb") as f:
+                shutil.copyfileobj(res.raw, f)
+
+            mm, dd = map(int, meet["date"].split("/"))
+            banner_args["date"] = dt.date(year, mm, dd).strftime("%b %d")
+            banner_args["title"] = meet["name"]
+            banner_args["cover"] = meet["cover"]
+
+            banner_ = banner.substitute(**banner_args)
+            imgkit.from_string(banner_, out)
+    pass
+
             
 import pathlib
 
