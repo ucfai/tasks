@@ -95,18 +95,18 @@
 <body onload="resizeTitle()">
     <div class="banner">
         <div id="text" class="half">
-            <h2 id="date">${weekday}, ${date} @ ${time}</h2>
-            <h2 id="room">${room}</h2>
+            <h2 id="date">{{ weekday }}, {{ date }} @ {{ time }}</h2>
+            <h2 id="room">{{ room }}</h2>
 
             <div id="title-container">
-                <h1 id="title">${title}</h1>
+                <h1 id="title">{{ title }}</h1>
             </div>
 
             <img id="logo" src="https://ucfsigai.org/assets/brand/sigai-fullmark-darkbg-ready.png" />
         </div>
         <div id="imgs" class="half">
             <div id="gradient"></div>
-            <img id="mtbanner" src="${cover}" />
+            <img id="mtbanner" src="{{ cover }}" />
         </div>
     </div>
 

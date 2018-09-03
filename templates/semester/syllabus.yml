@@ -8,10 +8,10 @@
 #       desc: > # the ">" specifies to YAML its a multi-line string
 #         <meeting-description>
 
-signin: ""
-meet_day: ""
-meet_time: ""
-room: ""
+signin_url: ""
+meet_day  : ""
+meet_time : ""
+meet_room : ""
 
 list: 
   - ...

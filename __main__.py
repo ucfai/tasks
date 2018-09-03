@@ -82,13 +82,13 @@ if __name__ == "__main__":
             if k == "op":
                 continue
             if v:
-                eval("semester.make_" + k)(sem)
+                sem.make(k)
                 break
     elif args["op"] == "update":
         if args["notebooks"]:
-            semester.update_notebooks(sem)
+            sem.update("notebooks")
         else:
-            semester.update_skeleton(sem, args["skeleton"])
+            sem.update("skeleton", specific=args["skeleton"])
     else:
         print("Invalid choice, exiting.")
         exit(-1)
