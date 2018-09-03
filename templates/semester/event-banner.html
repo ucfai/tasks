@@ -83,7 +83,8 @@
         }
 
         div.banner div.half#imgs img#mtbanner {
-            left: -60%;
+            right: 50%;
+            margin-right: -50%;
             height: 100%;
             z-index: 1;
             position: absolute;
@@ -118,12 +119,12 @@
             var banner = document.getElementsByClassName("banner")[0];
 
             var title = document.getElementById("title");
-            console.log("title " + title.offsetHeight)
+            console.log("title " + title.offsetHeight);
 
             var container = document.getElementById("title-container");
             container.style.height = banner.offsetHeight - 2 * banner_padding - 2 * banner_h2s - banner_logo;
 
-            console.log("container " + container.offsetHeight)
+            console.log("container " + container.offsetHeight);
 
 
             var padding = ((container.offsetHeight - title.offsetHeight) / 2);
