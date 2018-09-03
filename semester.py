@@ -9,7 +9,6 @@ from pathlib import Path
 import logging
 
 from admin import sm_utils
-from admin.utils import res_semester as res
 
 import shutil
 import yaml
@@ -113,6 +112,7 @@ import requests
 import imghdr
 import imgkit
 import datetime as dt
+from admin import utils
 
 
 def make_banners(semester):
@@ -120,7 +120,7 @@ def make_banners(semester):
     
     Semester.coordinators = yaml.load(open(semester.file_admin, "r"))
 
-    banner = Template(open(res["templates"].joinpath("banner.html"), "r"))
+    banner = Template(open(utils.res_semester["templates"].joinpath("banner.html"), "r"))
     syllabus = yaml.load(open(semester.file_sched, "r"))
 
     banner_args = {
