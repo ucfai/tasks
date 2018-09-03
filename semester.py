@@ -152,7 +152,7 @@ def make_banners(semester):
                     break
             
             if not cov_exists and meet["covr"] is not "":
-                res = requests.get(meet["covr"], headers={"user-agent": "Mozilla/5.0"})
+                res = requests.get(meet["covr"])
                 if res.status_code != requests.codes.ok:
                     res = requests.get(meet["covr"], headers={"user-agent": "Mozilla/5.0"})
                     
