@@ -148,9 +148,7 @@ def make_banners(semester):
             banner_args["cover"] = meet["covr"]
         
             banner_ = banner.safe_substitute(banner_args)
-            imgkit.from_string(banner_, out, options={
-                "--enable-javascript": True,
-            })
+            imgkit.from_string(banner_, out)
 
 
 def update_notebooks(semester):
