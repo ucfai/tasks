@@ -2,7 +2,6 @@ from argparse import ArgumentParser
 import os
 import logging
 
-from semester import Semester
 import semester
 
 if __name__ == "__main__":

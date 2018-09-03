@@ -1,7 +1,7 @@
 from string import Template
 import yaml
 
-from admin import notebooks
+import notebooks
 from admin import res_semester as res
 
 
