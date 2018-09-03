@@ -137,7 +137,7 @@ def make_banners(semester):
             out = semester.workdir.joinpath(nb_name).joinpath("banner.jpg")
             
             res = requests.get(meet["covr"], stream=True)
-            ext = imghdr.what(h=res.raw)
+            ext = imghdr.what(file="", h=res.raw)
             cov = semester.workdir.joinpath(nb_name).joinpath("cover." + ext)
             with open(cov, "wb") as f:
                 shutil.copyfileobj(res.raw, f)
