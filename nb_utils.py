@@ -3,7 +3,6 @@ import nbformat as nbf
 from string import Template
 
 from admin import semester
-# from admin.semester import Semester
 
 nb_heading = Template("""# ${title}
 ---

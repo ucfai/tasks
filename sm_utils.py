@@ -2,7 +2,7 @@ from string import Template
 import yaml
 
 from admin import notebooks
-from admin import res_semester as res
+from admin.utils import res_semester as res
 
 
 def gen_notebook(mode, semester, sched, year, workdir, nbs):

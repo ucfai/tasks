@@ -9,7 +9,7 @@ from pathlib import Path
 import logging
 
 from admin import sm_utils
-from admin import res_semester as res
+from admin.utils import res_semester as res
 
 import shutil
 import yaml
