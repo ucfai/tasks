@@ -150,7 +150,7 @@ def make_banners(semester):
                     cov_exists = True
                     break
             
-            if not cov_exists:
+            if not cov_exists and meet["covr"] is not "":
                 res = requests.get(meet["covr"], headers={'user-agent': 'Mozilla/5.0'})
                 img = Image.open(io.BytesIO(res.content))
                 fmt = img.format.lower()
