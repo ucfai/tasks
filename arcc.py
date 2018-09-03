@@ -1,3 +1,14 @@
+"""This module is for bulk-modification of the SSH keys we receive every
+semester from the ARCC at UCF, to access Newton and Stokes for our meetings.
+
+It will assume that the SSH keys are in the same directory, and packaged up as
+TARs.
+"""
+
+__author__ = "John Muchovej <j+sigai@ionlights.org>"
+__maintainer__ = "SIGAI@UCF, <admins@ucfsigai.org>"
+__version__ = "0.1"
+
 from string import Template
 from argparse import ArgumentParser
 
@@ -37,7 +48,7 @@ def main(args):
                         filename="logs/arcc.log", level=logging.DEBUG)
     
     logging.info("Last run: `{}`".format(datetime.datetime.today()))
-
+    
     logging.info("User-specified directory: {}".format(args.directory))
     
     os.chdir(pathlib.Path(args.directory))
@@ -67,7 +78,7 @@ def main(args):
             print("Failed to extract {}".format(key))
             logging.error("Failed to extract to {}".format(key.stem))
             continue
-            
+        
         os.chdir(key.stem)
         
         contents = {k: pathlib.Path(v.substitute(dict(student=student)))
@@ -85,7 +96,7 @@ def main(args):
             
             logging.debug("\t{} -> {}".format(str(file_), str(contents[look])))
             file_.rename(contents[look])
-            
+        
         pathlib.Path(student).mkdir(exist_ok=True)
         os.chdir(student)
         zip_ = pathlib.Path(student + ".zip")
@@ -99,7 +110,7 @@ def main(args):
                     logging.error("Failed to write `{}`".format(str(new)))
             zip_.writestr("/config", conf)
             logging.debug("\t\twriting conf")
-
+        
         tar_ = pathlib.Path(student + ".tar")
         with tarfile.TarFile(tar_, mode="w") as tar_:
             for new in contents.values():
@@ -110,7 +121,7 @@ def main(args):
                     logging.error("Failed to write: `{}`".format(str(new)))
             tar_.add(config)
             logging.debug("\t\twriting conf")
-            
+        
         os.chdir(here)
         logging.info("CLEANING UP")
         shutil.rmtree(key.stem)

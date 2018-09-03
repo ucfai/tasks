@@ -45,6 +45,12 @@ if __name__ == "__main__":
                               "posts, even if there already exists the same "
                               "versions.")
 
+    make_op.add_argument("--banners", action="store_true",
+                         help="Generate banners for each meeting in a given "
+                              "semester - this will be displayed on "
+                              "https://ucfsigai.org/ and the Facebook Group's "
+                              "Events.")
+
     update_op = update.add_mutually_exclusive_group(required=True)
     update_op.add_argument("--notebooks", action="store_true",
                            help="Update the notebooks for a given semester. "
@@ -63,10 +69,12 @@ if __name__ == "__main__":
     args = parser.parse_args()
     args = vars(args)
     
-    semester = semester.S(cwd)
+    sem = semester.Semester(cwd)
     
     ops = {
-        "make": {"notebooks": None, "skeleton": None, "jekyll_posts": None},
+        "make": {"notebooks": None, "skeleton": None, "jekyll_posts": None, 
+        "banners": None},
+        "update": {"notebooks": None, "skeleton": None}
     }
     
     if args["op"] == "make":
@@ -74,18 +82,13 @@ if __name__ == "__main__":
             if k == "op":
                 continue
             if v:
-                eval("semester.make_" + k)()
+                eval("semester.make_" + k)(sem)
                 break
     elif args["op"] == "update":
         if args["notebooks"]:
-            semester.make_notebooks()
+            semester.update_notebooks(sem)
         else:
-            semester.update_skeleton(args["skeleton"])
+            semester.update_skeleton(sem, args["skeleton"])
     else:
         print("Invalid choice, exiting.")
         exit(-1)
-    
-    
-    
-    # semester = semester.S(args.semester, args.topic, cwd)
-    # eval("semester._" + args.op)()

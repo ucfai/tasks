@@ -42,7 +42,7 @@ def metadata(date, meet, unit):
             "authors"    : [
                 {
                     "github": gh,
-                    "name"  : semester.S.coordinators[gh]["nam"],
+                    "name"  : semester.Semester.coordinators[gh]["nam"],
                 } for gh in meet["inst"]
             ],
             "description": meet["desc"].strip(),
