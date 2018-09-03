@@ -144,7 +144,7 @@ def make_banners(semester):
         
             mm, dd = map(int, meet["date"].split("/"))
             banner_args["date"] = dt.date(semester.year, mm, dd).strftime("%b %d")
-            banner_args["title"] = meet["name"]
+            banner_args["title"] = meet["name"].encode('ascii', 'xmlcharrefreplace')
             banner_args["cover"] = meet["covr"]
         
             banner_ = banner.safe_substitute(banner_args)
