@@ -7,20 +7,20 @@ __author__ = "John Muchovej <j+sigai@ionlights.org>"
 __maintainer__ = "SIGAI@UCF, <admins@ucfsigai.org>"
 __version__ = "0.1"
 
-import datetime as dt
 from pathlib import Path
-
-import nbformat as nbf
-
-from admin import nb_utils
 
 from nbconvert import HTMLExporter
 
+import nbformat as nbf
+
+from jinja2 import Template
+import datetime as dt
+
 
 class Notebook:
-    def __init__(self, name_, unit_, meet_, sem_):
+    def __init__(self, name_, unit_, meet_, sem_, coordinators_):
         self.sem = Path(sem_)
-        self.name = Path(name_).joinpath(name_ + ".ipynb")
+        self.filename = Path(name_).joinpath(name_ + ".ipynb")
         self.unit = unit_
         self.meet = meet_
         self.date = dt.date(
@@ -29,9 +29,17 @@ class Notebook:
                                    map(int, name_.split("-")[:3]))
                    })
         
+        self.lecturers = coordinators_
+        
         self.nb = None
     
-    def _make(self):
+    def call(self, call_, outdir=None):
+        if outdir is not None:
+            eval("self.__" + call_)(outdir)
+        else:
+            eval("self.__" + call_)
+    
+    def __make(self):
         try:
             self.nb = nbf.read(str(self.sem.joinpath(self.name)), as_version=4)
             reading = True
@@ -39,33 +47,23 @@ class Notebook:
             reading = False
             self.nb = nbf.v4.new_notebook()
         
-        self.nb["metadata"] = nb_utils.metadata(self.date, self.meet, self.unit)
+        self.nb["metadata"] = metadata(self.date, self.meet, self.unit, self.lecturers)
         if not reading:
-            self.nb["cells"].append(nb_utils.heading(self.nb, self.date, self.meet))
+            self.nb["cells"].append(heading(self.nb, self.date, self.meet))
         else:
             idx = next((idx
                         for idx, cell in enumerate(self.nb["cells"])
                         if cell["metadata"]["type"] == "sigai_heading")
                        , None)
-            self.nb["cells"][idx] = nb_utils.heading(self.nb, self.date, self.meet)
+            self.nb["cells"][idx] = heading(self.nb, self.date, self.meet)
         
         self.name = self.sem.joinpath(self.name)
     
-    def _update(self):
-        self.nb = nbf.read(str(self.sem.joinpath(self.name)), as_version=4)
-        
-        self.nb["metadata"] = nb_utils.metadata(self.date, self.meet, self.unit)
-        
-        idx = next((idx
-                    for idx, cell in enumerate(self.nb["cells"])
-                    if cell["metadata"]["type"] == "sigai_heading")
-                   , None)
-        self.nb["cells"][idx] = nb_utils.heading(self.nb, self.date, self.meet)
-
-        self.name = self.sem.joinpath(self.name)
+    def __update(self):
+        self._make()
     
-    def _jekyll(self, outdir):
-        # nbconv_tpl = pathlib.Path(res["templates"]).joinpath("sigai-markdown.tpl")
+    def __jekyll(self, outdir=Path("./docs")):
+        # nbconv_tpl = utils.res_gen("ntbk", "sigai-markdown.tpl")
         self.nb = nbf.read(str(self.sem.joinpath(self.name)), as_version=4)
         
         html = HTMLExporter()
@@ -93,3 +91,62 @@ class Notebook:
             f.write(f"description: >\n  \"{sigai['description']}\"\n")
             f.write("---\n")
             f.write(body)
+    
+    def write(self):
+        assert self.nb is not None, "Looks like I'm a non-existent Notebook! :o"
+        with(self.filename, "w") as _:
+            nbf.write(self.nb, _)
+
+
+nb_heading = Template("""# {{title}}
+---
+by: {{ authors }}, on {{ date }}
+""")
+author_templ = Template("{{ name }} \([@{{ gh }}](github.com/{{ gh }}/)\)")
+
+
+def heading(nb, date, meet):
+    author_tuple = [(a["name"], a["github"])
+                    for a in nb["metadata"]["sigai"]["authors"]]
+    
+    curr_nb_heading = nb_heading.safe_substitute({
+        "title"  : meet["name"],
+        "authors": ", ".join(
+                [author_templ.render(name=inst, gh=git).decode()
+                 for inst, git in author_tuple]),
+        "date"   : date.strftime("%m %b %Y"),
+    })
+    
+    curr_nb_metadata = {
+        "name": meet["name"],
+        "type": "sigai_heading"
+    }
+    
+    return nbf.v4.new_markdown_cell(curr_nb_heading,
+                                    metadata=curr_nb_metadata)
+
+
+def metadata(date, meet, unit, lecturers):
+    return {
+        "sigai": {
+            "authors"    : [
+                {
+                    "github": gh,
+                    "name"  : name
+                } for gh, name in lecturers.items()
+            ],
+            "description": meet["desc"].strip(),
+            "title"      : meet["name"],
+            "date"       : date.isoformat(),
+            "unit"       : {
+                "name"  : unit["name"],
+                "number": unit["unit"]
+            }
+        }
+    }
+
+
+def name(entry, year):
+    mm, dd = map(int, entry["date"].split("/"))
+    
+    return "-".join([str(dt.date(year, mm, dd)), entry["file"]])

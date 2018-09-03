@@ -82,7 +82,7 @@ if __name__ == "__main__":
             if k == "op":
                 continue
             if v:
-                eval("semester.make_" + k)(sem)
+                eval("sem.make")(k)
                 break
     elif args["op"] == "update":
         if args["notebooks"]:

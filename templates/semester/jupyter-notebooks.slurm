@@ -11,6 +11,6 @@ export XDG_RUNTIME_DIR=${TMPDIR}
 
 source activate sigai-fa18
 
-jupyter lab --no-browser --port=$1 --ip='0.0.0.0' --NotebookApp.token=''
+jupyter notebook --no-browser --port=$1 --ip='0.0.0.0' --NotebookApp.token=''
 
 date
