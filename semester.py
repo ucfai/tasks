@@ -10,7 +10,6 @@ from jinja2 import Template
 from PIL import Image
 
 from admin import utils
-from admin import sm_utils
 from admin import notebooks
 from admin.notebooks import Notebook
 
