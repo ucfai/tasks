@@ -131,7 +131,7 @@ def make_banners(semester):
         "title"  : None,
         "cover"  : None,
     }
-    for unit in syllabus["list"]:
+    for unit in syllabus["teach"]:
         for meet in unit["list"]:
             nb_name = nb_utils.name(meet, semester.year)
             out = semester.workdir.joinpath(nb_name).joinpath("banner.jpg")

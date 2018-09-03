@@ -13,8 +13,8 @@ res_arcc      = {k: Path(f"admin/{v}") for k, v in res_arcc.items()}
 res_notebooks = {k: Path(f"admin/{v}") for k, v in res_notebooks.items()}
 
 resources = {
-    "semester": res_semester,
-    "arcc": res_arcc,
+    "semester" : res_semester,
+    "arcc"     : res_arcc,
     "notebooks": res_notebooks,
 }
 
