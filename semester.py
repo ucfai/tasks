@@ -162,7 +162,7 @@ def make_banners(semester):
                     cov = semester.workdir.joinpath(nb_name).joinpath("cover." + accepted[fmt])
                     img.save(str(cov))
     
-            banner_args["cover"] = cov
+            banner_args["cover"] = cov if meet["covr"] is not "" else ""
             
             banner_ = banner.safe_substitute(banner_args)
             imgkit.from_string(banner_, out)
