@@ -18,6 +18,8 @@ def gen_notebook(mode, semester, sched, year, workdir, nbs):
       
       
 import imgkit
+import shutil
+import requests
 
 def gen_banners(semester, sched, year, workdir, nbs):
     banner = Template(open(res["templates"].joinpath("banner.html"), "r"))

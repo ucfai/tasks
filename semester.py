@@ -107,11 +107,50 @@ def make_jekyll_posts(semester):
     sm_utils.gen_jekyll_posts(**semester.gen_nb_args)
 
 
+from string import Template
+from admin import nb_utils
+import requests
+import imghdr
+import imgkit
+import datetime as dt
+
+
 def make_banners(semester):
     validate_skeleton_presence(semester, prepnbs=False)
     
     Semester.coordinators = yaml.load(open(semester.file_admin, "r"))
-    sm_utils.gen_banners(semester.gen_nb_args)
+
+    banner = Template(open(res["templates"].joinpath("banner.html"), "r"))
+    syllabus = yaml.load(open(semester.file_sched, "r"))
+
+    banner_args = {
+        "weekday": syllabus["week_day"],
+        "time"   : syllabus["meet_time"],
+        "room"   : syllabus["room"],
+        "date"   : None,
+        "title"  : None,
+        "cover"  : None,
+    }
+    for unit in syllabus["list"]:
+        for meet in unit["list"]:
+            nb_name = nb_utils.name(meet, semester.year)
+            out = semester.workdir.joinpath(nb_name).joinpath("banner.jpg")
+            res = requests.get(meet["cover"], stream=True)
+        
+            ext = imghdr.what(h=res.raw)
+        
+            cov = semester.workdir.joinpath(nb_name).joinpath("cover." + ext)
+        
+            with open(cov, "wb") as f:
+                shutil.copyfileobj(res.raw, f)
+        
+            mm, dd = map(int, meet["date"].split("/"))
+            banner_args["date"] = dt.date(semester.year, mm, dd).strftime("%b %d")
+            banner_args["title"] = meet["name"]
+            banner_args["cover"] = meet["cover"]
+        
+            banner_ = banner.substitute(**banner_args)
+            imgkit.from_string(banner_, out)
 
 
 def update_notebooks(semester):
