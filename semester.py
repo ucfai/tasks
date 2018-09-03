@@ -138,21 +138,30 @@ def make_banners(semester):
         for meet in unit["list"]:
             nb_name = nb_utils.name(meet, semester.year)
             out = semester.workdir.joinpath(nb_name).joinpath("banner.jpg")
+
+            mm, dd = map(int, meet["date"].split("/"))
+            banner_args["date"] = dt.date(semester.year, mm, dd).strftime("%b %d")
+            banner_args["title"] = meet["name"].encode('ascii', 'xmlcharrefreplace').decode("utf-8")
             
-            res = requests.get(meet["covr"], headers={'user-agent': 'Mozilla/5.0'})
-            img = Image.open(io.BytesIO(res.content))
-            fmt = img.format.lower()
-            if fmt in accepted.keys() and res.status_code == requests.codes.ok:
-                cov = semester.workdir.joinpath(nb_name).joinpath("cover." + accepted[fmt])
-                img.save(str(cov))
-        
-                mm, dd = map(int, meet["date"].split("/"))
-                banner_args["date"] = dt.date(semester.year, mm, dd).strftime("%b %d")
-                banner_args["title"] = meet["name"].encode('ascii', 'xmlcharrefreplace').decode("utf-8")
-                banner_args["cover"] = cov
+            cov_exists = False
+            for ext in accepted.values():
+                cov = semester.workdir.joinpath(nb_name).joinpath("cover." + ext)
+                if cov.exists():
+                    cov_exists = True
+                    break
             
-                banner_ = banner.safe_substitute(banner_args)
-                imgkit.from_string(banner_, out)
+            if not cov_exists:
+                res = requests.get(meet["covr"], headers={'user-agent': 'Mozilla/5.0'})
+                img = Image.open(io.BytesIO(res.content))
+                fmt = img.format.lower()
+                if fmt in accepted.keys() and res.status_code == requests.codes.ok:
+                    cov = semester.workdir.joinpath(nb_name).joinpath("cover." + accepted[fmt])
+                    img.save(str(cov))
+    
+            banner_args["cover"] = cov
+            
+            banner_ = banner.safe_substitute(banner_args)
+            imgkit.from_string(banner_, out)
 
 
 def update_notebooks(semester):
