@@ -135,19 +135,17 @@ def make_banners(semester):
         for meet in unit["list"]:
             nb_name = nb_utils.name(meet, semester.year)
             out = semester.workdir.joinpath(nb_name).joinpath("banner.jpg")
-            res = requests.get(meet["cover"], stream=True)
-        
-            ext = imghdr.what(h=res.raw)
-        
-            cov = semester.workdir.joinpath(nb_name).joinpath("cover." + ext)
-        
-            with open(cov, "wb") as f:
-                shutil.copyfileobj(res.raw, f)
+            
+            # res = requests.get(meet["covr"], stream=True)
+            # ext = imghdr.what(h=res.raw)
+            # cov = semester.workdir.joinpath(nb_name).joinpath("cover." + ext)
+            # with open(cov, "wb") as f:
+            #     shutil.copyfileobj(res.raw, f)
         
             mm, dd = map(int, meet["date"].split("/"))
             banner_args["date"] = dt.date(semester.year, mm, dd).strftime("%b %d")
             banner_args["title"] = meet["name"]
-            banner_args["cover"] = meet["cover"]
+            banner_args["cover"] = meet["covr"]
         
             banner_ = banner.substitute(**banner_args)
             imgkit.from_string(banner_, out)
