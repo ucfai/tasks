@@ -147,7 +147,7 @@ def make_banners(semester):
             banner_args["title"] = meet["name"]
             banner_args["cover"] = meet["covr"]
         
-            banner_ = banner.substitute(**banner_args)
+            banner_ = banner.substitute(banner_args)
             imgkit.from_string(banner_, out)
 
 
