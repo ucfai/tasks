@@ -120,7 +120,7 @@ def make_banners(semester):
     
     Semester.coordinators = yaml.load(open(semester.file_admin, "r"))
 
-    banner = Template(open(utils.res_semester["templates"].joinpath("banner.html"), "r"))
+    banner = Template(open(utils.res_gen("semester", "templates", "event-banner.html"), "r"))
     syllabus = yaml.load(open(semester.file_sched, "r"))
 
     banner_args = {
