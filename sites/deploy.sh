@@ -12,7 +12,7 @@ SHA=`git rev-parse --verify HEAD`
 rm -rf .git
 cd docs
 bundle install
-jekyll --build --future
+jekyll b --future
 cd _site
 git init
 git remote origin $SSH_REPO
