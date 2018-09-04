@@ -21,12 +21,6 @@ git checkout --orphan gh-pages
 git config user.name "Travis, CI"
 git config user.email "travis-ci@ucfsigai.org"
 
-# If there are no changes (e.g. this is a README update) then just bail.
-if [ -z `git diff --exit-code` ]; then
-    echo "No changes to the spec on this push; exiting."
-    exit 0
-fi
-
 git add .
 git commit -m "Deploying ${SHA} to GitHub Pages"
 
