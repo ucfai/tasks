@@ -15,7 +15,7 @@ bundle install
 jekyll b --future
 cd _site
 git init
-git remote origin $SSH_REPO
+git remote add origin $SSH_REPO
 git checkout --orphan gh-pages
 
 git config user.name "Travis, CI"
