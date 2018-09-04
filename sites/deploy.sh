@@ -12,7 +12,7 @@ SHA=`git rev-parse --verify HEAD`
 rm -rf .git
 cd docs
 bundle install
-jekyll b --future
+bundle exec jekyll b --future
 cd _site
 git init
 git remote add origin $SSH_REPO
@@ -39,4 +39,4 @@ chmod 600 deploy_key
 eval `ssh-agent -s`
 ssh-add deploy_key
 
-git push --force $SSH_REPO $TARGET_BRANCH
+git push --force origin $TARGET_BRANCH
