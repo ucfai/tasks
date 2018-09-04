@@ -11,6 +11,7 @@ SHA=`git rev-parse --verify HEAD`
 
 rm -rf .git
 cd docs
+bundle install
 jekyll --build --future
 cd _site
 git init
