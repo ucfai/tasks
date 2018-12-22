@@ -1,4 +1,4 @@
-name: sigai-auto-admin
+name: ucfai-auto-admin
 channels:
   - defaults
   - conda-forge
@@ -104,4 +104,3 @@ dependencies:
   - zope=1.0=py37_0
   - zope.interface=4.5.0=py37h1de35cc_0
   - wkhtmltopdf==0.12.3
-

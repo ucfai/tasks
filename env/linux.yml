@@ -1,4 +1,4 @@
-name: sigai-auto-admin
+name: ucfai-auto-admin
 channels:
   - defaults
   - conda-forge
