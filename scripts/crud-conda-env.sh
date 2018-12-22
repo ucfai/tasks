@@ -1,9 +1,20 @@
 #!/bin/sh
 
-OS=`uname -r`
+OS=`uname -s`
 
 case $OS in
-    "Darwin") path="macos" ;;
+    "Darwin")
+        path="macos"
+        command -v brew > /dev/null
+        if [[ $? == 0 ]]; then
+            brew cask list wkhtmltopdf
+            if [[ $? != 0 ]]; then
+                brew cask install wkhtmltopdf
+            fi
+        else
+            echo "You also need to install \`wkhtmltopdf\`."
+        fi
+        ;;
     "Linux")  path="linux" ;;
 esac
 

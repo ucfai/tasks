@@ -49,7 +49,7 @@ do
 done
 
 #: OS specific configs
-OS=`uname -r`
+OS=`uname -s`
 miniconda_url="https://repo.anaconda.com/miniconda"
 case $OS in
     "Darwin")

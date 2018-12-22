@@ -10,7 +10,7 @@ setuptools.setup(
     author_email="admins@ai.cs.ucf.edu",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://ai.cs.ucf.edu/admin/"
+    url="https://ai.cs.ucf.edu/admin/",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Console",
