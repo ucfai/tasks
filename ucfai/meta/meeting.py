@@ -4,13 +4,12 @@ from pathlib import Path
 from typing import List, Dict
 
 import nbformat as nbf
+from jinja2 import Template
 
-from ucfai import meeting_utils as mtg_utils
-from .website import site_content_dir
-from .coordinator import Coordinator
+from ucfai.meta import MeetingMeta
+from ucfai.meta.coordinator import Coordinator
 
-from ucfai import MeetingMeta
-from .groups import Group
+res_dir = Path(__file__).parent
 
 
 class Meeting:
@@ -38,40 +37,6 @@ class Meeting:
             "room": self.meta.room,
         }
 
-    def notebook(self):
-        try:
-            self.nb = nbf.read(str(self.__nb_pth()), as_version=4)
-        except FileNotFoundError:
-            # TODO: Need to handle not finding the expended file
-            pass
-
-        self.nb["metadata"] = mtg_utils.metadata(self)
-
-        raise NotImplementedError()
-
-    def make_ntbk(self, group: Group):
-        path = group._to_dir() / self.__nb_pth()
-        if path.exists():
-            raise FileExistsError("I won't overwrite this file. :/")
-
-        Path(path.parent).mkdir()
-
-        nb = nbf.v4.new_notebook()
-        nb["metadata"] = mtg_utils.metadata(self)
-        nb["cells"].append(mtg_utils.heading(self, repr(group)))
-
-        with open(path, "w") as f_nb:
-            nbf.write(nb, f_nb)
-
-        self.nb = nb
-
-    def prep_post(self, group: Group):
-        path = site_content_dir / group._to_dir() / str(self)
-        if path.exists():
-            raise FileExistsError("Erm... the entry for the site exists. :/")
-
-        path.mkdir()
-
     @staticmethod
     def parse_yaml(d: Dict, coords: Dict, meta: MeetingMeta) -> Dict:
         """This method consumes a dict which will be used to see a given
@@ -86,6 +51,9 @@ class Meeting:
         reqd_keys = {"name", "file", "covr", "inst", "desc"}
         assert reqd_keys.intersection(set(d.keys())) == reqd_keys
 
+        assert d["name"], "A lecture hasn't been named... do that first."
+        assert d["file"], "Each lecture needs a `filename` for the site and " \
+                          "Notebook generation."
         assert d["inst"], "It seems you haven't specified a Coordinator for " \
                           "this meeting, do that first."
 
@@ -94,21 +62,21 @@ class Meeting:
 
         return d
 
-    def __nb_pth(self):
-        return self.__to_pth(ext=".ipynb")
+    def as_nb(self): return self.__as_path(ext=".ipynb")
 
-    def __to_dir(self):
-        return self.__to_pth(ext="")
+    def as_dir(self): return self.__as_path(ext="")
 
-    def __to_pth(self, ext: str = ""):
+    def __as_path(self, ext: str = ""):
         if ext and "." not in ext:
             ext = f".{ext}"
-        return Path(f"{self}/{self}{ext}")
+        return Path(f"{repr(self)}/{repr(self)}{ext}")
 
-    def __str__(self):
+    def __repr__(self):
         if not self.meta.date:
             raise ValueError("`Meeting.date` must be defined for this to work.")
         return f"{self.meta.date.isoformat()[:10]}-{self.file}"
+
+    def __str__(self): return self.name
 
     def __lt__(self, other) -> bool:
         assert type(other) == type(self)
@@ -129,3 +97,30 @@ class Meeting:
     def __gt__(self, other) -> bool:
         assert type(other) == type(self)
         return self.meta.date > other.meta.date
+
+
+def metadata(mtg: Meeting) -> Dict:
+    return {
+        "ucfai": {
+            "authors": [c.as_metadata() for c in mtg.inst],
+            "description": mtg.desc.strip(),
+            "title": mtg.name,
+            "date": mtg.meta.date.isoformat()[:10],  # outputs as 2018-01-16
+        }
+    }
+
+
+def heading(mtg: Meeting, group: str) -> nbf.NotebookNode:
+    tpl_heading = Template(
+        open(res_dir / "templates" / "nb-heading.html").read())
+    tpl_args = {
+        "group_sem": repr(group),
+        "authors": mtg.inst,
+        "title": mtg.name,
+        "file": mtg.file,
+        "date": mtg.meta.date.isoformat()[:10]
+    }
+
+    rendering = tpl_heading.render(**tpl_args)
+    head_meta = {"name": mtg.name, "type": "sigai_heading"}
+    return nbf.v4.new_markdown_cell(rendering, metadata=head_meta)
