@@ -17,4 +17,4 @@ dependencies:
   - pip:
       - imgkit==1.0.1
       # you need to also run: `brew install wkhtmltopdf` for `imgkit` to work!
-      - git+https://github.com/ucfai/admin
+      - git+https://github.com/ucfai/admin@ionlights-admin-rewrite

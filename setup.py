@@ -20,10 +20,6 @@ setup(
         'Pillow',
         'PyYAML',
         'requests',
-        'fabric',
         'nbconvert',
-        "keras",
-        "tensorflow-gpu",
-        "pytorch"
     ]
 )
