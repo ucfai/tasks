@@ -1,7 +1,7 @@
-import hashlib
 import io
 import os
 import logging
+import datetime
 from pathlib import Path
 from typing import List, Dict
 
@@ -9,7 +9,7 @@ import imgkit
 import requests
 import yaml
 from PIL import Image
-from pandas import Timedelta, to_datetime, DataFrame, date_range, Series
+from pandas import Timedelta, to_datetime, DataFrame, date_range, Series, concat
 from jinja2 import Template
 import nbformat as nbf
 import nbconvert as nbc
@@ -24,13 +24,14 @@ from ucfai.tooling.github_pages import SITE_CONTENT_DIR
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
 
-res_dir = Path(__file__).parent
+res_dir = Path(__file__).parent.parent
 
+today = to_datetime(datetime.date.today())
 
 # region Public Methods ########################################################
 # These should begin with a character.
 
-def seed_semester(grp: Group) -> None:
+def seed_semester(grp: Group, auto_overwrite: bool = False) -> None:
     """Performs initial semester setup.
     1. Copies base YAML into `<grp>/<sem>/`
     2. Sets up the Website entries for the semester (doesn't make posts)
@@ -44,9 +45,8 @@ def seed_semester(grp: Group) -> None:
 
     # region 1. Copy base YAML files {env, overhead, syllabus}.yml
     import shutil
-    parent: Path = Path(__file__).parent
     # noinspection PyTypeChecker
-    shutil.copytree(parent / "seed", grp.as_dir())
+    shutil.copytree(res_dir / "templates/seed", grp.as_dir())
 
     # noinspection PyTypeChecker
     with open(grp.as_dir() / "env.yml", "r") as f:
@@ -71,7 +71,7 @@ def seed_semester(grp: Group) -> None:
     # endregion
 
 
-def prepare_ntbks(grp: Group) -> None:
+def prepare_ntbks(grp: Group, auto_overwrite: bool = False) -> None:
     """Assumes a complete (or partially complete) Syllabus; this will only
     create new Syllabus entries and won't make other changes (to avoid
     irreversible deletions).
@@ -89,37 +89,127 @@ def prepare_ntbks(grp: Group) -> None:
     # noinspection PyTypeChecker
     syllabus = yaml.load(open(grp.as_dir() / "syllabus.yml"))
     overhead_meetings = overhead["meetings"]
+    _mtg_offset = overhead_meetings["start_offset"]
+    
+    def _can_overwrite():
+        s = "It seems that you're attempting to overwrite a passed meeting. " \
+            "Shall I continue? [y/N] "
+        return input(s).lower() == "y"
 
     def _parse_and_make_meetings(key: str) -> None:
         abbr = {"prim": "primary", "supp": "supplementary"}
-        mtg_meta = __make_schedule(grp, overhead_meetings[abbr[key]])
+        mtg_meta = __make_schedule(grp, overhead_meetings[abbr[key]],
+                                   offset=_mtg_offset)
         meetings = [Meeting(**Meeting.parse_yaml(mtg, grp.coords, meta))
                     for mtg, meta in zip(syllabus[abbr[key]], mtg_meta)]
         setattr(grp, f"{key}_sched", mtg_meta)
 
         for mtg in meetings:
-            __make_notebook(grp, mtg)
-            __prepares_post(grp, mtg)
+            manual_overwrite = False
+            if mtg.meta.date < today:
+                manual_overwrite = _can_overwrite()
+            if manual_overwrite or (auto_overwrite and mtg.meta.date > today):
+                __make_notebook(grp, mtg, auto_overwrite)
+                __prepares_post(grp, mtg, auto_overwrite)
 
     # region `Primary` meetings
     _parse_and_make_meetings("prim")
     # endregion
     # region `Supplementary` meetings
     if "supplementary" in syllabus.keys():
+        _mtg_offset += 1
         _parse_and_make_meetings("supp")
     # endregion
 
     # endregion
+    
+
+def update_ntbks(grp: Group, auto_overwrite: bool = False) -> None:
+    """Assumes the existence of the Syllabus; this will attempt to update
+    notebooks and produce banners for the semester."""
+    __chk_root(grp)
+    
+    # region Read `overhead.yml` and update Coordinators
+    # noinspection PyTypeChecker
+    overhead = yaml.load(open(grp.as_dir() / "overhead.yml"))
+    overhead_coordinators = overhead["coordinators"]
+    setattr(grp, "coords", Coordinator.parse_yaml(overhead_coordinators))
+    # endregion
+    
+    # region Read `syllabus.yml`; update Notebooks; make banners
+    syllabus = yaml.load(open(grp.as_dir() / "syllabus.yml"))
+    overhead_meetings = overhead["meetings"]
+    _mtg_offset = overhead_meetings["start_offset"]
+    
+    def _can_overwrite():
+        s = "It appears that you might be overwriting a passed meeting " \
+            "banner. Shall I continue? [y/N] "
+        return input(s) == "y"
+    
+    def _parse_and_make_meetings(key: str) -> None:
+        abbr = {"prim": "primary", "supp": "supplementary"}
+        mtg_meta = __make_schedule(grp, overhead_meetings[abbr[key]],
+                                   offset=_mtg_offset)
+        meetings = [Meeting(**Meeting.parse_yaml(mtg, grp.coords, meta))
+                    for mtg, meta in zip(syllabus[abbr[key]], mtg_meta)]
+        setattr(grp, f"{key}_sched", mtg_meta)
+
+        for mtg in meetings:
+            manual_overwrite = False
+            if mtg.meta.date < today:
+                manual_overwrite = _can_overwrite()
+            if manual_overwrite or (auto_overwrite and mtg.meta.date > today):
+                __make_banner(grp, mtg)
+
+    # region `Primary` meetings
+    _parse_and_make_meetings("prim")
+    # endregion
+    
+    # region `Supplementary` meetings
+    if "supplementary" in syllabus.keys():
+        _mtg_offset += 1
+        _parse_and_make_meetings("supp")
+    # endregion
+    
+    # endregion
 
 
-def convert_ntbks(self) -> None:
-    self.__chk_root()
-
-    export = nbc.LatexExporter()
-    export.template_path = res_dir / "templates" / "notebooks"
-    export.template_file = "nb-as-post"
+def convert_ntbks(grp: Group) -> None:
+    __chk_root(grp)
 
     # TODO: notebook conversion to Post w/ Front-Matter
+    # region Read `overhead.yml` and update Coordinators
+    # noinspection PyTypeChecker
+    overhead = yaml.load(open(grp.as_dir() / "overhead.yml"))
+    overhead_coordinators = overhead["coordinators"]
+    setattr(grp, "coords", Coordinator.parse_yaml(overhead_coordinators))
+    # endregion
+
+    # region Read `syllabus.yml`; update Notebooks; make banners
+    syllabus = yaml.load(open(grp.as_dir() / "syllabus.yml"))
+    overhead_meetings = overhead["meetings"]
+    _mtg_offset = overhead_meetings["start_offset"]
+
+    def _parse_and_make_meetings(key: str) -> None:
+        abbr = {"prim": "primary", "supp": "supplementary"}
+        mtg_meta = __make_schedule(grp, overhead_meetings[abbr[key]],
+                                   offset=_mtg_offset)
+        meetings = [Meeting(**Meeting.parse_yaml(mtg, grp.coords, meta))
+                    for mtg, meta in zip(syllabus[abbr[key]], mtg_meta)]
+        setattr(grp, f"{key}_sched", mtg_meta)
+    
+        for mtg in meetings:
+            __make_posts(grp, mtg)
+
+    # region `Primary` meetings
+    _parse_and_make_meetings("prim")
+    # endregion
+
+    # region `Supplementary` meetings
+    if "supplementary" in syllabus.keys():
+        _mtg_offset += 1
+        _parse_and_make_meetings("supp")
+    # endregion
 # endregion
 
 
@@ -127,6 +217,7 @@ def convert_ntbks(self) -> None:
 ACCEPTED_OPS = {
     "seed-semester": seed_semester,
     "prepare-ntbks": prepare_ntbks,
+    "update-ntbks" : update_ntbks,
     "convert-ntbks": convert_ntbks,
 }
 # endregion
@@ -149,7 +240,7 @@ def __chk_root(grp: Group) -> None:
 
 def __parse_ucf_cal(grp: Group) -> Series:
     holiday = OBS_HOLIDAY[grp.sem.name]
-    cal_url = f"{UCF_CAL_URL}/json/{grp.meta.year}/{grp.meta.name}"
+    cal_url = f"{UCF_CAL_URL}/json/{grp.sem.year}/{grp.sem.name}"
 
     ucf_parsed = requests.get(cal_url).json()["terms"][0]["events"]
     df_ucf_cal = DataFrame.from_dict(ucf_parsed)
@@ -161,25 +252,36 @@ def __parse_ucf_cal(grp: Group) -> Series:
     # generate a DataFrame with all possible dates (to act like a calendar)
     #   there's also the [7:] slicer b/c we can't meet in the first week of
     #   the semester, according to UCF
-    dt_range = Series(date_range(beg["dtstart"][:-1],
-                                 end["dtstart"][:-1]))[7:]
+    dt_range = Series(date_range(start=beg["dtstart"][:-1],
+                                 end=end["dtstart"][:-1]))[7:]
 
-    dt_holidays = None  # TODO: figure generalized removal, later
+    dt_holis = []
+    for h in holiday:
+        day2rm = df_ucf_cal.loc[summary_mask.str.contains(h)].iloc[0]
+        beg = day2rm["dtstart"][:-1]
+        end = day2rm["dtend"][:-1] if day2rm["dtend"] else beg
+        dt_holis.append(Series(date_range(start=beg, end=end)))
+    
+    dt_holis = concat(dt_holis)
 
-    return dt_range
+    return dt_range, dt_holis
 
 
-def __make_schedule(grp: Group, sched: Dict) -> List[MeetingMeta]:
-    dt_range = __parse_ucf_cal(grp)
+def __make_schedule(grp: Group, sched: Dict, offset: int = 3) -> List[MeetingMeta]:
+    dt_range, dt_holis = __parse_ucf_cal(grp)
     assert all([v for v in sched.values()])
 
     wday, room = sched["wday"], sched["room"]
 
+    # generate meeting dates, on a weekly basis
+    mtg_dts = Series(dt_range)[(((offset - 1) * 7) + __day2idx(wday))::7]
+    # remove the holidays
+    mtg_dts = mtg_dts[~mtg_dts.isin(dt_holis)]
+
     time_s, time_e = sched["time"].split("-")
     mtg_time = Timedelta(hours=int(time_s[:2]), minutes=int(time_s[3:]))
-    dt_range += mtg_time
-
-    mtg_dts = dt_range.iloc[__day2idx(wday)::7].values
+    mtg_dts += mtg_time
+    
     log.info("Meeting dates:\n%s", mtg_dts)
 
     sched = [MeetingMeta(to_datetime(mtg), room) for mtg in mtg_dts]
@@ -188,71 +290,123 @@ def __make_schedule(grp: Group, sched: Dict) -> List[MeetingMeta]:
     return sched
 
 
-def __make_notebook(grp: Group, mtg: Meeting) -> None:
-    path = grp.as_dir() / mtg.as_nb()
+def __can_overwrite(path: Path) -> bool:
+    s = f"I see that `{path}` already exists... :/ Shall I overwrite it? [y/N] "
     if path.exists():
-        raise FileExistsError("I won't overwrite this file. :/")
+        return input(s).lower() != "y"
 
-    Path(path.parent).mkdir()
+
+def __make_notebook(grp: Group, mtg: Meeting, auto_overwrite: bool = False) -> None:
+    path = grp.as_dir() / mtg.as_nb()
+    if not auto_overwrite and not __can_overwrite(path):
+        return
+
+    Path(path.parent).mkdir(exist_ok=True)
 
     nb = nbf.v4.new_notebook()
     nb["metadata"] = meeting.metadata(mtg)
-    nb["cells"].append(meeting.heading(mtg, repr(grp)))
+    nb["cells"].append(meeting.heading(mtg, str(grp.as_dir())))
 
     with open(path, "w") as f_nb:
         nbf.write(nb, f_nb)
 
 
-def __prepares_post(grp: Group, mtg: Meeting) -> None:
-    path = SITE_CONTENT_DIR / grp.as_dir() / str(mtg)
-    if path.exists():
-        raise FileExistsError("Erm... the entry for the site exists. :/")
+def __prepares_post(grp: Group, mtg: Meeting, auto_overwrite: bool = False) -> None:
+    path = SITE_CONTENT_DIR / grp.as_dir(for_jekyll=True) / "_posts" / repr(mtg)
+    if not auto_overwrite and not __can_overwrite(path):
+        return
 
-    path.mkdir()
+    path.mkdir(exist_ok=True)
+    __make_posts(grp, mtg)
 
 
-def __make_banner(mtg: Meeting) -> None:
+def __make_posts(grp: Group, mtg: Meeting) -> None:
+    export = nbc.HTMLExporter()
+    export.template_file = "basic"
+    # TODO: implement LaTeX parser and get TPL to extract content below
+    # export = nbc.LatexExporter()
+    # export.template_path = [f"{res_dir}/templates/notebooks"]
+    # export.template_file = f"{res_dir}/templates/notebooks/nb-as-post.tpl"
+    
+    try:
+        nb = nbf.read(f"{grp.as_dir() / mtg.as_nb()}", as_version=4)
+    except FileNotFoundError:
+        __make_notebook(grp, mtg)
+
+    nb = nbf.read(f"{grp.as_dir() / mtg.as_nb()}", as_version=4)
+    
+    sigai = nb["metadata"]["ucfai"]
+    
+    idx = next((idx
+                for idx, cell in enumerate(nb["cells"])
+                if cell["metadata"]["type"] == "sigai_heading")
+               , None)
+    
+    del nb["cells"][idx]
+    
+    body, _ = export.from_notebook_node(nb)
+    
+    output = Path(f"{SITE_CONTENT_DIR}/{grp.as_dir(for_jekyll=True)}/_posts/"
+                  f"{repr(mtg)}/{repr(mtg)}.md")
+    output.touch()
+    
+    with open(output, "w") as f:
+        f.write("---\n")
+        f.write(f"title: \"{sigai['title']}\"\n")
+        f.write(f"categories: [\"{grp.sem.short}\"]\n")
+        # f.write(f"tags: {[sigai['name']]}\n")
+        f.write(f"authors: {[_['github'] for _ in sigai['authors']]}\n")
+        f.write(f"description: >-\n  \"{sigai['description']}\"\n")
+        f.write("---\n")
+        f.write(body)
+    
+
+def __make_banner(grp: Group, mtg: Meeting) -> None:
     """Generates the banner for each meeting."""
+    log.debug(f"Generating `banner.jpg` for {repr(mtg)}...")
 
     # region meta, needed to generate the banner and restrict images
-    tpl_banner = Template(
-        open(res_dir / "templates" / "event-banner.html").read())
+    tpl_banner = Template(open(res_dir / "templates/event-banner.html").read())
 
     accepted_content_types = list(map(
         lambda x: f"image/{x}", ["jpeg", "png", "gif", "tiff"]
     ))
     # endregion
 
-    # region snag banner image from url
     ext = mtg.covr.split(".")[-1]
-    cvr = requests.get(mtg.covr, headers={"user-agent": "Mozilla/5.0"})
-    cvr_pth = Group.workdir(str(mtg), "cover." + ext)
-    if cvr.headers["Content-Type"] in accepted_content_types:
-        img_bytes = io.BytesIO(cvr.content)
-        try:
-            # noinspection PyTypeChecker
-            cvr_bytes = io.BytesIO(open(cvr_pth, "rb").read())
-
-            # get hashes to check for diff
-            cvr_hash = hashlib.sha256(cvr_bytes).hexdigest()
-            img_hash = hashlib.sha256(img_bytes).hexdigest()
-
-            if cvr_hash != img_hash:
+    cvr_pth = Path(f"{SITE_CONTENT_DIR}/{grp.as_dir(for_jekyll=True)}/_posts/{repr(mtg)}/cover.{ext}")
+    if mtg.covr:
+        # region snag banner image from url
+        # TODO: Make robust to detecting Image Format, don't rely on File Ext...
+        cvr = requests.get(mtg.covr, headers={"user-agent": "Mozilla/5.0"})
+        if cvr.headers["Content-Type"] in accepted_content_types:
+            img_bytes = io.BytesIO(cvr.content)
+            try:
+                # noinspection PyTypeChecker
+                cvr_bytes = io.BytesIO(open(cvr_pth, "rb").read())
+    
+                # get hashes to check for diff
+                # img_hash = hashlib.sha256(img_bytes).hexdigest()
+                # cvr_hash = hashlib.sha256(cvr_bytes).hexdigest()
+                #
+                # if cvr_hash != img_hash:
+                #     img = Image.open(img_bytes)
+                #     img.save(cvr_pth)
+            except FileNotFoundError:
                 img = Image.open(img_bytes)
                 img.save(cvr_pth)
-        except FileNotFoundError:
-            pass
-    # endregion
+        # endregion
 
     # region render the banner and save
-    out = Group.workdir(str(mtg), "banner.jpg")
+    out = cvr_pth.with_name("banner.jpg")
 
     banner = tpl_banner.render(
         date=mtg.meta.date,
         room=mtg.meta.room,
         name=mtg.name.encode("ascii", "xmlcharrefreplace").decode("utf-8"),
-        cover=cvr_pth
+        cover=cvr_pth.absolute() if mtg.covr else ""
     )
+    
     imgkit.from_string(banner, out, options={"quiet": ""})
     # endregion
 

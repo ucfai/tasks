@@ -14,7 +14,7 @@ class Coordinator:
 
     @staticmethod
     def parse_yaml(d: Dict) -> Dict:
-        if "coordinators" in d.keys():
+        if "coordinators" in d:
             d = d["coordinators"]
 
         return {c["github"]: Coordinator(**c) for c in d}

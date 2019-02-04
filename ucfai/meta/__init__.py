@@ -7,6 +7,7 @@ MeetingMeta = namedtuple("MeetingMeta", ["date", "room"])
 from ucfai.meta.groups import *
 
 ACCEPTED_GRP = {
+    "course"      : Course,
     "data-science": DataScience,
     "intelligence": Intelligence,
     "competitions": Competitions,

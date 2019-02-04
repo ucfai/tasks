@@ -29,6 +29,7 @@
             padding: 36px;
             padding-right: 0;
             float: left;
+            z-index: 10000;
         }
 
         div.banner div.half#text h1, div.banner div.half#text h2 {
@@ -69,6 +70,7 @@
             /*right: 0;*/
             float: right;
             overflow: hidden;
+            z-index: 100;
         }
 
         div.banner div.half#imgs div#gradient {
@@ -95,14 +97,14 @@
 <body onload="resizeTitle()">
     <div class="banner">
         <div id="text" class="half">
-            <h2 id="date">{{ date.strftime("%a, %b %d @ %-I:%M %p").lower() }}</h2>
+            <h2 id="date">{{ date.strftime("%a, %b %d @ %-I:%M %p") }}</h2>
             <h2 id="room">{{ room }}</h2>
 
             <div id="title-container">
                 <h1 id="title">{{ name }}</h1>
             </div>
 
-            <img id="logo" src="https://ai.cs.ucf.edu/assets/brand/sigai-fullmark-darkbg-ready.png" />
+            <img id="logo" src="https://ucfai.org/assets/brand/fullmark/dark-bg-ready.png" />
         </div>
         <div id="imgs" class="half">
             <div id="gradient"></div>
@@ -111,7 +113,7 @@
     </div>
 
     <script>
-        function resizeTitle() {
+        document.addEventListener("DOMContentLoaded", function() {
             var banner_h2s = 90;
             var banner_logo = 143;
             var banner_padding = 36;
@@ -130,6 +132,6 @@
             var padding = ((container.offsetHeight - title.offsetHeight) / 2);
             title.style.marginTop = padding;
             title.style.marginBottom = padding;
-        }
+        })
     </script>
 </body>

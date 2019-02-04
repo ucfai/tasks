@@ -42,9 +42,10 @@ class Group:
         self.__dict__[key] = value
 
     def __getattr__(self, item) -> Any:
-        assert item in self.__dict__.keys()
+        assert item in self.__dict__, (item, self.__dict__)
         return self.__dict__[item]
 
-    def as_dir(self) -> Path:
+    def as_dir(self, for_jekyll=False) -> Path:
+        if for_jekyll: return Path(repr(self))
         return Path(repr(self)) / self.sem.short
 

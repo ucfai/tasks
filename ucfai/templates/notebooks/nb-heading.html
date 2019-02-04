@@ -1,7 +1,7 @@
-<img src="https://ai.cs.ucf.edu/{{ group_sem }}/{{ file }}/banner.jpg">
+<img src="https://ucfai.org//{{ group_sem }}/{{ file }}/banner.jpg">
 
 <div class="col-12">
-    <a class="btn btn-success btn-block" href="https://ai.cs.ucf.edu/signup">
+    <a class="btn btn-success btn-block" href="https://ucfai.org/signup">
         First Attendance? Sign Up!
     </a>
 </div>
@@ -11,20 +11,9 @@
     <hr>
 </div>
 
-<div class="row" style="line-height: 2em;">
-    <div class="col-10">
-        <p>by:</p>{% for author in authors %}
-        <div class="card ucfai-inst">
-            <img src="https://avatars.githubusercontent.com/{{ author.github }}" />
-            <div>
-                <p> <strong> {{ author.name }} </strong> </p>
-                <a href="https://github.com/{{ author.github }}">
-                    @{{ author.github}}
-                </a>
-            </div>
-        </div>{% endfor %}
-    </div>
-    <div class="col-2">
-        {{ date }}
-    </div>
+<div style="line-height: 2em;">
+    <p>by: {% for author in authors %}
+        <strong> {{ author.name }}</strong>
+        (<a href="https://github.com/{{ author.github }}">@{{ author.github }}</a>)
+    {% endfor %} on {{ date }}</p>
 </div>

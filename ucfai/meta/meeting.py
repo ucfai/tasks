@@ -9,12 +9,12 @@ from jinja2 import Template
 from ucfai.meta import MeetingMeta
 from ucfai.meta.coordinator import Coordinator
 
-res_dir = Path(__file__).parent
+res_dir = Path(__file__).parent.parent
 
 
 class Meeting:
     def __init__(self, name: str, file: str, covr: str, meta: MeetingMeta,
-                 inst: List[Coordinator], desc: str, tags: List[str]) -> None:
+                 inst: List[Coordinator], desc: str, tags: List[str], **kwargs):
         self.name, self.file = name, file
         self.covr = covr
         self.meta = meta
@@ -106,15 +106,16 @@ def metadata(mtg: Meeting) -> Dict:
             "description": mtg.desc.strip(),
             "title": mtg.name,
             "date": mtg.meta.date.isoformat()[:10],  # outputs as 2018-01-16
+            "tags": [],
         }
     }
 
 
 def heading(mtg: Meeting, group: str) -> nbf.NotebookNode:
     tpl_heading = Template(
-        open(res_dir / "templates" / "nb-heading.html").read())
+        open(res_dir / "templates/notebooks/nb-heading.html").read())
     tpl_args = {
-        "group_sem": repr(group),
+        "group_sem": group,
         "authors": mtg.inst,
         "title": mtg.name,
         "file": mtg.file,

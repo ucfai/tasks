@@ -50,7 +50,9 @@ def main():
     parser.add_argument("group", choices=ACCEPTED_GRP.keys())
 
     parser.add_argument("op", choices=ACCEPTED_OPS.keys())
+    
+    parser.add_argument("--full-overwrite", action="store_true", dest="overwrite")
 
     args = parser.parse_args()
     grp = ACCEPTED_GRP[args.group](sem_meta)
-    ACCEPTED_OPS[args.op](grp)
+    ACCEPTED_OPS[args.op](grp, args.overwrite)
