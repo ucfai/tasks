@@ -1,12 +1,26 @@
 {# derived from: https://gist.github.com/cscorley/9144544 #}
-{% extends 'latex.tpl' %}
+{# informed by: http://rjbaxley.com/posts/2017/02/25/Jekyll_Blogging_with_Notebooks.html #}
+{% extends 'markdown.tpl' %}
 
 {%- block header -%}
 ---
 layout: post
-title: "{{ resources['metadata']['name'] }}"
+title: "{{ resources['ucfai']['title'] }}"
+date: "{{ resources['ucfai']['date'] }}"
+authors:
+    {% for author in resources['ucfai']['authors'] %}
+    - {{ author['github'] }}
+    {% endfor %}
+categories:
+    {% for category in resources['ucfai']['categories'] %}
+    - {{ category }}
+    {% endfor %}
 tags:
-    - {{ resources['metadata']['ucfai']  }}
+    {% for tag in resources['ucfai']['tags'] %}
+    - {{ tag }}
+    {% endfor %}
+description: >-
+    {{ resources['ucfai']['description'] }}
 ---
 {%- endblock header -%}
 

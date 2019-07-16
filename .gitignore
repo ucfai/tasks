@@ -1,9 +1,11 @@
 *.rsl*
 .idea/
 .DS_Store
+# allow the ucfai lib to be tracked by git
+!ucfai/lib/
 
 # Byte-compiled / optimized / DLL files
-__pycache__/
+**/*/__pycache__/
 *.py[cod]
 *$py.class
 

@@ -10,8 +10,8 @@ class Course(Group):
 class Intelligence(Group):
     def __init__(self, sem_meta: SemesterMeta):
         super().__init__(name="Intelligence", sem_meta=sem_meta)
-  
-        
+
+
 class DataScience(Group):
     def __init__(self, sem_meta: SemesterMeta):
         super().__init__(name="Data Science", sem_meta=sem_meta)

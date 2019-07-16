@@ -90,7 +90,7 @@ def prepare_ntbks(grp: Group, auto_overwrite: bool = False) -> None:
     syllabus = yaml.load(open(grp.as_dir() / "syllabus.yml"))
     overhead_meetings = overhead["meetings"]
     _mtg_offset = overhead_meetings["start_offset"]
-    
+
     def _can_overwrite():
         s = "It seems that you're attempting to overwrite a passed meeting. " \
             "Shall I continue? [y/N] "
@@ -122,30 +122,30 @@ def prepare_ntbks(grp: Group, auto_overwrite: bool = False) -> None:
     # endregion
 
     # endregion
-    
+
 
 def update_ntbks(grp: Group, auto_overwrite: bool = False) -> None:
     """Assumes the existence of the Syllabus; this will attempt to update
     notebooks and produce banners for the semester."""
     __chk_root(grp)
-    
+
     # region Read `overhead.yml` and update Coordinators
     # noinspection PyTypeChecker
     overhead = yaml.load(open(grp.as_dir() / "overhead.yml"))
     overhead_coordinators = overhead["coordinators"]
     setattr(grp, "coords", Coordinator.parse_yaml(overhead_coordinators))
     # endregion
-    
+
     # region Read `syllabus.yml`; update Notebooks; make banners
     syllabus = yaml.load(open(grp.as_dir() / "syllabus.yml"))
     overhead_meetings = overhead["meetings"]
     _mtg_offset = overhead_meetings["start_offset"]
-    
+
     def _can_overwrite():
         s = "It appears that you might be overwriting a passed meeting " \
             "banner. Shall I continue? [y/N] "
         return input(s) == "y"
-    
+
     def _parse_and_make_meetings(key: str) -> None:
         abbr = {"prim": "primary", "supp": "supplementary"}
         mtg_meta = __make_schedule(grp, overhead_meetings[abbr[key]],
@@ -164,13 +164,13 @@ def update_ntbks(grp: Group, auto_overwrite: bool = False) -> None:
     # region `Primary` meetings
     _parse_and_make_meetings("prim")
     # endregion
-    
+
     # region `Supplementary` meetings
     if "supplementary" in syllabus.keys():
         _mtg_offset += 1
         _parse_and_make_meetings("supp")
     # endregion
-    
+
     # endregion
 
 
@@ -261,7 +261,7 @@ def __parse_ucf_cal(grp: Group) -> Series:
         beg = day2rm["dtstart"][:-1]
         end = day2rm["dtend"][:-1] if day2rm["dtend"] else beg
         dt_holis.append(Series(date_range(start=beg, end=end)))
-    
+
     dt_holis = concat(dt_holis)
 
     return dt_range, dt_holis
@@ -281,7 +281,7 @@ def __make_schedule(grp: Group, sched: Dict, offset: int = 3) -> List[MeetingMet
     time_s, time_e = sched["time"].split("-")
     mtg_time = Timedelta(hours=int(time_s[:2]), minutes=int(time_s[3:]))
     mtg_dts += mtg_time
-    
+
     log.info("Meeting dates:\n%s", mtg_dts)
 
     sched = [MeetingMeta(to_datetime(mtg), room) for mtg in mtg_dts]
@@ -321,45 +321,38 @@ def __prepares_post(grp: Group, mtg: Meeting, auto_overwrite: bool = False) -> N
 
 
 def __make_posts(grp: Group, mtg: Meeting) -> None:
-    export = nbc.HTMLExporter()
-    export.template_file = "basic"
+    export = nbc.MarkdownExporter()
+    export.template_file = "nb-as-post"
     # TODO: implement LaTeX parser and get TPL to extract content below
     # export = nbc.LatexExporter()
-    # export.template_path = [f"{res_dir}/templates/notebooks"]
+    export.template_path = [f"{res_dir}/templates/notebooks"]
     # export.template_file = f"{res_dir}/templates/notebooks/nb-as-post.tpl"
-    
+
     try:
         nb = nbf.read(f"{grp.as_dir() / mtg.as_nb()}", as_version=4)
     except FileNotFoundError:
         __make_notebook(grp, mtg)
 
     nb = nbf.read(f"{grp.as_dir() / mtg.as_nb()}", as_version=4)
-    
+
     sigai = nb["metadata"]["ucfai"]
-    
+
     idx = next((idx
                 for idx, cell in enumerate(nb["cells"])
                 if cell["metadata"]["type"] == "sigai_heading")
                , None)
-    
+
     del nb["cells"][idx]
-    
+
     body, _ = export.from_notebook_node(nb)
-    
+
     output = Path(f"{SITE_CONTENT_DIR}/{grp.as_dir(for_jekyll=True)}/_posts/"
                   f"{repr(mtg)}/{repr(mtg)}.md")
     output.touch()
-    
+
     with open(output, "w") as f:
-        f.write("---\n")
-        f.write(f"title: \"{sigai['title']}\"\n")
-        f.write(f"categories: [\"{grp.sem.short}\"]\n")
-        # f.write(f"tags: {[sigai['name']]}\n")
-        f.write(f"authors: {[_['github'] for _ in sigai['authors']]}\n")
-        f.write(f"description: >-\n  \"{sigai['description']}\"\n")
-        f.write("---\n")
         f.write(body)
-    
+
 
 def __make_banner(grp: Group, mtg: Meeting) -> None:
     """Generates the banner for each meeting."""
@@ -384,7 +377,7 @@ def __make_banner(grp: Group, mtg: Meeting) -> None:
             try:
                 # noinspection PyTypeChecker
                 cvr_bytes = io.BytesIO(open(cvr_pth, "rb").read())
-    
+
                 # get hashes to check for diff
                 # img_hash = hashlib.sha256(img_bytes).hexdigest()
                 # cvr_hash = hashlib.sha256(cvr_bytes).hexdigest()
@@ -406,7 +399,7 @@ def __make_banner(grp: Group, mtg: Meeting) -> None:
         name=mtg.name.encode("ascii", "xmlcharrefreplace").decode("utf-8"),
         cover=cvr_pth.absolute() if mtg.covr else ""
     )
-    
+
     imgkit.from_string(banner, out, options={"quiet": ""})
     # endregion
 

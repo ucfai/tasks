@@ -8,16 +8,11 @@ from ucfai.meta import SemesterMeta, ACCEPTED_GRP
 from ucfai.tooling import UCF_CAL_URL, ACCEPTED_OPS
 
 
-# region ArgumentParser descriptions
-
-# endregion
-
-
 def which_semester() -> SemesterMeta:
-    """A static method which determines the current semester based on the
-    present date and uses the UCF calendar redirect to inform its decision.
+    """A method which determines the current semester based on the present date
+    and uses the UCF calendar redirect to inform its decision.
 
-    :return: SemesterMeta
+    :return SemesterMeta
     """
     cal_url = requests.get(UCF_CAL_URL).url
     curr_dt = dt.now()
@@ -48,11 +43,15 @@ def main():
     parser = ArgumentParser(prog="ucfai")
 
     parser.add_argument("group", choices=ACCEPTED_GRP.keys())
-
     parser.add_argument("op", choices=ACCEPTED_OPS.keys())
-    
     parser.add_argument("--full-overwrite", action="store_true", dest="overwrite")
 
     args = parser.parse_args()
+
+    # `ACCEPTED_GRP` makes use of Python's dict-based execution to allow for
+    #   restriction to one of the Groups listed in `meta/groups.py`
     grp = ACCEPTED_GRP[args.group](sem_meta)
+
+    # `ACCEPTED_OPS` does similarly, restricting execution to the opterations
+    #   lists in `lib/ops.py`
     ACCEPTED_OPS[args.op](grp, args.overwrite)
