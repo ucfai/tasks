@@ -1,0 +1,11 @@
+## newton ----------------------------------------------------------------------
+Host            sigai.newton
+HostName        newton.ist.ucf.edu
+User            ${student}
+IdentityFile    ~/.ssh/${student}.pem
+
+## stokes ----------------------------------------------------------------------
+Host            sigai.stokes
+HostName        stokes.ist.ucf.edu
+User            ${student}
+IdentityFile    ~/.ssh/${student}.pem
