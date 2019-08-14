@@ -7,6 +7,8 @@ others to formulate what now runs many of the managerial and distributed
 services of AI@UCF.
 
 
+[git-ionlights]: https://github.com/ionlights
+
 ## Code Structure
 ```
 autobot            # package root
@@ -34,3 +36,4 @@ The `bot` should focus on managing 4 different verticals.
 We've taken time to document as thoroughly, and unobtrustively, as possible
 &ndash; and you can find a web-based version of the documentation at
 https://ucfai.org/bot.
+
