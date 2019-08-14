@@ -1,35 +1,38 @@
-# SIGAI@UCF's `admin` module
+# ucfai's `autobot`
+As there's quite a bit to managing a course/club, it's relatively necessary to
+have some structure which might be challenging to maintain with the frequency of
+changing hands. To overcome this, [@ionlights][git-ionlights] initially
+developed a bot to handle this. It's since been further expanded upon by many
+others to formulate what now runs many of the managerial and distributed
+services of AI@UCF.
 
-Basically, to make everything jive really well together, 
-[@ionlights][@gh-ionlights] put this together to make most tasks 
-needed to maintain the non-content-generating portions of the club highly 
-structured so that bots could handle a lot of the "heavy-lifting" in terms of 
-maintenance. 
 
-The [docs][docs] site is quite comprehensive, in terms of getting yourself up to
-speed on how all this works together, in the event you want to make edits, or 
-just learn how to do something like this.
+[git-ionlights]: https://github.com/ionlights
 
-<!--
-This repo is compose of a few different "submodules":
-- `algorithms` houses reference implementations of just about every kind of 
-algorithm we've covered in previous semesters, rather highly commented, too. :smiley: 
-- `animations` is our custom animation library (creds: [@thedibaccle][@gh-thedibaccle], 
-and [@ionlights][@gh-ionlights])
-- `arcc.py` is how we manage interaction with ARCC's cluster and make SSH'ing dead-
-simple.
-- `env` houses environment files to run this, on all mainstream OSes the 
-coordinators have tended to run in the past.
-- `jupyter` holds onto all the Jupyter configuration files/folders. This 
-actually should make its way into the group folder on the ARCC cluster, whenever
-changes are propogated, but we keep it here for reference.
-- `notebooks` handles the construction, updating, and conversion of any group's
-semester notebooks (largely for use on the website), although TravisCI tends to
-run this most times.
-- `semester` is the programmatic way to generate all the needed files for new 
-semester, along with structuring notebooks and other templated files for 
-relatively easy use among Coordinators and students alike.   -->
+## Code Structure
+```
+autobot            # package root
+├── lib            # all the primary functions of the bot go here
+│   ├── apis       # any external resources we need to access are done here
+│   ├── config     # configurations, e.g. website-specific data, etc.
+│   └── ops        # all actions enumerated, with associated funcs
+├── meta           # object-oriented containers for use by `tooling` funcs
+│   └── groups.py  # sets up specific attributes for each Group
+├── templates      # files to either seed or generate content in groups/site
+└── main.py        # entrypoint
+```
 
-[docs]: https://ucfsigai.org/admin
-[@gh-ionlights]: https://github.com/ionlights
-[@gh-thedibaccle]: https://github.com/thedibaccle
+## General Structure
+The `bot` should focus on managing 4 different verticals.
+1. Generating all the minimal content needed for a given group's semester.
+1. Maintaining and updating the website to ensure that all content is publicly,
+   and easily, accessible.
+1. Performing the routine of various social platforms, e.g. uploading lectures
+   to YouTube, architecting the emails to best sent, etc.
+1. Onboarding new leadership in a structured manner to make sure that everyone
+   has the appropriate access needed on a variety of platforms.
+
+## Documentation
+We've taken time to document as thoroughly, and unobtrustively, as possible
+&ndash; and you can find a web-based version of the documentation at
+https://ucfai.org/bot.

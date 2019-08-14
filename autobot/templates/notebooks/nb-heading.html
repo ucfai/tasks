@@ -1,0 +1,19 @@
+<img src="https://ucfai.org//{{ group_sem }}/{{ file }}/banner.jpg">
+
+<div class="col-12">
+    <a class="btn btn-success btn-block" href="https://ucfai.org/signup">
+        First Attendance? Sign Up!
+    </a>
+</div>
+
+<div class="col-12">
+    <h1> {{ title }} </h1>
+    <hr>
+</div>
+
+<div style="line-height: 2em;">
+    <p>by: {% for author in authors %}
+        <strong> {{ author.name }}</strong>
+        (<a href="https://github.com/{{ author.github }}">@{{ author.github }}</a>)
+    {% endfor %} on {{ date }}</p>
+</div>
