@@ -6,10 +6,10 @@ from typing import List, Dict
 import nbformat as nbf
 from jinja2 import Template
 
-from ucfai.meta import MeetingMeta
-from ucfai.meta.coordinator import Coordinator
+from autobot.meta import MeetingMeta
+from autobot.meta.coordinator import Coordinator
 
-res_dir = Path(__file__).parent.parent
+src_dir = Path(__file__).parent.parent
 
 
 class Meeting:
@@ -62,12 +62,22 @@ class Meeting:
 
         return d
 
-    def as_nb(self): return self.__as_path(ext=".ipynb")
+    def fq_path(self, group):
+        return group.as_dir() / self.meta.sem / self.as_dir()
+
+    def as_post(self):
+        # currently setup for Jekyll
+        # TODO: move support to Hugo
+        return Path(self.meta.sem) / self.as_md()
+
+    def as_md(self): return self.__as_path(ext="md")
+
+    def as_nb(self): return self.__as_path(ext="ipynb")
 
     def as_dir(self): return self.__as_path(ext="")
 
     def __as_path(self, ext: str = ""):
-        if ext and "." not in ext:
+        if ext and "." != ext[0]:
             ext = f".{ext}"
         return Path(f"{repr(self)}/{repr(self)}{ext}")
 
@@ -99,29 +109,29 @@ class Meeting:
         return self.meta.date > other.meta.date
 
 
-def metadata(mtg: Meeting) -> Dict:
+def metadata(meeting: Meeting) -> Dict:
     return {
-        "ucfai": {
-            "authors": [c.as_metadata() for c in mtg.inst],
-            "description": mtg.desc.strip(),
-            "title": mtg.name,
-            "date": mtg.meta.date.isoformat()[:10],  # outputs as 2018-01-16
+        "autobot": {
+            "authors": [c.as_metadata() for c in meeting.inst],
+            "description": meeting.desc.strip(),
+            "title": meeting.name,
+            "date": meeting.meta.date.isoformat()[:10],  # outputs as 2018-01-16
             "tags": [],
         }
     }
 
 
-def heading(mtg: Meeting, group: str) -> nbf.NotebookNode:
+def heading(meeting: Meeting, group: str) -> nbf.NotebookNode:
     tpl_heading = Template(
-        open(res_dir / "templates/notebooks/nb-heading.html").read())
+        open(src_dir / "templates/notebooks/nb-heading.html").read())
     tpl_args = {
         "group_sem": group,
-        "authors": mtg.inst,
-        "title": mtg.name,
-        "file": mtg.file,
-        "date": mtg.meta.date.isoformat()[:10]
+        "authors": meeting.inst,
+        "title": meeting.name,
+        "file": meeting.file,
+        "date": meeting.meta.date.isoformat()[:10]
     }
 
     rendering = tpl_heading.render(**tpl_args)
-    head_meta = {"name": mtg.name, "type": "sigai_heading"}
+    head_meta = {"name": meeting.name, "major_heading": True}
     return nbf.v4.new_markdown_cell(rendering, metadata=head_meta)

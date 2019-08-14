@@ -5,22 +5,16 @@
 {%- block header -%}
 ---
 layout: post
-title: "{{ resources['ucfai']['title'] }}"
-date: "{{ resources['ucfai']['date'] }}"
-authors:
-    {% for author in resources['ucfai']['authors'] %}
-    - {{ author['github'] }}
-    {% endfor %}
-categories:
-    {% for category in resources['ucfai']['categories'] %}
-    - {{ category }}
-    {% endfor %}
-tags:
-    {% for tag in resources['ucfai']['tags'] %}
-    - {{ tag }}
-    {% endfor %}
+title: {{ resources['metadata']['title'] }}
+date: {{ resources['metadata']['date'] }}
+authors: 
+    {% for author in resources["metadata"]["authors"] -%}
+    - {{ author["github"] }}
+    {%- endfor %}
+categories: {{ resources["metadata"]["categories"] or [] }}
+tags: {{ resources["metadata"]["tags"] or [] }}
 description: >-
-    {{ resources['ucfai']['description'] }}
+    {{ resources['metadata']['description'] }}
 ---
 {%- endblock header -%}
 
@@ -32,19 +26,22 @@ description: >-
 {% endblock input %}
 
 {% block data_svg %}
-![svg]({{ output.metadta.filenames['image/svg+xml'] | path2support }})
+![svg]({{ output.metadta.filenames['image/svg+xml'] }})
 {% endblock data_svg %}
 
 {% block data_png %}
-![png]({{ output.metadta.filenames['image/png'] | path2support }})
+![png]({{ output.metadta.filenames['image/png'] }})
 {% endblock data_png %}
 
 {% block data_jpg %}
-![jpeg]({{ output.metadta.filenames['image/jpeg'] | path2support }})
+![jpeg]({{ output.metadta.filenames['image/jpeg'] }})
 {% endblock data_jpg %}
 
 {% block markdowncell scoped %}
+{% if cell["metadata"].get("type", "") != "sigai_heading" -%}
+{# {% if not cell["metadata"].get("nb_major_heading", False) -%} #}
 {{ cell.source | wrap_text(80) }}
+{%- endif %}
 {% endblock markdowncell %}
 
 {% block headingcell scoped %}

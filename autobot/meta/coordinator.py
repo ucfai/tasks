@@ -1,6 +1,6 @@
 from typing import Dict
 
-from ucfai.tooling.apis.github import get_github_user
+from autobot.lib.apis.github import get_github_user
 
 
 class Coordinator:

@@ -1,10 +1,14 @@
-from ucfai.meta import SemesterMeta
-from ucfai.meta.group import Group
+"""NB: Update the `ACCCEPTED` constant at the base of this file when adding a
+new group!"""
+from autobot.meta import SemesterMeta
 
 
-class Course(Group):
+from .group import Group
+
+
+class Core(Group):
     def __init__(self, sem_meta: SemesterMeta):
-        super().__init__(name="Course", sem_meta=sem_meta)
+        super().__init__(name="Core", sem_meta=sem_meta)
 
 
 class Intelligence(Group):
@@ -20,3 +24,11 @@ class DataScience(Group):
 class Competitions(Group):
     def __init__(self, sem_meta: SemesterMeta):
         super().__init__(name="Competitions", sem_meta=sem_meta)
+
+
+ACCEPTED = {
+    "core": Core,
+    "intelligence": Intelligence,
+    "data-science": DataScience,
+    "competitions": Competitions,
+}

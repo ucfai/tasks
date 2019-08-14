@@ -2,7 +2,7 @@ import logging
 from pathlib import Path
 from typing import Any
 
-from ucfai.meta import SemesterMeta
+from autobot.meta import SemesterMeta
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)

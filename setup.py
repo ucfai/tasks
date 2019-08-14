@@ -2,14 +2,14 @@ from setuptools import setup, find_packages
 
 
 setup(
-    name="ucfai",
+    name="autobot",
     packages=find_packages(),
-    # package_dir={"ucfai": "src"},
+    # package_dir={"autobot": "src"},
     include_package_data=True,
-    # namespace_packages=["ucfai"],
+    # namespace_packages=["autobot"],
     entry_points={
         "console_scripts": [
-            "ucfai = ucfai.run:main"
+            "autobot = autobot.main:main"
         ]
     },
     install_requires=[
