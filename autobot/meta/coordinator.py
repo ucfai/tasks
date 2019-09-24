@@ -5,7 +5,7 @@ from autobot.lib.apis.github import get_github_user
 
 class Coordinator:
     def __init__(self, github: str, role: str) -> None:
-        self.github = github
+        self.github = github.lower()
         assert self.github
         self.role = role
 
@@ -17,7 +17,7 @@ class Coordinator:
         if "coordinators" in d:
             d = d["coordinators"]
 
-        return {c["github"]: Coordinator(**c) for c in d}
+        return {c["github"].lower(): Coordinator(**c) for c in d}
 
     def _github_request(self) -> None:
         user = get_github_user(self.github)

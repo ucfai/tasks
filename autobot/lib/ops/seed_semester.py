@@ -38,14 +38,14 @@ def seed_semester(group: Group, auto_overwrite: bool = False) -> None:
     #   2. overhead.yml
     #   3. syllabus.yml
     # noinspection PyTypeChecker
-    shutil.copytree(src_dir / "templates/seed", group.as_dir())
+    shutil.copytree(src_dir / "templates/seed/group", group.as_dir())
 
     # noinspection PyTypeChecker
     with open(group.as_dir() / "env.yml", "r") as f:
         env = Template(f.read())
 
     with open(group.as_dir() / "env.yml", "w") as f:
-        f.write(env.render(org_name=ORG_NAME, sem_meta=group.sem))
+        f.write(env.render(org_name=ORG_NAME, group=group))
     # endregion
 
     # region 2. Setup Website for this semester

@@ -35,12 +35,12 @@ def make_schedule(group: Group, schedule: Dict, offset: int = 2):
     meeting_dates = pd.Series(date_range)
     meeting_start = (offset - 1) * 7 + day2index(wday)
     meeting_dates = meeting_dates[meeting_start::7]
-    if holidays:
+    if holidays is not None:
         # remove holidays
         meeting_dates = meeting_dates[~meeting_dates.isin(holidays)]
 
     time_s, time_e = schedule["time"].split("-")
-    meeting_time = pd.Timedelta(hours=int(time_s[:2]), minutes=int(time_s[3:]))
+    meeting_time = pd.Timedelta(hours=int(time_s[:2]), minutes=int(time_s[2:]))
     meeting_dates += meeting_time
 
     log.info(f"Meeting dates\n{meeting_dates}")
@@ -70,10 +70,10 @@ def parse_calendar(group: Group) -> tuple:
     for holiday in OBS_HOLIDAYS[group.sem.name]:
         day2remove = df_calendar.loc[summary_mask.str.contains(holiday)].iloc[0]
         beg = day2remove["dtstart"][:-1]
-        end = day2remove["dtend"][:-1] if day2rm["dtend"] else beg
+        end = day2remove["dtend"][:-1] if day2remove["dtend"] else beg
         holidays.append(pd.Series(pd.date_range(start=beg, end=end)))
 
-    if holidays:
+    if holidays is not None:
         holidays = pd.concat(holidays)
 
     return date_range, holidays

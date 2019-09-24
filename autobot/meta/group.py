@@ -49,3 +49,5 @@ class Group:
         if for_jekyll: return Path(repr(self))
         return Path(repr(self)) / self.sem.short
 
+    def for_jinja(self):
+        return repr(self)

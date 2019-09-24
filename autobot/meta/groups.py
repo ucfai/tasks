@@ -25,10 +25,15 @@ class Competitions(Group):
     def __init__(self, sem_meta: SemesterMeta):
         super().__init__(name="Competitions", sem_meta=sem_meta)
 
+class Supplementary(Group):
+    def __init__(self, sem_meta: SemesterMeta):
+        super().__init__(name="Supplementary", sem_meta=sem_meta)
+
 
 ACCEPTED = {
     "core": Core,
     "intelligence": Intelligence,
     "data-science": DataScience,
     "competitions": Competitions,
+    "supplementary": Supplementary,
 }
