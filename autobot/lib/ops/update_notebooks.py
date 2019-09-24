@@ -8,9 +8,3 @@ def update_notebooks(group: Group, auto_overwrite: bool = False) -> None:
     2. Updates the banner for the meeting / social media.
     """
     safety.force_root()
-
-    nbgrader_cell_metadata = {
-        "nbgrader": {
-            "solution": True,
-        }
-    }

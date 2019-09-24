@@ -101,7 +101,7 @@
             <h2 id="room">{{ room }}</h2>
 
             <div id="title-container">
-                <h1 id="title">{{ title }}</h1>
+                <h1 id="title">{{ name }}</h1>
             </div>
 
             <img id="logo" src="https://ucfai.org/assets/brand/fullmark/dark-bg-ready.png" />
@@ -118,10 +118,10 @@
             var banner_logo = 143;
             var banner_padding = 36;
 
-            var banner = document.getElementsByClassTitle("banner")[0];
+            var banner = document.getElementsByClassName("banner")[0];
 
-            var title = document.getElementById("title");
-            console.log("title " + title.offsetHeight);
+            var title = document.getElementById("name");
+            console.log("name " + title.offsetHeight);
 
             var container = document.getElementById("title-container");
             container.style.height = banner.offsetHeight - 2 * banner_padding - 2 * banner_h2s - banner_logo;
