@@ -40,10 +40,11 @@ def make_notebooks(group: Group, forced_overwrite: bool = False) -> None:
     overhead = yaml.load(open(group.as_dir() / "overhead.yml", "r"))
     coordinators = overhead["coordinators"]
     setattr(group, "coords", Coordinator.parse_yaml(coordinators))
+    print(group.coords)
 
     meetings = overhead["meetings"]
     _meeting_offset = meetings["start_offset"]
-    meeting_sched = ucf.make_schedule(group, meetings, _meeting_offset)
+    meeting_schedule = ucf.make_schedule(group, meetings, _meeting_offset)
     # endregion
 
     # region 2. Read `syllabus.yml` and parse Syllabus
@@ -59,9 +60,10 @@ def make_notebooks(group: Group, forced_overwrite: bool = False) -> None:
             continue
 
     for meeting in meetings:
+        print(repr(meeting))
         # Make edit in the group-specific repo
         meeting.as_notebook(overwrite=forced_overwrite)
-        meeting.publish_kaggle()
+        # meeting.publish_kaggle()
 
         # Make edits in the ucfai.org repo
         meeting.as_post(overwrite=forced_overwrite)

@@ -1,10 +1,26 @@
-import hashlib
 import io
+import os
+import copy
+import datetime
+import shutil
 from pathlib import Path
+from hashlib import sha256
 from typing import List, Dict
+from itertools import product
+from distutils.dir_util import copy_tree
 
-import nbformat as nbf
+import imgkit
+import requests
+import yaml
+from PIL import Image
+import pandas as pd
 from jinja2 import Template
+import nbformat as nbf
+import nbconvert as nbc
+from nbgrader.preprocessors import ClearSolutions, ClearOutput
+
+from autobot import ORG_NAME
+from autobot.lib.utils import website
 
 from . import MeetingMeta
 from .coordinator import Coordinator
@@ -15,23 +31,26 @@ src_dir = Path(__file__).parent.parent
 
 class Meeting:
     def __init__(self, group: Group, meeting_dict: Dict, meta: MeetingMeta):
-        assert set(["required", "optional"]).intersection(set(meeting_dicts.keys()))
+        assert set(["required", "optional"]).intersection(set(meeting_dict.keys()))
 
         self.group = group
         self.required = meeting_dict["required"]
         self.optional = meeting_dict["optional"]
         self.meta = meta
 
+        self.required["instructors"] = [x.lower()
+                                        for x in self.required["instructors"]]
+
         for key in self.required.keys():
             assert self.required[key], \
                 f"You haven't specified `{key}` for this meeting..."
 
-        self.repo_path = self.group.as_dir() / self.meta.sem / self.as_dir()
+        self.repo_path = self.group.as_dir() / repr(self)
         self.site_path = (website.CONTENT_DIR / self.group.as_dir(for_jekyll=True) /
                           "_posts" / repr(self))
 
-        self.repo_math.mkdir(exist_ok=True)
-        self.site_math.mkdir(exist_ok=True)
+        self.repo_path.mkdir(exist_ok=True)
+        self.site_path.mkdir(exist_ok=True)
 
     def write_yaml(self) -> Dict:
         """This prepares the dict to write each entry in `syllabus.yml`."""
@@ -73,11 +92,13 @@ class Meeting:
 
         return d
 
-    def fq_path(self, group):
-        return group.as_dir() / self.meta.sem / self.as_dir()
-
     def as_md(self): return self.__as_path(ext="md")
     def as_dir(self): return self.__as_path(ext="")
+    def as_slug_competition(self):
+        return f"{ORG_NAME}-{self.as_slug_kernel()}"
+    def as_slug_kernel(self):
+        return (f"{self.group.name.lower()}-"
+            f"{self.group.sem.short}-{self.required['filename']}")
     def __as_path(self, ext: str = ""):
         if ext and "." != ext[0]:
             ext = f".{ext}"
@@ -86,7 +107,7 @@ class Meeting:
     def __repr__(self):
         if not self.meta.date:
             raise ValueError("`Meeting.date` must be defined for this to work.")
-        return f"{self.meta.date.isoformat()[:10]}-{self.filename}"
+        return f"{self.meta.date.isoformat()[:10]}-{self.required['filename']}"
 
     def __str__(self): return self.title
     def __lt__(self, other) -> bool:
@@ -108,10 +129,15 @@ class Meeting:
     def __can_overwrite(self, overwrite: bool):
         if overwrite:
             return True
-        pass
+
+        if self.repo_path.exists():
+            overwrite = input(f"`{self.repo_path}` exists. Overwrite? [y/N] ")
+            return overwrite.lower() in ["y", "yes"]
+
+        return False
 
     def __read_nb(self, suffix: str = ""):
-        path = copy.deepcopy(self.path)
+        path = copy.deepcopy(self.repo_path) / (repr(self) + ".ipynb")
         # looking to prepend ".suffix" to ".ipynb", so you get: `.suffix.ipynb`
         if suffix:
             suffix = suffix if suffix.startswith(".") else f".{suffix}"
@@ -132,8 +158,8 @@ class Meeting:
         nb, path = self.__read_nb(suffix="solution")
 
         # region Enforce metadata and primary heading of notebooks
-        title_index = next([index for index, cell in enumerate(nb["cells"])
-                            if cell["metadata"].get("nb-title", False)], None)
+        title_index = next((index for index, cell in enumerate(nb["cells"])
+                            if cell["metadata"].get("nb-title", False)), None)
 
         if title_index is not None:
             del nb["cells"][title_index]
@@ -154,11 +180,10 @@ class Meeting:
             kernel_metadata = Template(f.read())
 
         with open(self.repo_path / "kernel-metadata.json", "w") as f:
-            title_as_slug = f"{group.name.lower()}-{group.sem.short}-{meeting.filename}"
-
-            meeting.kaggle["competitions"].insert(0, f"{ORG_NAME}-{title_as_slug}")
-            text = kernel_metadata.render(slug=title_as_slug, notebook=repr(meeting),
-                                          kaggle=meeting.kaggle)
+            self.optional["kaggle"]["competitions"].insert(0, self.as_slug_competition())
+            text = kernel_metadata.render(slug=self.as_slug_kernel(),
+                                          notebook=repr(self),
+                                          kaggle=self.optional["kaggle"])
 
             f.write(text.replace("'", '"'))  # JSON doesn't like single-quotes
         # endregion
@@ -172,14 +197,23 @@ class Meeting:
             }
         }
 
+        solution_begin = "### BEGIN SOLUTION"
+        solution_end   = "### END SOLUTION"
+
         for cell in nb["cells"]:
-            if cell["cell_type"] == "code":
-                cell["metadata"].update(nbgrader_cell_metadata)
+            if cell["cell_type"] != "code":
+                continue
+
+            source = "".join(cell["source"])
+            if solution_begin in source and solution_end in source:
+                cell["metadata"].update({"nbgrader": {"solution": True}})
+            elif "nbgrader" in cell["metadata"]:
+                del cell["metadata"]["nbgrader"]
 
         with open(path, "w") as f_nb:
             nbf.write(nb, f_nb)
 
-        nb_exporter = nbc.NotebookExporter(preprocessor=[ClearSolutions, ClearOutput])
+        nb_exporter = nbc.NotebookExporter(preprocessors=[ClearSolutions, ClearOutput])
         nb_empty, _ = nb_exporter.from_notebook_node(nb)
 
         nb_release = path.with_suffix("").with_suffix("").with_suffix(path.suffixes[-1])
@@ -217,7 +251,7 @@ class Meeting:
 
         # NOTE: this is where the site's content path is generated
         output = (website.CONTENT_DIR / self.group.as_dir(for_jekyll=True) / "_posts" /
-                  repr(meeting) / f"{repr(meeting)}.md")
+                  repr(self) / f"{repr(self)}.md")
 
         output.parent.mkdir(exist_ok=True)
 
@@ -234,30 +268,30 @@ class Meeting:
             return
 
         template_banner = Template(
-            open(src_dic / "templates/event-banner.html", "r").read()
+            open(src_dir / "templates/event-banner.html", "r").read()
         )
 
         accepted_content_types = [
             f"image/{x}" for x in ["jpg", "jpeg", "png", "gif", "tiff"]
         ]
 
-        extension = self.cover.split(".")[-1]
+        extension = self.required["cover"].split(".")[-1]
 
         cover_image_path = (website.CONTENT_DIR /
                             self.group.as_dir(for_jekyll=True) / "_posts" /
                             repr(self) / "cover.png")
 
         # snag the image from the URL provided in the syllabus
-        cover = requests.get(self.cover, headers={"user-agent": "Mozilla/5.0"})
+        cover = requests.get(self.required["cover"], headers={"user-agent": "Mozilla/5.0"})
         if cover.headers["Content-Type"] in accepted_content_types:
             image_as_bytes = io.BytesIO(cover.content)
             try:
                 # noinspection PyTypeChecker
-                cover_as_bytes = io.BytesIO(open(cover_img_path, "rb").read())
+                cover_as_bytes = io.BytesIO(open(cover_image_path, "rb").read())
 
                 # get hashes to check for diff
-                image_hash = sha256(image_as_bytes).hexdigest()
-                cover_hash = sha256(cover_as_bytes).hexdigest()
+                image_hash = sha256(image_as_bytes.read()).hexdigest()
+                cover_hash = sha256(cover_as_bytes.read()).hexdigest()
 
                 # clearly, something has changed between what we have and what
                 #   was just downloaded -> update
@@ -281,11 +315,12 @@ class Meeting:
 def _generate_metadata(meeting: Meeting) -> Dict:
     return {
         "autobot": {
-            "authors": [c.as_metadata() for c in meeting.instructors],
-            "description": meeting.description.strip(),
-            "title": meeting.title,
+            "authors": [meeting.group.coords[c.lower()].as_metadata()
+                        for c in meeting.required["instructors"]],
+            "description": meeting.required["description"].strip(),
+            "title": meeting.required["title"],
             "date": meeting.meta.date.isoformat()[:10],  # outputs as 2018-01-16
-            "tags": meeting.tags,
+            "tags": meeting.optional["tags"],
             "categories": [meeting.group.sem.short],
         }
     }
@@ -298,13 +333,13 @@ def _generate_heading(meeting: Meeting) -> nbf.NotebookNode:
 
     tpl_args = {
         "group_sem": meeting.group.as_dir(),
-        "authors": meeting.instructors,
-        "title": meeting.title,
-        "file": meeting.filename,
+        "authors": [meeting.group.coords[author] for author in meeting.required["instructors"]],
+        "title": meeting.required["title"],
+        "file": meeting.required["filename"],
         "date": meeting.meta.date.isoformat()[:10]
     }
 
     rendering = tpl_heading.render(**tpl_args)
-    head_meta = {"title": meeting.title, "nb-title": True}
+    head_meta = {"title": meeting.required["title"], "nb-title": True}
 
     return nbf.v4.new_markdown_cell(rendering, metadata=head_meta)

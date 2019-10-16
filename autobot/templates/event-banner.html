@@ -97,11 +97,11 @@
 <body onload="resizeTitle()">
     <div class="banner">
         <div id="text" class="half">
-            <h2 id="date">{{ date.strftime("%a, %b %d @ %-I:%M %p") }}</h2>
-            <h2 id="room">{{ room }}</h2>
+            <h2 id="date">{{ meeting.meta.date.strftime("%a, %b %d @ %-I:%M %p") }}</h2>
+            <h2 id="room">{{ meeting.meta.room }}</h2>
 
             <div id="title-container">
-                <h1 id="title">{{ title }}</h1>
+                <h1 id="title">{{ meeting.required["title"] }}</h1>
             </div>
 
             <img id="logo" src="https://ucfai.org/assets/brand/fullmark/dark-bg-ready.png" />
