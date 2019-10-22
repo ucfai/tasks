@@ -340,13 +340,13 @@ class Meeting:
 
 
     def publish_kaggle(self):
-        print(self.fqd_path(), os.getcwd())
+        # TODO: prevent Kaggle from pushing every notebook, every time
+
         if "KAGGLE_CONFIG_DIR" not in os.environ:
             os.environ["KAGGLE_CONFIG_DIR"] = str(Path(__file__).parent.parent.parent)
 
         cwd = os.getcwd()
         os.chdir(self.fqd_path())
-        import pdb; pdb.set_trace()
         subprocess.call("kaggle k push", shell=True)
         os.chdir(cwd)
 
