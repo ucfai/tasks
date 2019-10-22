@@ -3,6 +3,7 @@ import os
 import copy
 import datetime
 import shutil
+import subprocess
 from pathlib import Path
 from hashlib import sha256
 from typing import List, Dict
@@ -112,11 +113,12 @@ class Meeting:
 
     def as_md(self): return self.__as_path(ext="md")
     def as_dir(self): return self.__as_path(ext="")
+    def fqd_path(self): return self.group.as_dir() / self.as_dir().parent
     def as_slug_competition(self):
         return f"{ORG_NAME}-{self.as_slug_kernel()}"
     def as_slug_kernel(self):
-        return (f"{self.group.name.lower()}-"
-            f"{self.group.sem.short}-{self.required['filename']}")
+        return f"{self.group.for_kaggle()}-{self.required['filename']}"
+
     def __as_path(self, ext: str = ""):
         if ext and "." != ext[0]:
             ext = f".{ext}"
@@ -336,6 +338,17 @@ class Meeting:
             "no-stop-slow-scripts": "",
         })
 
+
+    def publish_kaggle(self):
+        print(self.fqd_path(), os.getcwd())
+        if "KAGGLE_CONFIG_DIR" not in os.environ:
+            os.environ["KAGGLE_CONFIG_DIR"] = str(Path(__file__).parent.parent.parent)
+
+        cwd = os.getcwd()
+        os.chdir(self.fqd_path())
+        import pdb; pdb.set_trace()
+        subprocess.call("kaggle k push", shell=True)
+        os.chdir(cwd)
 
 def _generate_metadata(meeting: Meeting) -> Dict:
     return {

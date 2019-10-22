@@ -63,7 +63,7 @@ def make_notebooks(group: Group, forced_overwrite: bool = False) -> None:
         print(repr(meeting))
         # Make edit in the group-specific repo
         meeting.as_notebook(overwrite=forced_overwrite)
-        # meeting.publish_kaggle()
+        meeting.publish_kaggle()
 
         # Make edits in the ucfai.org repo
         meeting.as_post(overwrite=forced_overwrite)

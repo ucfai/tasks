@@ -51,3 +51,6 @@ class Group:
 
     def for_jinja(self):
         return repr(self)
+
+    def for_kaggle(self):
+        return f"{repr(self)}-{self.sem.short}"
