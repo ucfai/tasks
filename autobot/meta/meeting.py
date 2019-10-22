@@ -36,7 +36,18 @@ class Meeting:
         self.group = group
         self.required = meeting_dict["required"]
         self.optional = meeting_dict["optional"]
-        self.meta = meta
+
+        if "date" in self.optional and self.optional["date"]:
+            date = self.optional["date"]
+        else:
+            date = meta.date
+
+        if "room" in self.optional and self.optional["room"]:
+            room = self.optional["room"]
+        else:
+            room = meta.room
+
+        self.meta = MeetingMeta(date, room)
 
         self.required["instructors"] = [x.lower()
                                         for x in self.required["instructors"]]
@@ -65,6 +76,7 @@ class Meeting:
             },
             "optional": {
                 "date": self.meta.date,
+                "room": self.meta.room,
                 "tags": self.tags,
                 "slides": self.slides,
                 "kernels": self.kernels,
@@ -89,6 +101,12 @@ class Meeting:
         d["required"]["instructors"] = list(map(lambda x: coords[x.lower()],
                                                 d["required"]["instructors"]))
         d["meta"] = meta
+
+        if d["optional"]["room"]:
+            d["meta"]["room"] = d["optional"]["room"]
+
+        if d["optional"]["date"]:
+            d["meta"]["date"] = d["optional"]["date"]
 
         return d
 
@@ -309,7 +327,14 @@ class Meeting:
         banner = template_banner.render(meeting=self,
                                         cover=cover_image_path.absolute())
 
-        imgkit.from_string(banner, out, options={"quiet": ""})
+        imgkit.from_string(banner, out, options={
+            # standard flags should be passed as dict keys with empty values...
+            # "quiet": "",
+            "debug-javascript": "",
+            "enable-javascript": "",
+            "javascript-delay": "400",
+            "no-stop-slow-scripts": "",
+        })
 
 
 def _generate_metadata(meeting: Meeting) -> Dict:

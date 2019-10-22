@@ -1,5 +1,6 @@
 **/pid*
-kaggle.json
+kaggle.json*
+!kaggle.json.gpg
 *.rsl*
 .idea/
 .DS_Store
