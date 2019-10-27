@@ -9,11 +9,7 @@ from autobot.lib import safety, log
 from autobot.lib.configs import website
 
 
-# go to the `autobot` root pkg dir
-src_dir = Path(__file__).parent.parent.parent
-
-
-def seed_semester(group: Group, auto_overwrite: bool = False) -> None:
+def seed_semester(group: Group) -> None:
     """Sets up the skeleton for a new semester.
     1. Copies base `yml` into `<group>/<semester>/`
     2. Sets up the Website's entires for the given semester. (NB: Does **not**
@@ -21,36 +17,30 @@ def seed_semester(group: Group, auto_overwrite: bool = False) -> None:
     3. Performs a similar setup with Google Drive & Google Forms.
     4. Generates skeleton for the login/management system.
     """
-    safety.force_root()
-
-    # Safety check
-    if auto_overwrite:
-        overwrite = log.warning(f"About to delete {group.as_dir()}. ", prompt=True)
-        if overwrite:
-            shutil.rmtree(group.as_dir())
-
-    if group.as_dir().exists():
-        log.warning(f"{group.as_dir()} exists! Tread carefully.")
-        raise FileExistsError("Found {group.as_dir()}; exiting.")
-
+    if paths.repo_group_folder(group).exists():
+        log.warning(f"{paths.repo_group_folder(group)} exists! Tread carefully.")
+        overwrite = input("The following actions **are destructive**. "
+                          "Continue? [y/N] ")
+        if overwrite.lower() not in ["y", "yes"]:
+            return
+    
     # region 1. Copy base `yml` files.
     #   1. env.yml
     #   2. overhead.yml
     #   3. syllabus.yml
-    # noinspection PyTypeChecker
-    shutil.copytree(src_dir / "templates/seed/group", group.as_dir())
+    # strong preference to use `shutil`, but can't use with existing dirs
+    # shutil.copytree("autobot/templates/seed/meeting", path.parent)
+    copy_tree("autobot/templates/seed/group", str(paths.repo_group_folder(group)))
 
-    # noinspection PyTypeChecker
-    with open(group.as_dir() / "env.yml", "r") as f:
-        env = Template(f.read())
+    env_yml = paths.repo_group_folder(group) / "env.yml"
+    env = Template(open(env_yml, "r").read())
 
-    with open(group.as_dir() / "env.yml", "w") as f:
+    with open(env_yml, "w") as f:
         f.write(env.render(org_name=ORG_NAME, group=group))
     # endregion
 
     # region 2. Setup Website for this semester
-    assert website.CONTENT_DIR.exists()
-    (website.CONTENT_DIR / group.as_dir()).mkdir(exist_ok=auto_overwrite)
+    paths.site_group_folder(group)
     # endregion
 
     # region 3. Setup Google Drive & Google Forms setup

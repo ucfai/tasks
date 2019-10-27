@@ -1,5 +1,6 @@
 import io
 import os
+import sys
 import datetime
 import hashlib
 import shutil
@@ -16,13 +17,11 @@ import pandas as pd
 from jinja2 import Template
 import nbformat as nbf
 import nbconvert as nbc
+from tqdm import tqdm
 
-from autobot.meta import notebooks, Coordinator, Group, Meeting
-from autobot.lib import safety
-from autobot.lib.configs import website
-from autobot.lib.apis import ucf
-
-src_dir = Path(__file__).parent.parent.parent
+from autobot.meta import Group, Meeting, Coordinator
+from autobot.lib.apis import ucf, kaggle
+from autobot.lib.utils import meetings, paths
 
 def make_notebooks(group: Group, forced_overwrite: bool = False) -> None:
     """Assumes a [partially] complete Syllabus; this will only create new
@@ -33,39 +32,42 @@ def make_notebooks(group: Group, forced_overwrite: bool = False) -> None:
     2. Reads `syllabus.yml`, parses the Semester's Syllabus, and sets up
        Notebooks
     """
-    safety.force_root()
-
     # region Read `overhead.yml` and seed Coordinators
     # noinspection PyTypeChecker
-    overhead = yaml.load(open(group.as_dir() / "overhead.yml", "r"))
+    overhead = yaml.load(open(paths.repo_group_folder(group) / "overhead.yml", "r"))
     coordinators = overhead["coordinators"]
     setattr(group, "coords", Coordinator.parse_yaml(coordinators))
-    print(group.coords)
 
-    meetings = overhead["meetings"]
-    _meeting_offset = meetings["start_offset"]
-    meeting_schedule = ucf.make_schedule(group, meetings, _meeting_offset)
+    overhead = overhead["meetings"]
+    meeting_schedule = ucf.make_schedule(group, overhead)
     # endregion
 
     # region 2. Read `syllabus.yml` and parse Syllabus
-    syllabus = yaml.load(open(group.as_dir() / "syllabus.yml", "r"))
+    syllabus_yml = yaml.load(open(paths.repo_group_folder(group) / "syllabus.yml", "r"))
 
-    meetings = []
-    for meeting, schedule in zip(syllabus, meeting_schedule):
+    syllabus = []
+    for meeting, schedule in tqdm(zip(syllabus_yml, meeting_schedule),
+                                  desc="Parsing Meetings"):
         try:
-            meetings.append(Meeting(group, meeting, schedule))
+            syllabus.append(Meeting(group, meeting, schedule))
         except AssertionError:
-            print("You're missing `required` fields from the meeting happening "
-                  f"on {schedule.date} in {schedule.room}!")
+            tqdm.write("You're missing `required` fields from the meeting "
+                       f"happening on {schedule.date} in {schedule.room}!")
             continue
 
-    for meeting in meetings:
-        print(repr(meeting))
+    for meeting in tqdm(syllabus, desc="Building/Updating Meetings", file=sys.stdout):
+        tqdm.write(f"{repr(meeting)} ~ {str(meeting)}")
+
+        # Perform initial directory checks/clean-up
+        meetings.update_or_create_folders_and_files(meeting)
+
         # Make edit in the group-specific repo
-        meeting.as_notebook(overwrite=forced_overwrite)
-        meeting.publish_kaggle()
+        meetings.update_or_create_notebook(meeting, overwrite=forced_overwrite)
+        meetings.download_papers(meeting)
+        kaggle.push_kernel(meeting)
 
         # Make edits in the ucfai.org repo
-        meeting.as_post(overwrite=forced_overwrite)
-        meeting.as_banner(overwrite=forced_overwrite)
+        meetings.render_banner(meeting)
+        # meetings.render_instagram_post(meeting)
+        meetings.export_notebook_as_post(meeting)
     # endregion
