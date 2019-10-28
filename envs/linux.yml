@@ -4,18 +4,18 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
-  - python=3.6.5
-  - jinja2=2.10
+  - python=3.7
+  - jinja2
   - jupyter=1.0.0
   - nbconvert=5.3.1
-  - pandas=0.23.4
-  - numpy=1.15.0
-  - pip=10.0.1
+  - pandas=0.25
+  - numpy
+  - pip
   - pygithub=1.39
-  - pyyaml=3.13
-  - pillow=5.2.0
+  - pyyaml
+  - pillow
   - requests=2.19.1
   - wkhtmltopdf=0.12.3
   - pip:
       - imgkit==1.0.1
-      - git+https://github.com/ucfai/admin
+      - git+https://github.com/ucfai/bot

@@ -6,5 +6,6 @@ def warning(s: str, prompt: bool = False):
     if prompt:
         return input("Continue? [y/N] ").lower() in ["y", "yes"]
 
+
 def info(s: str):
     pass

@@ -94,14 +94,14 @@
     </style>
 </head>
 
-<body onload="resizeTitle()">
+<body>
     <div class="banner">
         <div id="text" class="half">
-            <h2 id="date">{{ date.strftime("%a, %b %d @ %-I:%M %p") }}</h2>
-            <h2 id="room">{{ room }}</h2>
+            <h2 id="date">{{ meeting.meta.date.strftime("%a, %b %d @ %-I:%M %p") }}</h2>
+            <h2 id="room">{{ meeting.meta.room }}</h2>
 
             <div id="title-container">
-                <h1 id="title">{{ name }}</h1>
+                <h1 id="title">{{ meeting.required["title"] }}</h1>
             </div>
 
             <img id="logo" src="https://ucfai.org/assets/brand/fullmark/dark-bg-ready.png" />
@@ -113,25 +113,36 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var banner_h2s = 90;
-            var banner_logo = 143;
-            var banner_padding = 36;
+     document.addEventListener("DOMContentLoaded", function() {
+         var banner_h2s = 90;
+         var banner_logo = 143;
+         var banner_padding = 36;
 
-            var banner = document.getElementsByClassName("banner")[0];
+         var banner = document.getElementsByClassName("banner")[0];
 
-            var title = document.getElementById("name");
-            console.log("name " + title.offsetHeight);
+         var title = document.getElementById("title");
+         /* console.log("title " + title.offsetHeight);
+          */
+         var container = document.getElementById("title-container");
+         container.style.height = banner.offsetHeight - 2 * banner_padding - 2 * banner_h2s - banner_logo;
+         /* console.log("container " + container.offsetHeight);
+          */
+         /* Resizes title */
+         title.style.fontSize = parseFloat(getComputedStyle(title).fontSize)
+         while (title.offsetHeight > container.offsetHeight) {
+             oldTitleFontSize = parseFloat(getComputedStyle(title).fontSize);
+             newTitleFontSize = parseFloat(oldTitleFontSize * 0.95);
+             title.style.fontSize = newTitleFontSize + "px";
+             /* Adjusts line-height on resized title, uses an arbitrary value */
+             title.style.lineHeight = newTitleFontSize * 1.05 + "px";
+             console.log("resizing: " + oldTitleFontSize + " -> " + newTitleFontSize);
+             console.log(title.offsetHeight, container.offsetHeight);
+         }
 
-            var container = document.getElementById("title-container");
-            container.style.height = banner.offsetHeight - 2 * banner_padding - 2 * banner_h2s - banner_logo;
-
-            console.log("container " + container.offsetHeight);
-
-
-            var padding = ((container.offsetHeight - title.offsetHeight) / 2);
-            title.style.marginTop = padding;
-            title.style.marginBottom = padding;
-        })
+         /* Vertically centers title */
+         var padding = ((container.offsetHeight - title.offsetHeight) / 2);
+         title.style.paddingTop = padding;
+         title.style.paddingBottom = padding;
+     })
     </script>
 </body>
