@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #: @author ionlights (John Muchovej)
 
 alias echo="echo -e"
@@ -64,13 +64,6 @@ case $OS in
         path="linux"
         ;;
 esac
-
-#: validate that `direnv` is installed
-if ! command -v direnv; then
-    echo -n "Please install \`direnv\`, this will save your \$PATH from being "
-    echo    "modified heavily."
-    exit -1
-fi
 
 #: install `conda` into an isolated "subsystem"
 chmod +x miniconda3.sh
