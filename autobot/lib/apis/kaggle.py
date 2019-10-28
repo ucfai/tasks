@@ -10,7 +10,9 @@ from autobot.meta.meeting import Meeting
 def push_kernel(meeting: Meeting):
     # TODO: prevent Kaggle from pushing every notebook, every time
     if "KAGGLE_CONFIG_DIR" not in os.environ:
-        os.environ["KAGGLE_CONFIG_DIR"] = str(Path(__file__).parent.parent.parent.parent)
+        os.environ["KAGGLE_CONFIG_DIR"] = str(
+            Path(__file__).parent.parent.parent.parent
+        )
 
     cwd = os.getcwd()
     os.chdir(paths.repo_meeting_folder(meeting))
@@ -32,6 +34,4 @@ def slug_competition(meeting: Meeting):
     """Since Kaggle InClass competitions are listed under general competitions,
     we take the `slug_kernel` of the meeting, and prepend `ORG_NAME`, which
     for AI@UCF, would be `ucfai`."""
-    return (
-        f"{ORG_NAME}-{slug_kernel(meeting)}"
-    )
+    return f"{ORG_NAME}-{slug_kernel(meeting)}"

@@ -14,18 +14,15 @@ from autobot.lib import log
 CALENDAR_URL = "https://calendar.ucf.edu"
 # these holidays need to match, specifically, how UCF labels them
 OBS_HOLIDAYS = {
-    "spring": ["Spring Break", "Martin Luther King Jr. Day", ],
+    "spring": ["Spring Break", "Martin Luther King Jr. Day"],
     "summer": [],
-    "fall"  : ["Veterans Day", "Labor Day", "Thanksgiving", ],
+    "fall": ["Veterans Day", "Labor Day", "Thanksgiving"],
 }
 
-long2short = {
-    "fall": "fa",
-    "summer": "su",
-    "spring": "sp",
-}
+long2short = {"fall": "fa", "summer": "su", "spring": "sp"}
 # invert `long2short`
 short2long = {k: v for v, k in long2short.items()}
+
 
 def day2index(s: str) -> int:
     weekdays = "Mon Tue Wed Thu Fri".split()
@@ -69,11 +66,12 @@ def parse_calendar(group: Group) -> tuple:
 
     summary_mask = df_calendar["summary"]
     starts = df_calendar.loc[summary_mask.str.contains("Classes Begin")].iloc[0]
-    ends   = df_calendar.loc[summary_mask.str.contains("Classes End")].iloc[0]
+    ends = df_calendar.loc[summary_mask.str.contains("Classes End")].iloc[0]
 
     # generate a DataFrame with all possible dates (to act like a calendar)
-    date_range = pd.Series(pd.date_range(start=starts["dtstart"][:-1],
-                                         end=ends["dtstart"][:-1]))
+    date_range = pd.Series(
+        pd.date_range(start=starts["dtstart"][:-1], end=ends["dtstart"][:-1])
+    )
 
     holidays = []
     for holiday in OBS_HOLIDAYS[group.semester.name]:
@@ -97,11 +95,7 @@ def determine_semester() -> SemesterMeta:
 
     may, aug, dec = [5, 8, 12]  # May, Aug, Dec (1-indexed)
 
-    semester_dict = OrderedDict({
-        "spring": may,
-        "summer": aug,
-        "fall": dec,
-    })
+    semester_dict = OrderedDict({"spring": may, "summer": aug, "fall": dec})
 
     semester_list = list(semester_dict.keys())
     n_semesters = len(semester_list)
@@ -118,6 +112,7 @@ def determine_semester() -> SemesterMeta:
     year, name = current_url.replace(f"{CALENDAR_URL}/", "").split("/")
 
     return semester_converter(name=name, year=year)
+
 
 def semester_converter(name: str = "", year: str = "", short: str = ""):
     """This makes a bi-directional conversion between "Spring 2019" <-> `sp19`.

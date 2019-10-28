@@ -48,4 +48,6 @@ def add_coordinators(grp: Group) -> None:
 
     for coord in grp.coords.items():
         _team.add_membership(coord.github, role=roles(coord.role))
+
+
 # endregion

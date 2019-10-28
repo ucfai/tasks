@@ -35,7 +35,7 @@ class Suffixes:
 
 class Solution:
     BEGIN = "### BEGIN SOLUTION"
-    END   = "### END SOLUTION"
+    END = "### END SOLUTION"
 
 
 def read(meeting: Meeting, suffix: str = Suffixes.WORKBOOK):
@@ -139,8 +139,11 @@ def update_or_create_notebook(meeting: Meeting, overwrite: bool = False):
         #   "nb-title": true,
         #   ...
         # otherwise, set `title_index = None` so we have a set value
-        title_index = (index for index, cell in enumerate(nb["cells"])
-                       if cell["metadata"].get("nb-title", False))
+        title_index = (
+            index
+            for index, cell in enumerate(nb["cells"])
+            if cell["metadata"].get("nb-title", False)
+        )
         title_index = next(title_index, None)  # give `next()` a default
         del nb["cells"][title_index]
     except TypeError:
@@ -164,21 +167,21 @@ def update_or_create_notebook(meeting: Meeting, overwrite: bool = False):
     kernel_metadata = Template(open(kernel_metadata_path).read())
 
     with open(kernel_metadata_path, "w") as f:
-        meeting.optional["kaggle"]["competitions"].insert(0, kaggle.slug_competition(meeting))
-        text = kernel_metadata.render(slug=kaggle.slug_kernel(meeting),
-                                      notebook=repr(meeting),
-                                      kaggle=meeting.optional["kaggle"])
+        meeting.optional["kaggle"]["competitions"].insert(
+            0, kaggle.slug_competition(meeting)
+        )
+        text = kernel_metadata.render(
+            slug=kaggle.slug_kernel(meeting),
+            notebook=repr(meeting),
+            kaggle=meeting.optional["kaggle"],
+        )
         f.write(text.replace("'", '"'))  # JSON doesn't like single quotes
     # endregion
 
     # region Generate workbook by splitting solution manual
     # this was determined by looking at the `nbgrader` source code in checks for
     #   thie `ClearSolutions` Preprocessor
-    nbgrader_cell_metadata = {
-        "nbgrader": {
-            "solution": True,
-        }
-    }
+    nbgrader_cell_metadata = {"nbgrader": {"solution": True}}
 
     for cell in nb["cells"]:
         if cell["cell_type"] is not "code":
@@ -205,6 +208,7 @@ def update_or_create_notebook(meeting: Meeting, overwrite: bool = False):
         f_nb.write(workbook)
     # endregion
 
+
 def download_papers(meeting: Meeting):
     if not meeting.optional["papers"]:
         return
@@ -224,9 +228,7 @@ def render_banner(meeting: Meeting):
     generating - this is intentional behavior, ergo **do not edit banners
     directly**.
     """
-    template_banner = Template(
-        open(get_template("event-banner.html"), "r").read()
-    )
+    template_banner = Template(open(get_template("event-banner.html"), "r").read())
 
     accepted_content_types = [
         f"image/{x}" for x in ["jpg", "jpeg", "png", "gif", "tiff"]
@@ -237,7 +239,9 @@ def render_banner(meeting: Meeting):
     cover_image_path = paths.site_post_assets(meeting) / "cover.png"
 
     # snag the image from the URL provided in the syllabus
-    cover = requests.get(meeting.required["cover"], headers={"user-agent": "Mozilla/5.0"})
+    cover = requests.get(
+        meeting.required["cover"], headers={"user-agent": "Mozilla/5.0"}
+    )
     # use this to mute the EXIF data error ~ this seems to be a non-issue based
     #   on what I've read (@ionlights) ~ circa Sep/Oct 2019
     warnings.filterwarnings("ignore", "(Possibly )?corrupt EXIF data", UserWarning)
@@ -264,17 +268,20 @@ def render_banner(meeting: Meeting):
 
     out = cover_image_path.with_name("banner.png")
 
-    banner = template_banner.render(meeting=meeting,
-                                    cover=cover_image_path.absolute())
+    banner = template_banner.render(meeting=meeting, cover=cover_image_path.absolute())
 
-    imgkit.from_string(banner, out, options={
-        # standard flags should be passed as dict keys with empty values...
-        "quiet": "",
-        "debug-javascript": "",
-        "enable-javascript": "",
-        "javascript-delay": "400",
-        "no-stop-slow-scripts": "",
-    })
+    imgkit.from_string(
+        banner,
+        out,
+        options={
+            # standard flags should be passed as dict keys with empty values...
+            "quiet": "",
+            "debug-javascript": "",
+            "enable-javascript": "",
+            "javascript-delay": "400",
+            "no-stop-slow-scripts": "",
+        },
+    )
 
 
 def export_notebook_as_post(meeting: Meeting):
@@ -298,8 +305,11 @@ def export_notebook_as_post(meeting: Meeting):
         #   "nb-title": true,
         #   ...
         # otherwise, set `title_index = None` so you we can check to avoid
-        title_index = (index for index, cell in enumerate(nb["cells"])
-                       if cell["metadata"].get("nb-title", False))
+        title_index = (
+            index
+            for index, cell in enumerate(nb["cells"])
+            if cell["metadata"].get("nb-title", False)
+        )
         title_index = next(title_index, None)  # give `next()` a default
         del nb["cells"][title_index]
     except IndexError:
@@ -314,9 +324,7 @@ def export_notebook_as_post(meeting: Meeting):
     md = nbc.MarkdownExporter()
     md.template_path = [get_template("notebooks", as_str=True)]
     md.template_file = "nb-front-matter"
-    heading, _ = md.from_notebook_node(nb, resources={
-        "metadata": autobot_metadata
-       })
+    heading, _ = md.from_notebook_node(nb, resources={"metadata": autobot_metadata})
 
     html = nbc.HTMLExporter()
     html.template_path = [get_template("notebooks", as_str=True)]
@@ -337,8 +345,10 @@ def export_notebook_as_post(meeting: Meeting):
 def _generate_metadata(meeting: Meeting) -> Dict:
     return {
         "autobot": {
-            "authors": [meeting.group.coords[c.lower()].as_metadata()
-                        for c in meeting.required["instructors"]],
+            "authors": [
+                meeting.group.coords[c.lower()].as_metadata()
+                for c in meeting.required["instructors"]
+            ],
             "description": meeting.required["description"].strip(),
             "title": meeting.required["title"],
             "date": meeting.meta.date.isoformat()[:10],
@@ -349,16 +359,16 @@ def _generate_metadata(meeting: Meeting) -> Dict:
 
 
 def _generate_heading(meeting: Meeting) -> nbf.NotebookNode:
-    tpl_heading = Template(
-        open(get_template("notebooks/nb-heading.html")).read()
-    )
+    tpl_heading = Template(open(get_template("notebooks/nb-heading.html")).read())
 
     tpl_args = {
         "group_sem": paths.repo_meeting_folder(meeting),
-        "authors": [meeting.group.coords[author] for author in meeting.required["instructors"]],
+        "authors": [
+            meeting.group.coords[author] for author in meeting.required["instructors"]
+        ],
         "title": meeting.required["title"],
         "file": meeting.required["filename"],
-        "date": meeting.meta.date.isoformat()[:10]
+        "date": meeting.meta.date.isoformat()[:10],
     }
 
     rendering = tpl_heading.render(**tpl_args)

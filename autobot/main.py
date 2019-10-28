@@ -11,7 +11,6 @@ from autobot.lib.apis import ucf
 from autobot.lib import safety
 
 
-
 def main():
     logging.basicConfig()
 

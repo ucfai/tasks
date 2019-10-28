@@ -27,11 +27,7 @@ class Coordinator:
         self.git_ln = user.url
 
     def as_metadata(self):
-        return {
-            "author": self.name,
-            "github": self.github,
-            "web"   : self.web,
-        }
+        return {"author": self.name, "github": self.github, "web": self.web}
 
     def as_md_heading(self):
         return f"{self.name} (@{self.github}[{self.git_ln}])"

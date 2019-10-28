@@ -50,12 +50,12 @@ class Meeting:
 
         self.meta = MeetingMeta(date, room)
 
-        self.required["instructors"] = [x.lower()
-                                        for x in self.required["instructors"]]
+        self.required["instructors"] = [x.lower() for x in self.required["instructors"]]
 
         for key in self.required.keys():
-            assert self.required[key], \
-                f"You haven't specified `{key}` for this meeting..."
+            assert self.required[
+                key
+            ], f"You haven't specified `{key}` for this meeting..."
 
     def write_yaml(self) -> Dict:
         """This prepares the dict to write each entry in `syllabus.yml`."""
@@ -74,8 +74,8 @@ class Meeting:
                 "tags": self.tags,
                 "slides": self.slides,
                 "kernels": self.kernels,
-                "papers": self.papers
-            }
+                "papers": self.papers,
+            },
         }
 
     @staticmethod
@@ -92,8 +92,9 @@ class Meeting:
         for k, v in d["required"].items():
             assert v, f"You haven't specified `{k}` in one of the syllabi entries..."
 
-        d["required"]["instructors"] = list(map(lambda x: coords[x.lower()],
-                                                d["required"]["instructors"]))
+        d["required"]["instructors"] = list(
+            map(lambda x: coords[x.lower()], d["required"]["instructors"])
+        )
         d["meta"] = meta
 
         if d["optional"]["room"]:
@@ -114,7 +115,8 @@ class Meeting:
             raise ValueError("`Meeting.date` must be defined for this to work.")
         return f"{self.meta.date.isoformat()[:10]}-{self.required['filename']}"
 
-    def __str__(self): return self.required["title"]
+    def __str__(self):
+        return self.required["title"]
 
     def __lt__(self, other) -> bool:
         assert type(other) == type(self)

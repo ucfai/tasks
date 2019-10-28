@@ -23,6 +23,7 @@ from autobot.meta import Group, Meeting, Coordinator
 from autobot.lib.apis import ucf, kaggle
 from autobot.lib.utils import meetings, paths
 
+
 def semester_setup(group: Group) -> None:
     """Sets up the skeleton for a new semester.
     1. Copies base `yml` into `<group>/<semester>/`
@@ -33,8 +34,9 @@ def semester_setup(group: Group) -> None:
     """
     if paths.repo_group_folder(group).exists():
         log.warning(f"{paths.repo_group_folder(group)} exists! Tread carefully.")
-        overwrite = input("The following actions **are destructive**. "
-                          "Continue? [y/N] ")
+        overwrite = input(
+            "The following actions **are destructive**. " "Continue? [y/N] "
+        )
         if overwrite.lower() not in ["y", "yes"]:
             return
 
@@ -63,6 +65,7 @@ def semester_setup(group: Group) -> None:
     # TODO: make "Sign-In" Google Form and Google Sheet
     # endregion
 
+
 def semester_upkeep(group: Group, forced_overwrite: bool = False) -> None:
     """Assumes a [partially] complete Syllabus; this will only create new
     Syllabus entries' resources - thus avoiding potentially irreversible
@@ -86,13 +89,16 @@ def semester_upkeep(group: Group, forced_overwrite: bool = False) -> None:
     syllabus_yml = yaml.load(open(paths.repo_group_folder(group) / "syllabus.yml", "r"))
 
     syllabus = []
-    for meeting, schedule in tqdm(zip(syllabus_yml, meeting_schedule),
-                                  desc="Parsing Meetings"):
+    for meeting, schedule in tqdm(
+        zip(syllabus_yml, meeting_schedule), desc="Parsing Meetings"
+    ):
         try:
             syllabus.append(Meeting(group, meeting, schedule))
         except AssertionError:
-            tqdm.write("You're missing `required` fields from the meeting "
-                       f"happening on {schedule.date} in {schedule.room}!")
+            tqdm.write(
+                "You're missing `required` fields from the meeting "
+                f"happening on {schedule.date} in {schedule.room}!"
+            )
             continue
 
     for meeting in tqdm(syllabus, desc="Building/Updating Meetings", file=sys.stdout):
@@ -112,9 +118,7 @@ def semester_upkeep(group: Group, forced_overwrite: bool = False) -> None:
         meetings.export_notebook_as_post(meeting)
     # endregion
 
+
 # region Accepted Operations
-ACCEPTED = {
-    "semester-setup" : semester_setup,
-    "semester-upkeep": semester_upkeep,
-}
+ACCEPTED = {"semester-setup": semester_setup, "semester-upkeep": semester_upkeep}
 # endregion

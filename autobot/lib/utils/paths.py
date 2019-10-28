@@ -9,7 +9,9 @@ def repo_group_folder(group: Group):
     return Path(repr(group)) / group.semester.short
 
 
-def repo_meeting_folder(meeting: Meeting, short: bool = False, fully_qualified_path: bool = False):
+def repo_meeting_folder(
+    meeting: Meeting, short: bool = False, fully_qualified_path: bool = False
+):
     """Generates the Meeting's directory, with optional parameters for the
     fully qualified path, which would be something similar to:
     `<group>/<semester>/<filename>`, e.g. consider the Fall 2019 Computational
@@ -17,6 +19,7 @@ def repo_meeting_folder(meeting: Meeting, short: bool = False, fully_qualified_p
     if short:
         return Path(repr(meeting))
     return repo_group_folder(meeting.group) / repo_meeting_folder(meeting, short=True)
+
 
 # endregion
 
@@ -27,6 +30,7 @@ site_dir = f"{ORG_NAME}.org"
 repo_url = f"{ORG_NAME}/{page_git}"
 
 CONTENT_DIR = Path(site_dir)
+
 
 def site_post(meeting):
     """Utility function to calculate necessary paths for the website."""
@@ -47,9 +51,11 @@ def site_post_assets(meeting):
 def site_data(meeting):
     pass
 
+
 def site_group_folder(group):
     path = CONTENT_DIR / repr(group) / group.semester.short
     path.mkdir(exists_ok=True, parents=True)
     return path
+
 
 # endregion

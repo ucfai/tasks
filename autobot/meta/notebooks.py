@@ -26,9 +26,11 @@ from .meeting import Meeting
 
 
 src_dir = Path(__file__).parent.parent
+
+
 class Suffixes:
     SOLUTION = ".solution.ipynb"
-    RELEASE  = ".ipynb"
+    RELEASE = ".ipynb"
 
 
 def read(group: Group, meeting: Meeting, suffix: str = ""):
@@ -51,8 +53,14 @@ def write(group: Group, meeting: Meeting):
     # creating a solution notebook
     nb, path = read(group, meeting, suffix="solution")
 
-    title_index = next((index for index, cell in enumerate(nb["cells"])
-                        if cell["metadata"].get("nb-title", False)), None)
+    title_index = next(
+        (
+            index
+            for index, cell in enumerate(nb["cells"])
+            if cell["metadata"].get("nb-title", False)
+        ),
+        None,
+    )
 
     if title_index is not None:
         del nb["cells"][title_index]
@@ -74,8 +82,9 @@ def write(group: Group, meeting: Meeting):
         title_as_slug = f"{group.name.lower()}-{group.sem.short}-{meeting.filename}"
 
         meeting.kaggle["competitions"].insert(0, f"{ORG_NAME}-{title_as_slug}")
-        text = kernel_metadata.render(slug=title_as_slug, notebook=repr(meeting),
-                                      kaggle=meeting.kaggle)
+        text = kernel_metadata.render(
+            slug=title_as_slug, notebook=repr(meeting), kaggle=meeting.kaggle
+        )
 
         f.write(text.replace("'", '"'))  # JSON doesn't like single-quotes
 
@@ -84,8 +93,14 @@ def as_post(meeting: Meeting):
     # TODO: combine this into a single exporter
     nb = meeting.read_nb(suffix=Suffixes.SOLUTION)
 
-    title_index = next((index for index, cell in enumerate(nb["cells"])
-                        if cell["metadata"].get("nb-title", False)), None)
+    title_index = next(
+        (
+            index
+            for index, cell in enumerate(nb["cells"])
+            if cell["metadata"].get("nb-title", False)
+        ),
+        None,
+    )
 
     if title_index is not None:
         del nb["cells"][title_index]
@@ -98,9 +113,7 @@ def as_post(meeting: Meeting):
     md = nbc.MarkdownExporter()
     md.template_path = [str(src_dir / "templates/notebooks")]
     md.template_file = "nb-front-matter"
-    heading, _ = md.from_notebook_node(nb, resources={
-        "metadata": autobot_metadata
-    })
+    heading, _ = md.from_notebook_node(nb, resources={"metadata": autobot_metadata})
 
     html = nbc.HTMLExporter()
     html.template_path = [str(src_dir / "templates/notebooks")]
@@ -124,11 +137,7 @@ def split_nb(meeting: Meeting):
 
     # this was determined by looking at the nbgrader source in the checks for
     #   the ClearSolutions preprocessor
-    nbgrader_cell_metadata = {
-        "nbgrader": {
-            "solution": True,
-        }
-    }
+    nbgrader_cell_metadata = {"nbgrader": {"solution": True}}
 
     for cell in nb["cells"]:
         if cell["cell_type"] == "code":
