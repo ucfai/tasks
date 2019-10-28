@@ -20,6 +20,7 @@ dependencies:
   - pillow=5.2.0
   - requests
   - termcolor
+  - tqdm
   - wkhtmltopdf=0.12.3
   - pip:
       - imgkit==1.0.1

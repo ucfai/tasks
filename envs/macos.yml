@@ -20,6 +20,7 @@ dependencies:
   - pillow=5.2.0
   - requests
   - termcolor
+  - tqdm
   - pip:
       - imgkit==1.0.1
       # you need to also run: `brew install wkhtmltopdf` for `imgkit` to work!
