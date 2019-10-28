@@ -8,4 +8,4 @@ from .meeting import Meeting
 from .coordinator import Coordinator
 from . import notebooks
 
-__all__ = ["groups", "coordinator", "SemesterMeta", "MeetingMeta", "notebooks"]
+__all__ = ["groups", "coordinator", "SemesterMeta", "MeetingMeta"]
