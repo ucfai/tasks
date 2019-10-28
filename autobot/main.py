@@ -3,11 +3,14 @@ import logging
 from datetime import datetime as dt
 
 import requests
+import argcomplete
 
 from autobot.meta import groups
 from autobot.lib import ops
 from autobot.lib.apis import ucf
 from autobot.lib import safety
+
+
 
 def main():
     logging.basicConfig()
@@ -19,7 +22,9 @@ def main():
     parser.add_argument("group", choices=groups.ACCEPTED.keys())
     parser.add_argument("op", choices=ops.ACCEPTED.keys())
     parser.add_argument("semester", nargs="?", default=semester)
-    parser.add_argument("--full-overwrite", action="store_true", dest="overwrite")
+    parser.add_argument("--overwrite", action="store_true")
+
+    argcomplete.autocomplete(parser)
 
     args = parser.parse_args()
     args.semester = ucf.semester_converter(short=semester)
