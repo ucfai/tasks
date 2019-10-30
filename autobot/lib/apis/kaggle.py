@@ -9,6 +9,7 @@ from autobot.meta.meeting import Meeting
 
 def push_kernel(meeting: Meeting):
     # TODO: prevent Kaggle from pushing every notebook, every time
+    # TODO: absorb the output from shell and parse it, potentially handling
     if "KAGGLE_CONFIG_DIR" not in os.environ:
         os.environ["KAGGLE_CONFIG_DIR"] = str(
             Path(__file__).parent.parent.parent.parent

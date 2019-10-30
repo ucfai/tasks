@@ -181,31 +181,44 @@ def update_or_create_notebook(meeting: Meeting, overwrite: bool = False):
     # region Generate workbook by splitting solution manual
     # this was determined by looking at the `nbgrader` source code in checks for
     #   thie `ClearSolutions` Preprocessor
-    nbgrader_cell_metadata = {"nbgrader": {"solution": True}}
+    sources = []
+    try:
+        nbgrader_cell_metadata = {"nbgrader": {"solution": True}}
 
-    for cell in nb["cells"]:
-        if cell["cell_type"] is not "code":
-            continue
+        workbook = copy.deepcopy(nb)
+        for cell in workbook["cells"]:
+            if str(cell["cell_type"]) != "code":
+                continue
 
-        source = "".join(cell["source"])
-        if Solution.BEGIN_FLAG in source and Solution.END_FLAG in source:
-            cell["metadata"].update(nbgrader_cell_metadata)
-        elif "nbgrader" in cell["metadata"]:
-            del cell["metadata"]["nbgrader"]
+            sources.append(cell)
+            source = "".join(cell["source"])
+            if Solution.BEGIN in source and Solution.END in source:
+                cell["metadata"].update(nbgrader_cell_metadata)
+            elif "nbgrader" in cell["metadata"]:
+                del cell["metadata"]["nbgrader"]
 
-    nbf.write(nb, open(path, "w"))
+        nbf.write(workbook, open(path, "w"))
 
-    workbook_exporter = nbc.NotebookExporter(
-        preprocessors=[ClearSolutions, ClearOutput]
-    )
-    workbook, _ = workbook_exporter.from_notebook_node(nb)
+        workbook_exporter = nbc.NotebookExporter(
+            preprocessors=[ClearSolutions, ClearOutput]
+        )
+        workbook_processed, _ = workbook_exporter.from_notebook_node(workbook)
 
-    # this is a nightmare. we're going from `.solution.ipynb` to `.ipynb`, but
-    #   have to remove the `.solution` suffix. which seems only doable by going
-    #   down the entire tree of suffixes and removing them.
-    workbook_path = path.with_suffix("").with_suffix("").with_suffix(Suffixes.WORKBOOK)
-    with open(workbook_path, "w") as f_nb:
-        f_nb.write(workbook)
+        # this is a nightmare. we're going from `.solution.ipynb` to `.ipynb`, but
+        #   have to remove the `.solution` suffix. which seems only doable by going
+        #   down the entire tree of suffixes and removing them.
+        workbook_path = path.with_suffix("").with_suffix("").with_suffix(Suffixes.WORKBOOK)
+        with open(workbook_path, "w") as f_nb:
+            f_nb.write(workbook_processed)
+
+    except RuntimeError:
+        nbf.write(nb, open(path, "w"))
+
+        from pprint import pprint
+        print(f"Something is wrong with the solution blocks of `{path}`...")
+        print("Dumping notebook JSON")
+        pprint(workbook["cells"])
+        pprint(sources)
     # endregion
 
 
