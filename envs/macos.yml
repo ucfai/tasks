@@ -25,4 +25,4 @@ dependencies:
       - imgkit==1.0.1
       - kaggle
       # you need to also run: `brew install wkhtmltopdf` for `imgkit` to work!
-      - git+https://github.com/ucfai/bot@master
+      # - git+https://github.com/ucfai/bot@master
