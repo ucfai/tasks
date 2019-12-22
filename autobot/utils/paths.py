@@ -54,7 +54,7 @@ def site_data(meeting):
 
 def site_group_folder(group):
     path = CONTENT_DIR / repr(group) / group.semester.short
-    path.mkdir(exists_ok=True, parents=True)
+    path.mkdir(exist_ok=True, parents=True)
     return path
 
 

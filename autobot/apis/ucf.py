@@ -7,7 +7,6 @@ from datetime import datetime
 
 from autobot.meta import MeetingMeta, SemesterMeta
 from autobot.meta.group import Group
-from autobot.lib import log
 
 
 # it's unlikely this URL will change, but should be occassionally checked
@@ -49,10 +48,10 @@ def make_schedule(group: Group, schedule: Dict):
     meeting_time = pd.Timedelta(hours=int(time_s[:2]), minutes=int(time_s[2:]))
     meeting_dates += meeting_time
 
-    log.info(f"Meeting dates\n{meeting_dates}")
+    logging.info(f"Meeting dates\n{meeting_dates}")
 
     schedule = [MeetingMeta(pd.to_datetime(mtg), room) for mtg in meeting_dates]
-    log.debug(schedule)
+    logging.debug(schedule)
 
     return schedule
 

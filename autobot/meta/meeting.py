@@ -21,7 +21,6 @@ import nbconvert as nbc
 from nbgrader.preprocessors import ClearSolutions, ClearOutput
 
 from autobot import ORG_NAME
-from autobot.lib.utils import website
 
 from . import MeetingMeta
 from .coordinator import Coordinator

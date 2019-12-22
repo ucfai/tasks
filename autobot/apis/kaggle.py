@@ -3,16 +3,15 @@ import subprocess
 from pathlib import Path
 
 from autobot import ORG_NAME
-from autobot.lib.utils import paths
+from autobot.utils import paths
 from autobot.meta.meeting import Meeting
 
 
 def push_kernel(meeting: Meeting):
     # TODO: prevent Kaggle from pushing every notebook, every time
-    # TODO: absorb the output from shell and parse it, potentially handling
     if "KAGGLE_CONFIG_DIR" not in os.environ:
         os.environ["KAGGLE_CONFIG_DIR"] = str(
-            Path(__file__).parent.parent.parent.parent
+            Path(__file__).parent.parent.parent
         )
 
     cwd = os.getcwd()
@@ -21,7 +20,12 @@ def push_kernel(meeting: Meeting):
     os.chdir(cwd)
 
 
-def slug_kernel(meeting: Meeting):
+def diff_kernel(meeting: Meeting) -> bool:
+    # TODO download and diff this kernel from the local copy
+    pass
+
+
+def slug_kernel(meeting: Meeting) -> str:
     """Generates Kaggle Kernel slugs of the form: `<group>-<semester>-<filename>`
     e.g. if looking at the Fall 2019 Computational Cognitive Neuroscience
     lecture, the slug would be: `core-fa19-ccn`."""
@@ -31,7 +35,7 @@ def slug_kernel(meeting: Meeting):
     )
 
 
-def slug_competition(meeting: Meeting):
+def slug_competition(meeting: Meeting) -> str:
     """Since Kaggle InClass competitions are listed under general competitions,
     we take the `slug_kernel` of the meeting, and prepend `ORG_NAME`, which
     for AI@UCF, would be `ucfai`."""

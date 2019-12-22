@@ -1,6 +1,6 @@
 from typing import Dict
 
-from autobot.lib.apis.github import get_github_user
+from autobot.apis.github import get_github_user
 
 
 class Coordinator:
