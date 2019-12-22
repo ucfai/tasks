@@ -5,8 +5,8 @@ from autobot.meta import Group, Meeting
 
 
 def force_root():
-    # safety.py \ lib \ autobot \ <autobot-root> \ <jenkins-root>
-    path = Path(__file__).parent.parent.parent.parent
+    # safety.py \ autobot \ <autobot-root> \ <jenkins-root>
+    path = Path(__file__).parent.parent.parent
 
     os.chdir(path)
 

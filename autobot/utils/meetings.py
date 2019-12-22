@@ -24,8 +24,8 @@ from nbgrader.preprocessors import ClearSolutions, ClearOutput
 
 from autobot import get_template
 from autobot.meta.meeting import Meeting
-from autobot.lib.utils import paths
-from autobot.lib.apis import kaggle
+from autobot.utils import paths
+from autobot.apis import kaggle
 
 
 class Suffixes:
@@ -34,8 +34,8 @@ class Suffixes:
 
 
 class Solution:
-    BEGIN = "### BEGIN SOLUTION"
-    END = "### END SOLUTION"
+    BEGIN_FLAG = "### BEGIN SOLUTION"
+    END_FLAG = "### END SOLUTION"
 
 
 def read(meeting: Meeting, suffix: str = Suffixes.WORKBOOK):
@@ -61,6 +61,7 @@ def update_or_create_folders_and_files(meeting: Meeting):
     *intelligently* merging work ~ so this would allow for some temporary titles
     and the like.
     """
+    # TODO: currently renaming will dumb ipynb outside of the proper folder
     repo_path = paths.repo_meeting_folder(meeting)
     site_path = paths.site_post(meeting)
 
@@ -127,9 +128,6 @@ def update_or_create_notebook(meeting: Meeting, overwrite: bool = False):
     notebook is strictly injected with the appropriate metadata and headings
     without losing content in the notebook.
     """
-    # if not safety.can_overwrite(meeting, overwrite):
-    #     return
-
     nb, path = read(meeting, suffix=Suffixes.SOLUTION)
 
     # region Enforce metadata and primary heading of notebooks
@@ -170,6 +168,7 @@ def update_or_create_notebook(meeting: Meeting, overwrite: bool = False):
         meeting.optional["kaggle"]["competitions"].insert(
             0, kaggle.slug_competition(meeting)
         )
+        # TODO: add Kaggle GPU specification support (from syllabus.yml)
         text = kernel_metadata.render(
             slug=kaggle.slug_kernel(meeting),
             notebook=repr(meeting),
@@ -181,44 +180,32 @@ def update_or_create_notebook(meeting: Meeting, overwrite: bool = False):
     # region Generate workbook by splitting solution manual
     # this was determined by looking at the `nbgrader` source code in checks for
     #   thie `ClearSolutions` Preprocessor
-    sources = []
-    try:
-        nbgrader_cell_metadata = {"nbgrader": {"solution": True}}
+    nbgrader_cell_metadata = {"nbgrader": {"solution": True}}
 
-        workbook = copy.deepcopy(nb)
-        for cell in workbook["cells"]:
-            if str(cell["cell_type"]) != "code":
-                continue
+    for cell in nb["cells"]:
+        if cell["cell_type"] != "code":
+            continue
 
-            sources.append(cell)
-            source = "".join(cell["source"])
-            if Solution.BEGIN in source and Solution.END in source:
-                cell["metadata"].update(nbgrader_cell_metadata)
-            elif "nbgrader" in cell["metadata"]:
-                del cell["metadata"]["nbgrader"]
+        source = "".join(cell["source"])
+        if Solution.BEGIN_FLAG in source and Solution.END_FLAG in source:
+            cell["metadata"].update(nbgrader_cell_metadata)
+        elif "nbgrader" in cell["metadata"]:
+            del cell["metadata"]["nbgrader"]
 
-        nbf.write(workbook, open(path, "w"))
+    nbf.write(nb, open(path, "w"))
 
-        workbook_exporter = nbc.NotebookExporter(
-            preprocessors=[ClearSolutions, ClearOutput]
-        )
-        workbook_processed, _ = workbook_exporter.from_notebook_node(workbook)
+    # TODO figure out how to get a nicer traceback from `ClearSolutions`
+    workbook_exporter = nbc.NotebookExporter(
+        preprocessors=[ClearSolutions, ClearOutput]
+    )
+    workbook, _ = workbook_exporter.from_notebook_node(nb)
 
-        # this is a nightmare. we're going from `.solution.ipynb` to `.ipynb`, but
-        #   have to remove the `.solution` suffix. which seems only doable by going
-        #   down the entire tree of suffixes and removing them.
-        workbook_path = path.with_suffix("").with_suffix("").with_suffix(Suffixes.WORKBOOK)
-        with open(workbook_path, "w") as f_nb:
-            f_nb.write(workbook_processed)
-
-    except RuntimeError:
-        nbf.write(nb, open(path, "w"))
-
-        from pprint import pprint
-        print(f"Something is wrong with the solution blocks of `{path}`...")
-        print("Dumping notebook JSON")
-        pprint(workbook["cells"])
-        pprint(sources)
+    # this is a nightmare. we're going from `.solution.ipynb` to `.ipynb`, but
+    #   have to remove the `.solution` suffix. which seems only doable by going
+    #   down the entire tree of suffixes and removing them.
+    workbook_path = path.with_suffix("").with_suffix("").with_suffix(Suffixes.WORKBOOK)
+    with open(workbook_path, "w") as f_nb:
+        f_nb.write(workbook)
     # endregion
 
 
