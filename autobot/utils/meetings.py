@@ -27,15 +27,12 @@ from autobot.meta.meeting import Meeting
 from autobot.utils import paths
 from autobot.apis import kaggle
 
+from .ucfai_exporter import *
+
 
 class Suffixes:
     SOLUTION = ".solution.ipynb"
     WORKBOOK = ".ipynb"
-
-
-class Solution:
-    BEGIN_FLAG = "### BEGIN SOLUTION"
-    END_FLAG = "### END SOLUTION"
 
 
 def read(meeting: Meeting, suffix: str = Suffixes.WORKBOOK):
@@ -128,85 +125,125 @@ def update_or_create_notebook(meeting: Meeting, overwrite: bool = False):
     notebook is strictly injected with the appropriate metadata and headings
     without losing content in the notebook.
     """
-    nb, path = read(meeting, suffix=Suffixes.SOLUTION)
+    # Validates this meeting's notebook conforms to expectations details in:
+    #   https://ucfai.org/docs/admin/making-meetings/
+    validator = TemplateNotebookValidator()
+    _, _ = validator.from_meeting(meeting)
 
-    # region Enforce metadata and primary heading of notebooks
-    try:
-        # try to find the cell which has metadata of the form...
-        #   ...
-        #   "nb-title": true,
-        #   ...
-        # otherwise, set `title_index = None` so we have a set value
-        title_index = (
-            index
-            for index, cell in enumerate(nb["cells"])
-            if cell["metadata"].get("nb-title", False)
-        )
-        title_index = next(title_index, None)  # give `next()` a default
-        del nb["cells"][title_index]
-    except TypeError:
-        # looks like the cell didn't exist, so let's move on
-        pass
+    copy_tree(
+        str(get_template("seed/meeting")), str(paths.repo_meeting_folder(meeting))
+    )
+    kernel_metadata = Template(
+        open(get_template("seed/meeting") / "kernel-metadata.json.j2", "r").read()
+    )
 
-    # insert the heading as the first cell of the notebook
-    nb["cells"].insert(0, _generate_heading(meeting))
-    # assert that the needed metdata exists
-    nb["metadata"].update(_generate_metadata(meeting))
-    # write the notebook to disk
-    nbf.write(nb, open(path, "w"))
-    # endregion
-
-    # region Setup `kernel-metadata.json` for Kaggle
-    # strong preference to use `shutil`, but can't use with existing dirs
-    # shutil.copytree(get_template("seed/meeting")), path.parent)
-    copy_tree(get_template("seed/meeting"), str(path.parent))
-
-    kernel_metadata_path = paths.repo_meeting_folder(meeting) / "kernel-metadata.json"
-    kernel_metadata = Template(open(kernel_metadata_path).read())
-
-    with open(kernel_metadata_path, "w") as f:
+    with open(paths.repo_meeting_folder(meeting) / "kernel-metadata.json", "w") as f:
         meeting.optional["kaggle"]["competitions"].insert(
             0, kaggle.slug_competition(meeting)
         )
-        # TODO: add Kaggle GPU specification support (from syllabus.yml)
         text = kernel_metadata.render(
             slug=kaggle.slug_kernel(meeting),
             notebook=repr(meeting),
             kaggle=meeting.optional["kaggle"],
         )
-        f.write(text.replace("'", '"'))  # JSON doesn't like single quotes
-    # endregion
+        f.write(text.replace("'", '"'))  # JSON doesn't like single-quotes
 
-    # region Generate workbook by splitting solution manual
-    # this was determined by looking at the `nbgrader` source code in checks for
-    #   thie `ClearSolutions` Preprocessor
-    nbgrader_cell_metadata = {"nbgrader": {"solution": True}}
+    # Converts a "Solutionbook" (`.solution.ipynb`) to a "Workbook" (`.ipynb`).
+    #   Makes use of Preprocessors and FileWriters to place generate and write the
+    #   notebook.
+    workbook = SolutionbookToWorkbookExporter()
+    _, _ = workbook.from_meeting(meeting)
 
-    for cell in nb["cells"]:
-        if cell["cell_type"] != "code":
-            continue
 
-        source = "".join(cell["source"])
-        if Solution.BEGIN_FLAG in source and Solution.END_FLAG in source:
-            cell["metadata"].update(nbgrader_cell_metadata)
-        elif "nbgrader" in cell["metadata"]:
-            del cell["metadata"]["nbgrader"]
-
-    nbf.write(nb, open(path, "w"))
-
-    # TODO figure out how to get a nicer traceback from `ClearSolutions`
-    workbook_exporter = nbc.NotebookExporter(
-        preprocessors=[ClearSolutions, ClearOutput]
-    )
-    workbook, _ = workbook_exporter.from_notebook_node(nb)
-
-    # this is a nightmare. we're going from `.solution.ipynb` to `.ipynb`, but
-    #   have to remove the `.solution` suffix. which seems only doable by going
-    #   down the entire tree of suffixes and removing them.
-    workbook_path = path.with_suffix("").with_suffix("").with_suffix(Suffixes.WORKBOOK)
-    with open(workbook_path, "w") as f_nb:
-        f_nb.write(workbook)
-    # endregion
+# def update_or_create_notebook(meeting: Meeting, overwrite: bool = False):
+#     """Notebooks are the nuts and bolts of AI@UCF. These power the website's
+#     posts, our workshops, and are the general workbooks students can make use
+#     of.
+#
+#     This function generates notebooks for a given meeting. *If the notebook
+#     exists*, a prompt will be issued for destructive actions. Otherwise, the
+#     notebook is strictly injected with the appropriate metadata and headings
+#     without losing content in the notebook.
+#     """
+#     nb, path = read(meeting, suffix=Suffixes.SOLUTION)
+#
+#     # region Enforce metadata and primary heading of notebooks
+#     try:
+#         # try to find the cell which has metadata of the form...
+#         #   ...
+#         #   "nb-title": true,
+#         #   ...
+#         # otherwise, set `title_index = None` so we have a set value
+#         title_index = (
+#             index
+#             for index, cell in enumerate(nb["cells"])
+#             if cell["metadata"].get("nb-title", False)
+#         )
+#         title_index = next(title_index, None)  # give `next()` a default
+#         del nb["cells"][title_index]
+#     except TypeError:
+#         # looks like the cell didn't exist, so let's move on
+#         pass
+#
+#     # insert the heading as the first cell of the notebook
+#     nb["cells"].insert(0, _generate_heading(meeting))
+#     # assert that the needed metdata exists
+#     nb["metadata"].update(_generate_metadata(meeting))
+#     # write the notebook to disk
+#     nbf.write(nb, open(path, "w"))
+#     # endregion
+#
+#     # region Setup `kernel-metadata.json` for Kaggle
+#     # strong preference to use `shutil`, but can't use with existing dirs
+#     # shutil.copytree(get_template("seed/meeting")), path.parent)
+#     copy_tree(get_template("seed/meeting"), str(path.parent))
+#
+#     kernel_metadata_path = paths.repo_meeting_folder(meeting) / "kernel-metadata.json"
+#     kernel_metadata = Template(open(kernel_metadata_path).read())
+#
+#     with open(kernel_metadata_path, "w") as f:
+#         meeting.optional["kaggle"]["competitions"].insert(
+#             0, kaggle.slug_competition(meeting)
+#         )
+#         # TODO: add Kaggle GPU specification support (from syllabus.yml)
+#         text = kernel_metadata.render(
+#             slug=kaggle.slug_kernel(meeting),
+#             notebook=repr(meeting),
+#             kaggle=meeting.optional["kaggle"],
+#         )
+#         f.write(text.replace("'", '"'))  # JSON doesn't like single quotes
+#     # endregion
+#
+#     # region Generate workbook by splitting solution manual
+#     # this was determined by looking at the `nbgrader` source code in checks for
+#     #   thie `ClearSolutions` Preprocessor
+#     nbgrader_cell_metadata = {"nbgrader": {"solution": True}}
+#
+#     for cell in nb["cells"]:
+#         if cell["cell_type"] != "code":
+#             continue
+#
+#         source = "".join(cell["source"])
+#         if Solution.BEGIN_FLAG in source and Solution.END_FLAG in source:
+#             cell["metadata"].update(nbgrader_cell_metadata)
+#         elif "nbgrader" in cell["metadata"]:
+#             del cell["metadata"]["nbgrader"]
+#
+#     nbf.write(nb, open(path, "w"))
+#
+#     # TODO figure out how to get a nicer traceback from `ClearSolutions`
+#     workbook_exporter = nbc.NotebookExporter(
+#         preprocessors=[ClearSolutions, ClearOutput]
+#     )
+#     workbook, _ = workbook_exporter.from_notebook_node(nb)
+#
+#     # this is a nightmare. we're going from `.solution.ipynb` to `.ipynb`, but
+#     #   have to remove the `.solution` suffix. which seems only doable by going
+#     #   down the entire tree of suffixes and removing them.
+#     workbook_path = path.with_suffix("").with_suffix("").with_suffix(Suffixes.WORKBOOK)
+#     with open(workbook_path, "w") as f_nb:
+#         f_nb.write(workbook)
+#     # endregion
 
 
 def download_papers(meeting: Meeting):
@@ -296,82 +333,99 @@ def export_notebook_as_post(meeting: Meeting):
     so that notebooks can generally be posted, since we don't have time for all
     the topics...
     """
-    nb, path = read(meeting, suffix=Suffixes.SOLUTION)
-
-    # region Enforce metadata and primary heading of notebooks
-    try:
-        # try to find the cell which has metadata of the form...
-        #   ...
-        #   "nb-title": true,
-        #   ...
-        # otherwise, set `title_index = None` so you we can check to avoid
-        title_index = (
-            index
-            for index, cell in enumerate(nb["cells"])
-            if cell["metadata"].get("nb-title", False)
-        )
-        title_index = next(title_index, None)  # give `next()` a default
-        del nb["cells"][title_index]
-    except IndexError:
-        # looks like the cell didn't exist, so let's move on
-        pass
-
-    autobot_metadata = nb["metadata"]["autobot"]
-    # changes to the template should, honestly, be done in the `tpl` file below
-    #   this is largely to make sure we don't have a fragile class, but at a
-    #   later date, there might be reason to extract it to a class - especially
-    #   for readability purposes
-    md = nbc.MarkdownExporter()
-    md.template_path = [get_template("notebooks", as_str=True)]
-    md.template_file = "nb-front-matter"
-    heading, _ = md.from_notebook_node(nb, resources={"metadata": autobot_metadata})
-
-    html = nbc.HTMLExporter()
-    html.template_path = [get_template("notebooks", as_str=True)]
-    html.template_file = "nb-post-body"
-    body, _ = html.from_notebook_node(nb)
-
-    # NOTE: this is where the site's content path is generated
-    output = paths.site_post(meeting) / f"{repr(meeting)}.md"
-    output.parent.mkdir(exist_ok=True)
-
-    with open(output, "w") as f:
-        f.write(heading)
-        f.write("\n{% raw %}")
-        f.write(body)
-        f.write("\n{% endraw %}")
+    as_post = SolutionbookToPostExporter()
+    post, resources = as_post.from_meeting(meeting)
+    print(resources)
 
 
-def _generate_metadata(meeting: Meeting) -> Dict:
-    return {
-        "autobot": {
-            "authors": [
-                meeting.group.coords[c.lower()].as_metadata()
-                for c in meeting.required["instructors"]
-            ],
-            "description": meeting.required["description"].strip(),
-            "title": meeting.required["title"],
-            "date": meeting.meta.date.isoformat()[:10],
-            "tags": meeting.optional["tags"],
-            "categories": [meeting.group.semester.short],
-        }
-    }
+# def export_notebook_as_post(meeting: Meeting):
+#     """Every notebook should also have a home on the website. This runs said
+#     notebook through the exporter so that it can be posted on the website.
+#
+#     NOTE: This function is destructive. It will overwrite the post it's
+#     exporting to - this is intentional behavior, ergo **do not edit posts
+#     directly**.
+#
+#     TODO: generalize to a utility function which is independent of a meeting,
+#     so that notebooks can generally be posted, since we don't have time for all
+#     the topics...
+#     """
+#     nb, path = read(meeting, suffix=Suffixes.SOLUTION)
+#
+#     # region Enforce metadata and primary heading of notebooks
+#     try:
+#         # try to find the cell which has metadata of the form...
+#         #   ...
+#         #   "nb-title": true,
+#         #   ...
+#         # otherwise, set `title_index = None` so you we can check to avoid
+#         title_index = (
+#             index
+#             for index, cell in enumerate(nb["cells"])
+#             if cell["metadata"].get("nb-title", False)
+#         )
+#         title_index = next(title_index, None)  # give `next()` a default
+#         del nb["cells"][title_index]
+#     except IndexError:
+#         # looks like the cell didn't exist, so let's move on
+#         pass
+#
+#     autobot_metadata = nb["metadata"]["autobot"]
+#     # changes to the template should, honestly, be done in the `tpl` file below
+#     #   this is largely to make sure we don't have a fragile class, but at a
+#     #   later date, there might be reason to extract it to a class - especially
+#     #   for readability purposes
+#     md = nbc.MarkdownExporter()
+#     md.template_path = [get_template("notebooks", as_str=True)]
+#     md.template_file = "nb-front-matter"
+#     heading, _ = md.from_notebook_node(nb, resources={"metadata": autobot_metadata})
+#
+#     html = nbc.HTMLExporter()
+#     html.template_path = [get_template("notebooks", as_str=True)]
+#     html.template_file = "nb-post-body"
+#     body, _ = html.from_notebook_node(nb)
+#
+#     # NOTE: this is where the site's content path is generated
+#     output = paths.site_post(meeting) / f"{repr(meeting)}.md"
+#     output.parent.mkdir(exist_ok=True)
+#
+#     with open(output, "w") as f:
+#         f.write(heading)
+#         f.write("\n{% raw %}")
+#         f.write(body)
+#         f.write("\n{% endraw %}")
 
 
-def _generate_heading(meeting: Meeting) -> nbf.NotebookNode:
-    tpl_heading = Template(open(get_template("notebooks/nb-heading.html")).read())
-
-    tpl_args = {
-        "group_sem": paths.repo_meeting_folder(meeting),
-        "authors": [
-            meeting.group.coords[author] for author in meeting.required["instructors"]
-        ],
-        "title": meeting.required["title"],
-        "file": meeting.required["filename"],
-        "date": meeting.meta.date.isoformat()[:10],
-    }
-
-    rendering = tpl_heading.render(**tpl_args)
-    head_meta = {"title": meeting.required["title"], "nb-title": True}
-
-    return nbf.v4.new_markdown_cell(rendering, metadata=head_meta)
+# def _generate_metadata(meeting: Meeting) -> Dict:
+#     return {
+#         "autobot": {
+#             "authors": [
+#                 meeting.group.coords[c.lower()].as_metadata()
+#                 for c in meeting.required["instructors"]
+#             ],
+#             "description": meeting.required["description"].strip(),
+#             "title": meeting.required["title"],
+#             "date": meeting.meta.date.isoformat()[:10],
+#             "tags": meeting.optional["tags"],
+#             "categories": [meeting.group.semester.short],
+#         }
+#     }
+#
+#
+# def _generate_heading(meeting: Meeting) -> nbf.NotebookNode:
+#     tpl_heading = Template(open(get_template("notebooks/nb-heading.html")).read())
+#
+#     tpl_args = {
+#         "group_sem": paths.repo_meeting_folder(meeting),
+#         "authors": [
+#             meeting.group.coords[author] for author in meeting.required["instructors"]
+#         ],
+#         "title": meeting.required["title"],
+#         "file": meeting.required["filename"],
+#         "date": meeting.meta.date.isoformat()[:10],
+#     }
+#
+#     rendering = tpl_heading.render(**tpl_args)
+#     head_meta = {"title": meeting.required["title"], "nb-title": True}
+#
+#     return nbf.v4.new_markdown_cell(rendering, metadata=head_meta)

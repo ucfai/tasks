@@ -2,27 +2,54 @@ import os
 import subprocess
 from pathlib import Path
 
+from tqdm import tqdm
+
 from autobot import ORG_NAME
 from autobot.utils import paths
 from autobot.meta.meeting import Meeting
 
+KAGGLE_USERNAME = "ucfaibot"
+KAGGLE_CONFIG_DIR = Path(__file__).parent.parent.parent
 
-def push_kernel(meeting: Meeting):
-    # TODO: prevent Kaggle from pushing every notebook, every time
+
+def _configure_environment() -> None:
     if "KAGGLE_CONFIG_DIR" not in os.environ:
-        os.environ["KAGGLE_CONFIG_DIR"] = str(
-            Path(__file__).parent.parent.parent
-        )
+        os.environ["KAGGLE_CONFIG_DIR"] = str(KAGGLE_CONFIG_DIR)
+    elif "KAGGLE_CONFIG_DIR" in os.environ and os.environ["KAGGLE_CONFIG_DIR"] != str(
+        KAGGLE_CONFIG_DIR
+    ):
+        tqdm.write(f"Found `KAGGLE_CONFIG_DIR = {os.environ['KAGGLE_CONFIG_DIR']}`")
+
+
+def pull_kernel(meeting: Meeting) -> None:
+    _configure_environment()
 
     cwd = os.getcwd()
-    os.chdir(paths.repo_meeting_folder(meeting))
-    subprocess.call("kaggle k push", shell=True)
+    os.chdir(paths.tmp_meeting_folder(meeting))
+    subprocess.call(
+        f"kaggle k pull -wp {KAGGLE_USERNAME}/{slug_kernel(meeting)}", shell=True
+    )
     os.chdir(cwd)
 
 
 def diff_kernel(meeting: Meeting) -> bool:
-    # TODO download and diff this kernel from the local copy
-    pass
+    _configure_environment()
+    pull_kernel(meeting)
+
+    cwd = os.getcwd()
+    # TODO compute sha256 over the meeting's Workbook and what we pulled from Kaggle, compare the hexdigests
+
+
+def push_kernel(meeting: Meeting) -> None:
+    _configure_environment()
+
+    if diff_kernel(meeting):
+        cwd = os.getcwd()
+        os.chdir(paths.repo_meeting_folder(meeting))
+        subprocess.call("kaggle k push", shell=True)
+        os.chdir(cwd)
+    else:
+        tqdm.write("Kernels are the same. Skipping.")
 
 
 def slug_kernel(meeting: Meeting) -> str:

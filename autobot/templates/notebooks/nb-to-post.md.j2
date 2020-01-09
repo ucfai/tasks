@@ -1,0 +1,15 @@
+{# derived from: https://github.com/jupyter/nbconvert/blob/a6f89c3ea214ec9abe126f85b5a810216d4c9ab4/nbconvert/templates/markdown.tpl #}
+{# derived from: https://gist.github.com/cscorley/9144544 #}
+{# derived from: https://github.com/jupyter/nbconvert/blob/a6f89c3ea214ec9abe126f85b5a810216d4c9ab4/nbconvert/templates/html/full.tpl}
+{# informed by: http://rjbaxley.com/posts/2017/02/25/Jekyll_Blogging_with_Notebooks.html #}
+{% extends "markdown.tpl" %}
+
+{#
+    this is placed on a single line to avoid issues with mixing markdown and HTML
+    rendering
+#}
+{% block input %}
+
+{{ cell.source | highlight_code(metadata=cell.metadata) }}
+
+{% endblock input %}

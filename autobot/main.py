@@ -169,6 +169,9 @@ def _parse_and_load_meetings(group: Group):
             )
             continue
 
+    # TODO (@ch1pless) word-wrap the syllabus to 88 characters (this makes for easier reading)
+    # TODO (@ch1pless) write things like meeting dates and rooms if non-existent, to avoid imputing – since this can be less than ideal for some actions
+
     return syllabus
 
 
@@ -176,27 +179,24 @@ def semester_upkeep(meeting: Meeting, overwrite: bool = False) -> None:
     tqdm.write(f"{repr(meeting)} ~ {str(meeting)}")
 
     # Perform initial directory checks/clean-up
-    meetings.update_or_create_folders_and_files(meeting)
+    # meetings.update_or_create_folders_and_files(meeting)
 
     # Make edit in the group-specific repo
     meetings.update_or_create_notebook(meeting, overwrite=overwrite)
-    # meetings.download_papers(meeting)
+    meetings.download_papers(meeting)
     # kaggle.push_kernel(meeting)
 
     # Make edits in the ucfai.org repo
-    # meetings.render_banner(meeting)
-    # meetings.render_instagram_post(meeting)
-    # meetings.export_notebook_as_post(meeting)
+    # banners.render_cover(meeting)
+    # banners.render_weekly_instagram_post(meeting)  # this actually needs a more global setting
+    meetings.export_notebook_as_post(meeting)
 
-    # Video Rendering and such
+    # Video Rendering and Upload
     # videos.dispatch_recording(meeting)  # unsure that this is needed
-
-    # videos.render_banner(meeting)
-
-    # this could fire off a request to GCP to avoid long-running
+    # banners.render_video_background(meeting)
+    # this could fire off a request to GCP to avoid long-running local renders
     # videos.compile_and_render(meeting)
-
-    # youtube.upload(meeting)
+    # videos.upload(meeting)
 
 
 def semester_upkeep_all(group: Group, overwrite: bool = False) -> None:

@@ -1,0 +1,35 @@
+---
+title: "{{ title }}"
+linktitle: "{{ title }}"
+date: "{{ date }}"
+lastmod: "{{ date }}"
+
+draft: false
+toc: true
+type: "docs"
+
+menu:
+  {{ group }}_{{ semester.short }}:
+    parent: {{ semester.long }}
+    weight: {{ number }}
+
+weight: {{ number }}
+
+authors: {%- for author in authors -%}
+    - {{ author.name }}
+{%- endfor -%}
+
+urls:
+  youtube: ""
+  slides:  ""
+  github:  ""
+  kaggle:  ""
+  colab:   ""
+
+tags: {%- for tag in tags %}
+  - {{ tag.lower() }}
+{%- endfor -%}
+
+description: >-
+  {{ descrption }}
+---

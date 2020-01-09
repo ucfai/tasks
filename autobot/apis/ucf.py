@@ -48,10 +48,10 @@ def make_schedule(group: Group, schedule: Dict):
     meeting_time = pd.Timedelta(hours=int(time_s[:2]), minutes=int(time_s[2:]))
     meeting_dates += meeting_time
 
-    logging.info(f"Meeting dates\n{meeting_dates}")
+    # logging.info(f"Meeting dates\n{meeting_dates}")
 
     schedule = [MeetingMeta(pd.to_datetime(mtg), room) for mtg in meeting_dates]
-    logging.debug(schedule)
+    # logging.debug(schedule)
 
     return schedule
 
