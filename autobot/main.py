@@ -12,7 +12,7 @@ from tqdm import tqdm
 from autobot import safety, get_template, ORG_NAME
 from autobot.apis import kaggle, ucf
 from autobot.meta import Group, Meeting, Coordinator, groups
-from autobot.utils import meetings, paths
+from autobot.utils import meetings, paths, syllabus
 
 
 def main():
@@ -45,6 +45,7 @@ def main():
 
     if "IN_DOCKER" in os.environ and args.wait:
         import time
+
         print("Waiting...")
         while True:
             time.sleep(1)
@@ -142,14 +143,14 @@ def semester_upkeep(meetings: List[Meeting], overwrite: bool = False) -> None:
         # meetings.update_or_create_folders_and_files(meeting)
 
         # Make edit in the group-specific repo
-        meetings.update_or_create_notebook(meeting, overwrite=overwrite)
-        meetings.download_papers(meeting)
-        # kaggle.push_kernel(meeting)
+        # meetings.update_or_create_notebook(meeting, overwrite=overwrite)
+        # meetings.download_papers(meeting)
+        kaggle.push_kernel(meeting)
 
         # Make edits in the ucfai.org repo
-        banners.render_cover(meeting)
+        # banners.render_cover(meeting)
         # banners.render_weekly_instagram_post(meeting)  # this actually needs a more global setting
-        meetings.export_notebook_as_post(meeting)
+        # meetings.export_notebook_as_post(meeting)
 
         # Video Rendering and Upload
         # videos.dispatch_recording(meeting)  # unsure that this is needed

@@ -1,12 +1,16 @@
 import os
 import subprocess
 from pathlib import Path
+from hashlib import sha256
+import shutil
 
 from tqdm import tqdm
 
 from autobot import ORG_NAME
 from autobot.utils import paths
 from autobot.meta.meeting import Meeting
+
+from .nbconvert import FileExtensions
 
 KAGGLE_USERNAME = "ucfaibot"
 KAGGLE_CONFIG_DIR = Path(__file__).parent.parent.parent
@@ -24,32 +28,46 @@ def _configure_environment() -> None:
 def pull_kernel(meeting: Meeting) -> None:
     _configure_environment()
 
-    cwd = os.getcwd()
-    os.chdir(paths.tmp_meeting_folder(meeting))
-    subprocess.call(
-        f"kaggle k pull -wp {KAGGLE_USERNAME}/{slug_kernel(meeting)}", shell=True
+    subprocess.run(
+        f"kaggle k pull -p {paths.tmp_meeting_folder(meeting)} {KAGGLE_USERNAME}/{slug_kernel(meeting)}",
+        shell=True,
+        stdout=subprocess.DEVNULL,
     )
-    os.chdir(cwd)
+    return (paths.tmp_meeting_folder(meeting) / slug_kernel(meeting)).with_suffix(
+        FileExtensions.Workbook
+    )
 
 
-def diff_kernel(meeting: Meeting) -> bool:
+def local_and_remote_kernels_diff(meeting: Meeting) -> bool:
     _configure_environment()
-    pull_kernel(meeting)
+    remote_kernel = pull_kernel(meeting)
 
-    cwd = os.getcwd()
-    # TODO compute sha256 over the meeting's Workbook and what we pulled from Kaggle, compare the hexdigests
+    local_kernel = (paths.repo_meeting_folder(meeting) / repr(meeting)).with_suffix(
+        FileExtensions.Workbook
+    )
+
+    remote_kernel_hash = sha256(open(remote_kernel, "rb").read()).hexdigest()
+    local_kernel_hash = sha256(open(local_kernel, "rb").read()).hexdigest()
+
+    if str(remote_kernel).startswith(str(paths.repo_meeting_folder(meeting))):
+        shutil.rmtree(remote_kernel.parent)
+    else:
+        os.remove(remote_kernel)
+
+    return remote_kernel_hash != local_kernel_hash
 
 
 def push_kernel(meeting: Meeting) -> None:
     _configure_environment()
 
-    if diff_kernel(meeting):
-        cwd = os.getcwd()
-        os.chdir(paths.repo_meeting_folder(meeting))
-        subprocess.call("kaggle k push", shell=True)
-        os.chdir(cwd)
+    if local_and_remote_kernels_diff(meeting):
+        subprocess.run(
+            f"kaggle k push -p {paths.repo_meeting_folder(meeting)}",
+            shell=True,
+            stdout=subprocess.DEVNULL,
+        )
     else:
-        tqdm.write("Kernels are the same. Skipping.")
+        tqdm.write("  - Kernels are the same. Skipping.")
 
 
 def slug_kernel(meeting: Meeting) -> str:

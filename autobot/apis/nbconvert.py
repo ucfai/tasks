@@ -16,7 +16,15 @@ from autobot.meta import Meeting
 from autobot.utils import paths
 
 
-def read_notebook(meeting: Meeting, suffix: str = ".solution.ipynb"):
+class FileExtensions:
+    Solutionbook = ".solution.ipynb"
+    Workbook = ".ipynb"
+
+    def __init__(self):
+        raise NotImplementedError("This equivalent to an Enum.")
+
+
+def read_notebook(meeting: Meeting, suffix: str = FileExtensions.Solutionbook):
     notebook_path = paths.repo_meeting_folder(meeting) / repr(meeting)
     if not notebook_path.with_suffix(suffix).exists():
         return nbformat.v4.new_notebook()
@@ -64,7 +72,7 @@ class SolutionbookToPostExporter(MarkdownExporter):
 
     def from_meeting(self, meeting: Meeting):
         notebook_path = paths.repo_meeting_folder(meeting) / (
-            repr(meeting) + ".solution.ipynb"
+            repr(meeting) + FileExtensions.Solutionbook
         )
 
         # TODO fill out `hugo-front-matter.md.j2` from meeting metadata and concat `notebook` (below) with this
@@ -92,7 +100,7 @@ class SolutionbookToWorkbookExporter(NotebookExporter):
     def from_meeting(self, meeting: Meeting):
         nb = read_notebook(meeting)
 
-        resources = {"output_extension": ".ipynb"}
+        resources = {"output_extension": FileExtensions.Workbook}
         notebook, resources = super(NotebookExporter, self).from_notebook_node(
             nb, resources
         )
@@ -117,7 +125,7 @@ class TemplateNotebookValidator(NotebookExporter):
 
         nb = read_notebook(meeting)
 
-        resources = {"output_extension": ".solution.ipynb"}
+        resources = {"output_extension": FileExtensions.Solutionbook}
         notebook, resources = super(NotebookExporter, self).from_notebook_node(
             nb, resources=resources
         )
