@@ -30,7 +30,6 @@ function git_interact {
         "cloning") rm .gitkeep; git clone ${git_url}/$(basename ${folder}) . ;;
     esac
 
-    git submodule update --init --recursive
 }
 
 # Check if we have copies of the group repositories
@@ -43,6 +42,8 @@ done
 
 # Check if we have a copy of the website
 git_interact "/ucfai.org"
+git submodule update --init --recursive
+echo "  - updated submodules"
 
 cd /ucfai
 

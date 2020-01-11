@@ -22,7 +22,7 @@ services:
   #     dockerfile: Dockerfile
   #     target: production
 
-  hugo:
+  autobot-hugo:
     image: jojomi/hugo:0.60.0
     container_name: autobot-hugo
     environment:
