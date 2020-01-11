@@ -12,7 +12,7 @@ from tqdm import tqdm
 from autobot import safety, get_template, ORG_NAME
 from autobot.apis import kaggle, ucf
 from autobot.meta import Group, Meeting, Coordinator, groups
-from autobot.utils import meetings, paths
+from autobot.utils import meetings, paths, syllabus
 
 
 def main():
@@ -45,6 +45,7 @@ def main():
 
     if "IN_DOCKER" in os.environ and args.wait:
         import time
+
         print("Waiting...")
         while True:
             time.sleep(1)
@@ -139,12 +140,12 @@ def semester_upkeep(meetings: List[Meeting], overwrite: bool = False) -> None:
         tqdm.write(f"{repr(meeting)} ~ {str(meeting)}")
 
         # Perform initial directory checks/clean-up
-        # meetings.update_or_create_folders_and_files(meeting)
+        meetings.update_or_create_folders_and_files(meeting)
 
         # Make edit in the group-specific repo
         meetings.update_or_create_notebook(meeting, overwrite=overwrite)
         meetings.download_papers(meeting)
-        # kaggle.push_kernel(meeting)
+        kaggle.push_kernel(meeting)
 
         # Make edits in the ucfai.org repo
         banners.render_cover(meeting)

@@ -10,6 +10,7 @@ import imgkit
 from autobot import get_template
 from autobot.meta import Meeting
 
+
 def render_cover(meeting: Meeting):
     """Generates the banner images for each meeting. These should be posted
        to the website as well as relevant social media.
@@ -73,8 +74,10 @@ def render_cover(meeting: Meeting):
         },
     )
 
+
 def render_weekly_instagram_post(meeting: Meeting):
     raise NotImplementedError()
+
 
 def render_video_background(meeting):
     raise NotImplementedError()

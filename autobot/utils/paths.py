@@ -1,12 +1,20 @@
 from pathlib import Path
+import os
 
 from autobot import ORG_NAME
 from autobot.meta import Group, Meeting
 
+
+def base_path():
+    if "IN_DOCKER" in os.environ:
+        return Path("/ucfai")
+    return Path()
+
+
 # region Repository pathing utilities
 def repo_group_folder(group: Group):
     """Produces the Group's directory, with respect to the current semester."""
-    return Path(repr(group)) / group.semester.short
+    return base_path() / repr(group) / group.semester.short
 
 
 def repo_meeting_folder(
@@ -17,8 +25,15 @@ def repo_meeting_folder(
     `<group>/<semester>/<filename>`, e.g. consider the Fall 2019 Computational
     Cognitive Neuroscience meeting: `core/fa19/2019-11-20-ccn`."""
     if short:
-        return Path(repr(meeting))
+        return repr(meeting)
     return repo_group_folder(meeting.group) / repo_meeting_folder(meeting, short=True)
+
+
+def tmp_meeting_folder(meeting: Meeting) -> Path:
+    if "IN_DOCKER" in os.environ:
+        return Path("/tmp")
+    else:
+        return repo_meeting_folder(meeting) / "tmp"
 
 
 # endregion
