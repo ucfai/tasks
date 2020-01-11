@@ -26,30 +26,25 @@ from autobot import get_template
 from autobot.meta.meeting import Meeting
 from autobot.utils import paths
 from autobot.apis import kaggle
-
-from .ucfai_exporter import *
-
-
-class Suffixes:
-    SOLUTION = ".solution.ipynb"
-    WORKBOOK = ".ipynb"
+from autobot.apis.nbconvert import (
+    SolutionbookToPostExporter, SolutionbookToWorkbookExporter, TemplateNotebookValidator, ValidateNBGraderPreprocessor)
 
 
-def read(meeting: Meeting, suffix: str = Suffixes.WORKBOOK):
-    """Attempts to read a Notebook for a given Meeting. If it can't find the
-    notebook it will touch the notebook gracefully and move on."""
-    path = paths.repo_meeting_folder(meeting) / (repr(meeting) + suffix)
+# def read(meeting: Meeting, suffix: str = Suffixes.WORKBOOK):
+#     """Attempts to read a Notebook for a given Meeting. If it can't find the
+#     notebook it will touch the notebook gracefully and move on."""
+#     path = paths.repo_meeting_folder(meeting) / (repr(meeting) + suffix)
 
-    # looking to prepend ".<suffix>" to ".ipynb", so you get: `.<suffix>.ipynb`
-    assert suffix.startswith(".")
+#     # looking to prepend ".<suffix>" to ".ipynb", so you get: `.<suffix>.ipynb`
+#     assert suffix.startswith(".")
 
-    try:
-        nb = nbf.read(str(path), as_version=4)
-    except FileNotFoundError:
-        path.parent.mkdir(exist_ok=True)
-        nb = nbf.v4.new_notebook()
+#     try:
+#         nb = nbf.read(str(path), as_version=4)
+#     except FileNotFoundError:
+#         path.parent.mkdir(exist_ok=True)
+#         nb = nbf.v4.new_notebook()
 
-    return nb, path
+#     return nb, path
 
 
 def update_or_create_folders_and_files(meeting: Meeting):
@@ -130,9 +125,6 @@ def update_or_create_notebook(meeting: Meeting, overwrite: bool = False):
     validator = TemplateNotebookValidator()
     _, _ = validator.from_meeting(meeting)
 
-    copy_tree(
-        str(get_template("seed/meeting")), str(paths.repo_meeting_folder(meeting))
-    )
     kernel_metadata = Template(
         open(get_template("seed/meeting") / "kernel-metadata.json.j2", "r").read()
     )
@@ -155,6 +147,7 @@ def update_or_create_notebook(meeting: Meeting, overwrite: bool = False):
     _, _ = workbook.from_meeting(meeting)
 
 
+# TODO: dump the following code once generalization has been totally tested
 # def update_or_create_notebook(meeting: Meeting, overwrite: bool = False):
 #     """Notebooks are the nuts and bolts of AI@UCF. These power the website's
 #     posts, our workshops, and are the general workbooks students can make use
@@ -257,68 +250,7 @@ def download_papers(meeting: Meeting):
             pdf.write(requests.get(link).content)
 
 
-def render_banner(meeting: Meeting):
-    """Generates the banner images for each meeting. These should be posted
-       to the website as well as relevant social media.
 
-    NOTE: This function is destructive. It will overwrite the banner it's
-    generating - this is intentional behavior, ergo **do not edit banners
-    directly**.
-    """
-    template_banner = Template(open(get_template("event-banner.html"), "r").read())
-
-    accepted_content_types = [
-        f"image/{x}" for x in ["jpg", "jpeg", "png", "gif", "tiff"]
-    ]
-
-    extension = meeting.required["cover"].split(".")[-1]
-
-    cover_image_path = paths.site_post_assets(meeting) / "cover.png"
-
-    # snag the image from the URL provided in the syllabus
-    cover = requests.get(
-        meeting.required["cover"], headers={"user-agent": "Mozilla/5.0"}
-    )
-    # use this to mute the EXIF data error ~ this seems to be a non-issue based
-    #   on what I've read (@ionlights) ~ circa Sep/Oct 2019
-    warnings.filterwarnings("ignore", "(Possibly )?corrupt EXIF data", UserWarning)
-    if cover.headers["Content-Type"] in accepted_content_types:
-        image_as_bytes = io.BytesIO(cover.content)
-        try:
-            # noinspection PyTypeChecker
-            cover_as_bytes = io.BytesIO(open(cover_image_path, "rb").read())
-
-            # get hashes to check for diff
-            image_hash = sha256(image_as_bytes.read()).hexdigest()
-            cover_hash = sha256(cover_as_bytes.read()).hexdigest()
-
-            # clearly, something has changed between what we have and what
-            #   was just downloaded -> update
-            if cover_hash != image_hash:
-                image = Image.open(image_as_bytes)
-            else:
-                image = Image.open(cover_as_bytes)
-        except FileNotFoundError:
-            image = Image.open(image_as_bytes)
-        finally:
-            image.save(cover_image_path)
-
-    out = cover_image_path.with_name("banner.png")
-
-    banner = template_banner.render(meeting=meeting, cover=cover_image_path.absolute())
-
-    imgkit.from_string(
-        banner,
-        out,
-        options={
-            # standard flags should be passed as dict keys with empty values...
-            "quiet": "",
-            "debug-javascript": "",
-            "enable-javascript": "",
-            "javascript-delay": "400",
-            "no-stop-slow-scripts": "",
-        },
-    )
 
 
 def export_notebook_as_post(meeting: Meeting):
@@ -338,6 +270,7 @@ def export_notebook_as_post(meeting: Meeting):
     print(resources)
 
 
+# TODO: dump the following code once generalization has been totally tested
 # def export_notebook_as_post(meeting: Meeting):
 #     """Every notebook should also have a home on the website. This runs said
 #     notebook through the exporter so that it can be posted on the website.

@@ -1,36 +1,16 @@
 from argparse import ArgumentParser
-from datetime import datetime as dt
 from distutils.dir_util import copy_tree
-from itertools import product
 from pathlib import Path
 from typing import List, Dict
-import datetime
-import hashlib
-import io
 import logging
 import os
-import shutil
 import sys
 
 from jinja2 import Template
-from PIL import Image
 from tqdm import tqdm
-import argcomplete
-import imgkit
-import nbconvert as nbc
-import nbformat as nbf
-import pandas as pd
-import requests
-import requests
-import yaml
-
-try:
-    from yaml import CLoader as Loader, CDumper as Dumper
-except ImportError:
-    from yaml import Loader, Dumper
 
 from autobot import safety, get_template, ORG_NAME
-from autobot.apis import ucf, kaggle
+from autobot.apis import kaggle, ucf
 from autobot.meta import Group, Meeting, Coordinator, groups
 from autobot.utils import meetings, paths
 
@@ -43,6 +23,8 @@ def main():
     parser = ArgumentParser(prog="autobot")
     parser.add_argument("group", choices=groups.ACCEPTED.keys())
     parser.add_argument("semester", nargs="?", default=semester)
+    if "IN_DOCKER" in os.environ:
+        parser.add_argument("--wait", action="store_true")
 
     action = parser.add_subparsers(title="action", dest="action")
 
@@ -59,9 +41,14 @@ def main():
 
     parser.add_argument("--overwrite", action="store_true")
 
-    argcomplete.autocomplete(parser)
-
     args = parser.parse_args()
+
+    if "IN_DOCKER" in os.environ and args.wait:
+        import time
+        print("Waiting...")
+        while True:
+            time.sleep(1)
+
     args.semester = ucf.semester_converter(short=args.semester)
 
     # `groups.ACCEPTED` makes use of Python's dict-based execution to allow for
@@ -73,11 +60,8 @@ def main():
     if args.action == "semester-setup":
         semester_setup(group)
     elif args.action == "semester-upkeep":
-        if args.all:
-            semester_upkeep_all(group, overwrite=args.overwrite)
-        else:
-            meetings = _parse_and_load_meetings(group)
-
+        meetings = syllabus.parse(group)
+        if not args.all:
             meeting = None
             if args.date:
                 meeting = next((m for m in meetings if args.date in repr(m)), None)
@@ -87,7 +71,9 @@ def main():
             if meeting is None:
                 raise ValueError("Couldn't find the meeting you were looking for!")
 
-            semester_upkeep(meeting, overwrite=args.overwrite)
+            meetings = [meeting]  # formats so semester upkeep accepts
+
+        semester_upkeep(meetings, overwrite=args.overwrite)
 
 
 def semester_setup(group: Group) -> None:
@@ -140,66 +126,7 @@ def semester_setup(group: Group) -> None:
     # endregion
 
 
-def _parse_and_load_meetings(group: Group):
-    # region Read `overhead.yml` and seed Coordinators
-    # noinspection PyTypeChecker
-    overhead_yml = paths.repo_group_folder(group) / "overhead.yml"
-    overhead_yml = yaml.load(open(overhead_yml, "r"), Loader=Loader)
-    coordinators = overhead_yml["coordinators"]
-    setattr(group, "coords", Coordinator.parse_yaml(coordinators))
-
-    meeting_overhead = overhead_yml["meetings"]
-    meeting_schedule = ucf.make_schedule(group, meeting_overhead)
-    # endregion
-
-    # region 2. Read `syllabus.yml` and parse Syllabus
-    syllabus_yml = paths.repo_group_folder(group) / "syllabus.yml"
-    syllabus_yml = yaml.load(open(syllabus_yml, "r"), Loader=Loader)
-
-    syllabus = []
-    for meeting, schedule in tqdm(
-        zip(syllabus_yml, meeting_schedule), desc="Parsing Meetings"
-    ):
-        try:
-            syllabus.append(Meeting(group, meeting, schedule))
-        except AssertionError:
-            tqdm.write(
-                "You're missing `required` fields from the meeting "
-                f"happening on {schedule.date} in {schedule.room}!"
-            )
-            continue
-
-    # TODO (@ch1pless) word-wrap the syllabus to 88 characters (this makes for easier reading)
-    # TODO (@ch1pless) write things like meeting dates and rooms if non-existent, to avoid imputing – since this can be less than ideal for some actions
-
-    return syllabus
-
-
-def semester_upkeep(meeting: Meeting, overwrite: bool = False) -> None:
-    tqdm.write(f"{repr(meeting)} ~ {str(meeting)}")
-
-    # Perform initial directory checks/clean-up
-    # meetings.update_or_create_folders_and_files(meeting)
-
-    # Make edit in the group-specific repo
-    meetings.update_or_create_notebook(meeting, overwrite=overwrite)
-    meetings.download_papers(meeting)
-    # kaggle.push_kernel(meeting)
-
-    # Make edits in the ucfai.org repo
-    # banners.render_cover(meeting)
-    # banners.render_weekly_instagram_post(meeting)  # this actually needs a more global setting
-    meetings.export_notebook_as_post(meeting)
-
-    # Video Rendering and Upload
-    # videos.dispatch_recording(meeting)  # unsure that this is needed
-    # banners.render_video_background(meeting)
-    # this could fire off a request to GCP to avoid long-running local renders
-    # videos.compile_and_render(meeting)
-    # videos.upload(meeting)
-
-
-def semester_upkeep_all(group: Group, overwrite: bool = False) -> None:
+def semester_upkeep(meetings: List[Meeting], overwrite: bool = False) -> None:
     """Assumes a [partially] complete Syllabus; this will only create new
     Syllabus entries' resources - thus avoiding potentially irreversible
     changes/deletions).
@@ -208,7 +135,25 @@ def semester_upkeep_all(group: Group, overwrite: bool = False) -> None:
     2. Reads `syllabus.yml`, parses the Semester's Syllabus, and sets up
        Notebooks.
     """
-    syllabus = _parse_and_load_meetings(group)
+    for meeting in tqdm(meetings, desc="Building / Updating Meetings", file=sys.stdout):
+        tqdm.write(f"{repr(meeting)} ~ {str(meeting)}")
 
-    for meeting in tqdm(syllabus, desc="Building/Updating Meetings", file=sys.stdout):
-        semester_upkeep(meeting, overwrite=overwrite)
+        # Perform initial directory checks/clean-up
+        # meetings.update_or_create_folders_and_files(meeting)
+
+        # Make edit in the group-specific repo
+        meetings.update_or_create_notebook(meeting, overwrite=overwrite)
+        meetings.download_papers(meeting)
+        # kaggle.push_kernel(meeting)
+
+        # Make edits in the ucfai.org repo
+        banners.render_cover(meeting)
+        # banners.render_weekly_instagram_post(meeting)  # this actually needs a more global setting
+        meetings.export_notebook_as_post(meeting)
+
+        # Video Rendering and Upload
+        # videos.dispatch_recording(meeting)  # unsure that this is needed
+        # banners.render_video_background(meeting)
+        # this could fire off a request to GCP to avoid long-running local renders
+        # videos.compile_and_render(meeting)
+        # videos.upload(meeting)
