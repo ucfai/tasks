@@ -1,0 +1,53 @@
+#!/bin/bash
+
+cd /
+source ~/.bashrc
+
+git_url="https://github.com/ucfai"
+
+if [[ ! "$(command -v autobot)" ]]; then
+    echo "Initial installation..."
+    case ${STAGE} in
+        "development") pip install -e /autobot ;;
+        "production")  pip install git+${git_url}/bot ;;
+        *) exit -1
+    esac
+fi
+
+function git_interact {
+    folder=$1
+    cd $1
+    if [ -d ".git" ]; then
+        gdiff=$(git diff origin/master)
+        status=$([ ${#gdiff} -eq 0 ] && echo "skipping" || echo "pulling")
+    else
+        status="cloning"
+    fi
+    echo "${folder} -> ${status}"
+    case ${status} in
+        "skipping") ;;
+        "pulling") git pull ;;
+        "cloning") rm .gitkeep; git clone ${git_url}/$(basename ${folder}) . ;;
+    esac
+
+    git submodule update --init --recursive
+}
+
+# Check if we have copies of the group repositories
+echo "Cloning groups..."
+[ -f ".gitkeep" ] && rm .gitkeep  # remove .gitkeep if it's present
+groups=("core" "intelligence" "data-science" "supplementary" "gbm")
+for group in ${groups[@]}; do
+    git_interact "/ucfai/${group}"
+done
+
+# Check if we have a copy of the website
+git_interact "/ucfai.org"
+
+cd /ucfai
+
+case $1 in
+    "") autobot --wait core ;;
+    "bash") /bin/bash ;;
+    *) autobot "$@" ;;
+esac

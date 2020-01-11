@@ -1,11 +1,11 @@
-**/pid*
+docker/groups
+docker/ucfai.org
+
 kaggle.json*
 !kaggle.json.gpg
 *.rsl*
 .idea/
 .DS_Store
-# allow the ucfai lib to be tracked by git
-!ucfai/lib/
 
 # Byte-compiled / optimized / DLL files
 **/*/__pycache__/
