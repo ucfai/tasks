@@ -21,7 +21,7 @@ RUN    env_name=$(head -1 /opt/env.yml | cut -d ":" -f 2 | tr -d "[:space:]") \
 
 WORKDIR /{{ ORG_NAME }}
 
-ENTRYPOINT [ "/autobot/docker/entrypoint" ]
+ENTRYPOINT [ "/docker/entrypoint" ]
 
 # Using `pip install -e .`
 from autobotbase as development

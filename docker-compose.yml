@@ -35,3 +35,15 @@ services:
       # - ./build:/output
     ports:
       - 8234:1313
+
+  # TODO this currently works *_only_* on a Linux host, b/c of `evdev`. Figure out if
+  #      there's a way to get around that limitation.
+  # autobot-reader:
+  #   container_name: autobot-reader
+  #   build:
+  #     context: ./docker/container.reader
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - .:/autobot
+  #     - ./docker/container.reader:/docker
+  #     - ./docker/volume.reader:/reader
