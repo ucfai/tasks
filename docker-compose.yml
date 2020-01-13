@@ -3,7 +3,7 @@ services:
   autobot-development:
     container_name: autobot-development
     build:
-      context: ./docker
+      context: ./docker/autobot
       dockerfile: Dockerfile
       target: development
       args:
@@ -11,15 +11,15 @@ services:
         env_name: autobot  # setup to work dynamically from conda env
     volumes:
       - .:/autobot
-      - ./docker/groups/:/ucfai/
-      - ./docker/ucfai.org/:/ucfai.org/
-      # - ./docker/conda:/opt/conda/envs/autobot
+      - ./docker/volume.groups/:/ucfai/
+      - ./docker/uvolume.cfai.org/:/ucfai.org/
+      - ./docker/container.autobot:/docker
 
   # autobot-production:
   #   container_name: autobot-production
   #   build:
   #     context: .
-  #     dockerfile: Dockerfile
+  #     dockerfile: autobot.Dockerfile
   #     target: production
 
   autobot-hugo:

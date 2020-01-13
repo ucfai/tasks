@@ -16,19 +16,28 @@ fi
 
 function git_interact {
     folder=$1
-    cd $1
+
+    # assert the folder exists (by creating it) and enter
+    mkdir -p ${folder}
+    cd ${folder}
+
     if [ -d ".git" ]; then
         gdiff=$(git diff origin/master)
         status=$([ ${#gdiff} -eq 0 ] && echo "skipping" || echo "pulling")
     else
         status="cloning"
+        [ -f .gitkeep ] && rm .gitkeep
     fi
+
     echo "${folder} -> ${status}"
+
     case ${status} in
         "skipping") ;;
         "pulling") git pull ;;
-        "cloning") rm .gitkeep; git clone ${git_url}/$(basename ${folder}) . ;;
+        "cloning") git clone ${git_url}/$(basename ${folder}) . ;;
     esac
+
+    touch .gitkeep
 
 }
 

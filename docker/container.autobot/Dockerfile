@@ -3,7 +3,7 @@ FROM continuumio/miniconda3:4.7.12 as autobotbase
 
 ADD env.yml /opt/env.yml
 
-ARG env_name
+ARG env_name="autobot"
 # ENV ENV_NAME $(head -1 /opt/env.yml | cut -d ":" -f 2 | tr -d "[:space:]")
 ENV ENV_NAME ${env_name}
 

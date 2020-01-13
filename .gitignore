@@ -1,5 +1,4 @@
-docker/groups
-docker/ucfai.org
+docker/volume*
 
 kaggle.json*
 !kaggle.json.gpg
