@@ -3,7 +3,7 @@ services:
   autobot-development:
     container_name: autobot-development
     build:
-      context: ./docker/autobot
+      context: ./docker/container.autobot
       dockerfile: Dockerfile
       target: development
       args:
@@ -12,13 +12,13 @@ services:
     volumes:
       - .:/autobot
       - ./docker/volume.groups/:/ucfai/
-      - ./docker/uvolume.cfai.org/:/ucfai.org/
+      - ./docker/volume.ucfai.org/:/ucfai.org/
       - ./docker/container.autobot:/docker
 
   # autobot-production:
   #   container_name: autobot-production
   #   build:
-  #     context: .
+  #     context: ./docker/container.autobot
   #     dockerfile: autobot.Dockerfile
   #     target: production
 
@@ -30,7 +30,7 @@ services:
       - HUGO_WATCH=true
       # - HUGO_BASEURL=
     volumes:
-      - ./docker/ucfai.org:/src
+      - ./docker/volume.ucfai.org:/src
       # use the volume mount below to inspect the hugo output, IFF needed
       # - ./build:/output
     ports:

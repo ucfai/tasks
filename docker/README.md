@@ -27,7 +27,7 @@ This locally mounts the `bot` so that development changes are reflected within t
 
 ### `/ucfai/` &ndash; used in both `autobot-development` and `autobot-production`
 
-**In `development`:** the local directory (`groups/`) is mounted so that we can see the changes being made to each group. `groups/` is deliberately untracked to avoid having to deal with `git submodule` voodoo, especially since `autobot` is intended to operate over the latest changes but doesn't depend on a specific version of a group.
+**In `development`:** the local directory (`volume.groups/`) is mounted so that we can see the changes being made to each group. `volume.groups/` is deliberately untracked to avoid having to deal with `git submodule` voodoo, especially since `autobot` is intended to operate over the latest changes but doesn't depend on a specific version of a group.
 
 **In `production`:** the local directory isn't mounted, but the `entrypoint` script still clones the groups to operate over them.
 
