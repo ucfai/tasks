@@ -5,7 +5,7 @@ from github.MainClass import Github
 from github.GithubException import GithubException
 
 from autobot import ORG_NAME
-from autobot.meta.group import Group
+from autobot.concepts import Group
 
 # GH_API_KEY = os.environ["GITHUB_API_KEY"]
 _GH_API_KEY = "ca9c8efd282ec1bc79dd10e9a84d2883f0104a51"

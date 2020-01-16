@@ -2,14 +2,14 @@ import logging
 from pathlib import Path
 from typing import Any
 
-from autobot.meta import SemesterMeta
+from .semester import Semester
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
 
 
 class Group:
-    def __init__(self, name: str, sem_meta: SemesterMeta) -> None:
+    def __init__(self, name: str, sem_meta: Semester) -> None:
         self.name = name
         self.semester = sem_meta
         self.coords = None

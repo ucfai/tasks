@@ -8,7 +8,7 @@ import requests
 import imgkit
 
 from autobot import get_template
-from autobot.meta import Meeting
+from autobot.concepts import Meeting
 
 
 def render_cover(meeting: Meeting):
@@ -19,7 +19,7 @@ def render_cover(meeting: Meeting):
     generating - this is intentional behavior, ergo **do not edit banners
     directly**.
     """
-    template_banner = Template(open(get_template("event-banner.html"), "r").read())
+    template_banner = load_setup_template("banners/event.html.j2")
 
     accepted_content_types = [
         f"image/{x}" for x in ["jpg", "jpeg", "png", "gif", "tiff"]
@@ -58,12 +58,30 @@ def render_cover(meeting: Meeting):
             image.save(cover_image_path)
 
     out = cover_image_path.with_name("banner.png")
-
     banner = template_banner.render(meeting=meeting, cover=cover_image_path.absolute())
 
+    _imgkit_from_str(banner, out)
+
+
+def render_weekly_instagram_post(meeting: Meeting):
+    template_instagram = load_setup_template("banners/instagram.html.j2")
+    raise NotImplementedError()
+
+
+def render_video_background(meeting):
+    template_videobg = load_setup_template("banners/video-bg.html.j2")
+
+    out = cover_image_path.with_name("banner.png")
+    banner = template_banner.render(meeting=meeting, cover=cover_image_path.absolute())
+
+    _imgkit_from_str(banner, out)
+    raise NotImplementedError()
+
+
+def _imgkit_from_str(to_render, output_file):
     imgkit.from_string(
-        banner,
-        out,
+        to_render,
+        output_file,
         options={
             # standard flags should be passed as dict keys with empty values...
             "quiet": "",
@@ -71,13 +89,5 @@ def render_cover(meeting: Meeting):
             "enable-javascript": "",
             "javascript-delay": "400",
             "no-stop-slow-scripts": "",
-        },
+        }
     )
-
-
-def render_weekly_instagram_post(meeting: Meeting):
-    raise NotImplementedError()
-
-
-def render_video_background(meeting):
-    raise NotImplementedError()

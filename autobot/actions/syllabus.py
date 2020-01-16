@@ -7,7 +7,7 @@ try:
 except ImportError:
     from yaml import Loader, Dumper
 
-from autobot.meta import Group, Coordinator, Meeting
+from autobot.concepts import Group, Coordinator, Meeting
 from autobot.apis import ucf
 
 from . import paths

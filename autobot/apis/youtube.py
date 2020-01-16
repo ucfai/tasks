@@ -1,4 +1,4 @@
-from autobot.meta import Meeting
+from autobot.concepts import Meeting
 
 
 def upload(meeting: Meeting):

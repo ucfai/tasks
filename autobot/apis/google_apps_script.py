@@ -1,4 +1,4 @@
-from autobot.meta.group import Group
+from autobot.concepts import Group
 
 # TODO: this needs to use the Google Apps API as denoted here:
 # - https://developers.google.com/apps-script/reference/forms/

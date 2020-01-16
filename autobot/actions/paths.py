@@ -2,19 +2,19 @@ from pathlib import Path
 import os
 
 from autobot import ORG_NAME
-from autobot.meta import Group, Meeting
+from autobot.concepts import Group, Meeting
 
 
 def base_path():
     if "IN_DOCKER" in os.environ:
         return Path("/ucfai")
-    return Path()
+    return Path("groups")
 
 
 # region Repository pathing utilities
 def repo_group_folder(group: Group):
     """Produces the Group's directory, with respect to the current semester."""
-    return base_path() / repr(group) / group.semester.short
+    return base_path() / repr(group) / repr(group.semester)
 
 
 def repo_meeting_folder(
@@ -44,7 +44,7 @@ page_git = f"{ORG_NAME}.org"
 site_dir = f"{ORG_NAME}.org"
 repo_url = f"{ORG_NAME}/{page_git}"
 
-CONTENT_DIR = Path(site_dir) / "content"
+CONTENT_DIR = base_path().with_suffix(".org") / "content"
 
 
 def site_post(meeting: Meeting):
@@ -72,9 +72,9 @@ def site_group_folder_from_meeting(meeting):
 
 
 def site_group_folder(group):
-    path = CONTENT_DIR / repr(group) / group.semester.short
+    path = CONTENT_DIR / repr(group) / repr(group.semester)
     path.mkdir(exist_ok=True, parents=True)
-    print(path)
+
     return path
 
 

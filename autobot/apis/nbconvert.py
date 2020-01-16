@@ -12,8 +12,8 @@ from nbgrader.preprocessors import ClearSolutions, ClearOutput
 from jinja2 import Template
 
 from autobot import get_template
-from autobot.meta import Meeting
-from autobot.utils import paths
+from autobot.concepts import Meeting
+from autobot.actions import paths
 
 
 class FileExtensions:
@@ -40,15 +40,15 @@ class SolutionbookToPostExporter(MarkdownExporter):
     def __init__(self, config=None, **kwargs):
         # This removes the `In [X]:` snippets of the notebook
         #   **but not the actual code snippets!**
-        self.exclude_input_prompt = False
+        self.exclude_input_prompt = True
         # from: https://github.com/jupyter/nbconvert/blob/b31a5af48ee159f579c021b897727374f28a0800/nbconvert/exporters/templateexporter.py#L237
 
         # This removes the `Out [X]:` snippets of the notebook
         #   **but not the actual code output!**
-        self.exclude_output_prompt = False
+        self.exclude_output_prompt = True
         # from: https://github.com/jupyter/nbconvert/blob/b31a5af48ee159f579c021b897727374f28a0800/nbconvert/exporters/templateexporter.py#L245
 
-        self.template_extension = ".md.j2"
+        self.no_prompt = True
 
         # This removes the title cell that's placed at the beginning of every notebook.
         self.register_preprocessor(
@@ -63,19 +63,14 @@ class SolutionbookToPostExporter(MarkdownExporter):
         # mimic'd from: https://github.com/jupyter/nbconvert/blob/b31a5af48ee159f579c021b897727374f28a0800/nbconvert/exporters/html.py#L99
         self.register_filter("highlight_code", Highlight2HTML(parent=self))
 
-    @property
-    def template_path(self):
-        return [get_template("notebooks", as_str=True)]
-
-    def _template_file_default(self):
-        return "nb-to-post"
-
     def from_meeting(self, meeting: Meeting):
         notebook_path = paths.repo_meeting_folder(meeting) / (
             repr(meeting) + FileExtensions.Solutionbook
         )
 
         # TODO fill out `hugo-front-matter.md.j2` from meeting metadata and concat `notebook` (below) with this
+
+        # the notebook is output as a string, so treat it as such when concatenating
         notebook, resources = super(MarkdownExporter, self).from_filename(
             str(notebook_path)
         )
@@ -85,7 +80,10 @@ class SolutionbookToPostExporter(MarkdownExporter):
         writer = FilesWriter(
             build_directory=str(paths.site_group_folder_from_meeting(meeting))
         )
-        print(resources)
+
+        front_matter_plus_notebook = ... # TODO combine the front matter and notebook
+
+        # writer.write(front_matter_plus_notebook, resources, meeting.required["filename"])
         writer.write(notebook, resources, meeting.required["filename"])
 
         return notebook, resources

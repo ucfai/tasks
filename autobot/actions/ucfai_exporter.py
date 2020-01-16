@@ -12,8 +12,8 @@ from nbgrader.preprocessors import ClearSolutions, ClearOutput
 from jinja2 import Template
 
 from autobot import get_template
-from autobot.meta import Meeting
-from autobot.utils import paths
+from autobot.concepts import Meeting
+from autobot.actions import paths
 
 
 def read_notebook(meeting: Meeting, suffix: str = ".solution.ipynb"):

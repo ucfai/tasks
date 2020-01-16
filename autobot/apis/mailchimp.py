@@ -1,4 +1,4 @@
-from autobot.meta.meeting import Meeting
+from autobot.concepts import Meeting
 
 
 def create_newsletter(mtg: Meeting):

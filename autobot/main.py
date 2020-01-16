@@ -11,25 +11,21 @@ from tqdm import tqdm
 
 from autobot import safety, get_template, ORG_NAME
 from autobot.apis import kaggle, ucf
-from autobot.meta import Group, Meeting, Coordinator, groups
-from autobot.utils import meetings, paths, syllabus
+from autobot.concepts import Semester, Group, Meeting, Coordinator, groups
+from autobot.actions import meetings, paths, syllabus
 
-
-def main():
-    logging.basicConfig()
-
-    semester = ucf.determine_semester().short
-
+def _argparser(**kwargs):
     parser = ArgumentParser(prog="autobot")
+
     parser.add_argument("group", choices=groups.ACCEPTED.keys())
-    parser.add_argument("semester", nargs="?", default=semester)
+    parser.add_argument("semester", nargs="?", default=kwargs["semester"])
+
     if "IN_DOCKER" in os.environ:
         parser.add_argument("--wait", action="store_true")
 
     action = parser.add_subparsers(title="action", dest="action")
 
     setup = action.add_parser("semester-setup")
-
     upkeep = action.add_parser("semester-upkeep")
 
     which_mtgs = upkeep.add_mutually_exclusive_group(required=True)
@@ -41,22 +37,21 @@ def main():
 
     parser.add_argument("--overwrite", action="store_true")
 
-    args = parser.parse_args()
+    return parser.parse_args()
+
+def main():
+    semester = ucf.determine_semester()
+
+    args = _argparser(**{"semester": repr(semester)})
 
     if "IN_DOCKER" in os.environ and args.wait:
-        import time
+        foreground()
 
-        print("Waiting...")
-        while True:
-            time.sleep(1)
-
-    args.semester = ucf.semester_converter(short=args.semester)
+    args.semester = Semester(shortname=args.semester)
 
     # `groups.ACCEPTED` makes use of Python's dict-based execution to allow for
-    #   restriction to one of the Groups listed in `meta/groups.py`
+    #   restriction to one of the Groups listed in `concept/groups.py`
     group = groups.ACCEPTED[args.group](args.semester)
-
-    safety.force_root()
 
     if args.action == "semester-setup":
         semester_setup(group)
@@ -76,6 +71,13 @@ def main():
 
         semester_upkeep(meetings, overwrite=args.overwrite)
 
+
+def foreground():
+    import time
+
+    print("Waiting...")
+    while True:
+        time.sleep(1)
 
 def semester_setup(group: Group) -> None:
     """Sets up the skeleton for a new semester.
@@ -107,7 +109,7 @@ def semester_setup(group: Group) -> None:
     with open(env_yml, "w") as f:
         f.write(
             env.render(
-                org_name=ORG_NAME, group_name=repr(group), semester=group.semester.short
+                org_name=ORG_NAME, group_name=repr(group), semester=repr(group.semester)
             )
         )
     # endregion
@@ -127,7 +129,7 @@ def semester_setup(group: Group) -> None:
     # endregion
 
 
-def semester_upkeep(meetings: List[Meeting], overwrite: bool = False) -> None:
+def semester_upkeep(syllabus: List[Meeting], overwrite: bool = False) -> None:
     """Assumes a [partially] complete Syllabus; this will only create new
     Syllabus entries' resources - thus avoiding potentially irreversible
     changes/deletions).
@@ -136,11 +138,11 @@ def semester_upkeep(meetings: List[Meeting], overwrite: bool = False) -> None:
     2. Reads `syllabus.yml`, parses the Semester's Syllabus, and sets up
        Notebooks.
     """
-    for meeting in tqdm(meetings, desc="Building / Updating Meetings", file=sys.stdout):
+    for meeting in tqdm(syllabus, desc="Building / Updating Syllabus", file=sys.stdout):
         tqdm.write(f"{repr(meeting)} ~ {str(meeting)}")
 
         # Perform initial directory checks/clean-up
-        meetings.update_or_create_folders_and_files(meeting)
+        # meetings.update_or_create_folders_and_files(meeting)
 
         # Make edit in the group-specific repo
         meetings.update_or_create_notebook(meeting, overwrite=overwrite)
@@ -148,7 +150,7 @@ def semester_upkeep(meetings: List[Meeting], overwrite: bool = False) -> None:
         kaggle.push_kernel(meeting)
 
         # Make edits in the ucfai.org repo
-        banners.render_cover(meeting)
+        # banners.render_cover(meeting)
         # banners.render_weekly_instagram_post(meeting)  # this actually needs a more global setting
         meetings.export_notebook_as_post(meeting)
 

@@ -1,4 +1,4 @@
-from autobot.meta.meeting import Meeting
+from autobot.concepts import Meeting
 
 
 def make_post(mtg: Meeting):

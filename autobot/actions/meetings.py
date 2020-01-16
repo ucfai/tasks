@@ -23,8 +23,8 @@ import nbconvert as nbc
 from nbgrader.preprocessors import ClearSolutions, ClearOutput
 
 from autobot import get_template
-from autobot.meta.meeting import Meeting
-from autobot.utils import paths
+from autobot.concepts import Meeting
+from autobot.actions import paths
 from autobot.apis import kaggle
 from autobot.apis.nbconvert import (
     SolutionbookToPostExporter,
@@ -40,19 +40,23 @@ def update_or_create_folders_and_files(meeting: Meeting):
     implementation is quite destructive. Ideally, there's some way to go about
     *intelligently* merging work ~ so this would allow for some temporary titles
     and the like.
+
+    Present file locations:
+      - <group>/<semester>/<repr(meeting)>/<repr(meeting)>.solution.ipynb
+      - ucfai.org/content/<group>/<semester>/<meeting-filename>.md
     """
     # TODO rename `placeholder` notebooks
     #      this requires changes in both the `paths.repo_meeting_folder` as well as the
     #      `paths.site_post`
-    # TODO implement a way to track meetings – since `hugo-academic`'s docs doesn't work
-    #      the same way Jekyll posts did (YYYY-MM-DD-<filename>.md), we need a new way
-    #      to uniquely identify meetings (so we know which to clean and such)
+    # TODO implement a way to track meetings – since `hugo-academic`'s docs doesn't
+    #      work the same way Jekyll posts did (YYYY-MM-DD-<filename>.md), we need a new
+    #      way to uniquely identify meetings (so we know which to clean and such)
     #      NOTE we might just be able to totally overwrite the group's contents on the
     #           site, since everything in, say, `core/fa19/*` (minus `_index.md`) is
     #           generated from the meeting's Solutionbook
-    # TODO allow for meetings to be moved – this intuitively makes sense to resolve with
-    #      the `filename` parameter, but may also need to consider the `date` (you can
-    #      get all this from `repr(meeting)`)
+    # TODO allow for meetings to be moved – this intuitively makes sense to resolve
+    #      with the `filename` parameter, but may also need to consider the `date` (you
+    #      can get all this from `repr(meeting)`)
     raise NotImplementedError()
 
 
@@ -183,4 +187,3 @@ def export_notebook_as_post(meeting: Meeting):
     """
     as_post = SolutionbookToPostExporter()
     post, resources = as_post.from_meeting(meeting)
-    print(resources)

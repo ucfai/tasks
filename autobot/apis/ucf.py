@@ -5,8 +5,8 @@ import pandas as pd
 import requests
 from datetime import datetime
 
-from autobot.meta import MeetingMeta, SemesterMeta
-from autobot.meta.group import Group
+from autobot.concepts import MeetingMeta
+from autobot.concepts import Group, Semester
 
 
 # it's unlikely this URL will change, but should be occassionally checked
@@ -17,10 +17,6 @@ OBS_HOLIDAYS = {
     "summer": [],
     "fall": ["Veterans Day", "Labor Day", "Thanksgiving"],
 }
-
-long2short = {"fall": "fa", "summer": "su", "spring": "sp"}
-# invert `long2short`
-short2long = {k: v for v, k in long2short.items()}
 
 
 def day2index(s: str) -> int:
@@ -85,7 +81,7 @@ def parse_calendar(group: Group) -> tuple:
     return date_range, holidays
 
 
-def determine_semester() -> SemesterMeta:
+def determine_semester() -> Semester:
     """A method which determines the current semester based on the present date
     and uses the UCF calendar redirect to inform it's decision.
     """
@@ -110,18 +106,4 @@ def determine_semester() -> SemesterMeta:
 
     year, name = current_url.replace(f"{CALENDAR_URL}/", "").split("/")
 
-    return semester_converter(name=name, year=year)
-
-
-def semester_converter(name: str = "", year: str = "", short: str = ""):
-    """This makes a bi-directional conversion between "Spring 2019" <-> `sp19`.
-    """
-    assert (name and year) or short
-
-    if name and year:
-        short = long2short[name] + year[2:]
-    else:
-        name = short2long[short[:2]]
-        year = "20" + short[2:]  # if this makes it into the next century, lol.
-
-    return SemesterMeta(name, year, short)
+    return Semester(name=name, year=year)

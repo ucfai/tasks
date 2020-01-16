@@ -1,7 +1,7 @@
 from pathlib import Path
 import os
 
-from autobot.meta import Group, Meeting
+from autobot.concepts import Group, Meeting
 
 
 def force_root():

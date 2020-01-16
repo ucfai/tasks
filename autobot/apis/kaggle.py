@@ -7,8 +7,8 @@ import shutil
 from tqdm import tqdm
 
 from autobot import ORG_NAME
-from autobot.utils import paths
-from autobot.meta.meeting import Meeting
+from autobot.actions import paths
+from autobot.concepts import Meeting
 
 from .nbconvert import FileExtensions
 
@@ -75,7 +75,7 @@ def slug_kernel(meeting: Meeting) -> str:
     e.g. if looking at the Fall 2019 Computational Cognitive Neuroscience
     lecture, the slug would be: `core-fa19-ccn`."""
     return (
-        f"{repr(meeting.group)}-{meeting.group.semester.short}-"
+        f"{repr(meeting.group)}-{repr(meeting.group.semester)}-"
         f"{meeting.required['filename']}"
     )
 

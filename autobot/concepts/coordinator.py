@@ -34,3 +34,14 @@ class Coordinator:
 
     def __str__(self) -> str:
         return f"<Coordinator ({self.github}, {self.role})>"
+
+    def __repr__(self) -> str:
+        return self.github.lower()
+
+# TODO add a Director class to avoid needing to specify things in a YAML
+class Director(Coordinator):
+    pass
+
+# TODO add a President class to avoid needing to specify things in YAML
+class President(Director):
+    pass
