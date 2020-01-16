@@ -191,19 +191,16 @@
       <div class="metadata-panel">
         <div id="lecture-video"></div>
         <div id="lecture-info">
-          <div id="title">
-            <h1>
-              A Really Really Long Title for the Purposes of Testing How it
-              Looks and Scales
-            </h1>
-          </div>
+          <div id="title"> <h1>{{ meeting.required["title"] }}</h1> </div>
           <div id="authors">
+            {% for author in meeting.required[""] %}
             <div class="author">
               <img src="http://avatars.githubusercontent.com/ionlights" />
               <p>John Muchovej, AI@UCF</p>
             </div>
+            {% endfor %}
           </div>
-          <div id="date">on 22 Jan 2019</div>
+          <div id="date">on {{ meeting.meta.date.strftime("on %d %b %Y") }</div>
         </div>
       </div>
     </main>

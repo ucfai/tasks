@@ -14,6 +14,7 @@ from autobot.apis import kaggle, ucf
 from autobot.concepts import Semester, Group, Meeting, Coordinator, groups
 from autobot.actions import meetings, paths, syllabus
 
+
 def _argparser(**kwargs):
     parser = ArgumentParser(prog="autobot")
 
@@ -38,6 +39,7 @@ def _argparser(**kwargs):
     parser.add_argument("--overwrite", action="store_true")
 
     return parser.parse_args()
+
 
 def main():
     semester = ucf.determine_semester()
@@ -79,6 +81,7 @@ def foreground():
     while True:
         time.sleep(1)
 
+
 def semester_setup(group: Group) -> None:
     """Sets up the skeleton for a new semester.
     1. Copies base `yml` into `<group>/<semester>/`
@@ -101,7 +104,7 @@ def semester_setup(group: Group) -> None:
     #   3. syllabus.yml
     # strong preference to use `shutil`, but can't use with existing dirs
     # shutil.copytree("autobot/templates/seed/meeting", path.parent)
-    copy_tree(get_template("seed/group"), str(paths.repo_group_folder(group)))
+    copy_tree(get_setup_template("group"), str(paths.repo_group_folder(group)))
 
     env_yml = paths.repo_group_folder(group) / "env.yml"
     env = Template(open(env_yml, "r").read())

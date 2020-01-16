@@ -81,7 +81,7 @@ class SolutionbookToPostExporter(MarkdownExporter):
             build_directory=str(paths.site_group_folder_from_meeting(meeting))
         )
 
-        front_matter_plus_notebook = ... # TODO combine the front matter and notebook
+        front_matter_plus_notebook = ...  # TODO combine the front matter and notebook
 
         # writer.write(front_matter_plus_notebook, resources, meeting.required["filename"])
         writer.write(notebook, resources, meeting.required["filename"])

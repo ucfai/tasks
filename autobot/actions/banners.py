@@ -89,5 +89,5 @@ def _imgkit_from_str(to_render, output_file):
             "enable-javascript": "",
             "javascript-delay": "400",
             "no-stop-slow-scripts": "",
-        }
+        },
     )

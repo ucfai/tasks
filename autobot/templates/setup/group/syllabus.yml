@@ -1,4 +1,5 @@
-- required:
+meeting:
+  required:
     title: ""
     cover: ""
     filename: ""
@@ -10,8 +11,13 @@
     room: ""
     tags: []
     slides: ""
-    papers: []
+    papers:  # this should read like a dictionary with: <paper-filename>: <url-to-paper>
+
+    urls:
+      slides: ""
+      youtube: ""
     kaggle:
       datasets: []
       competitions: []
       kernels: []
+      enable_gpu: false

@@ -4,6 +4,7 @@ long2short = {"fall": "fa", "summer": "su", "spring": "sp"}
 # invert `long2short`
 short2long = {k: v for v, k in long2short.items()}
 
+
 class Semester:
     def __init__(self, name: str = "", year: Union[str, int] = "", shortname: str = ""):
         assert (name and year) or shortname  # TODO print out "help" text

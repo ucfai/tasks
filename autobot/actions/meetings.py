@@ -140,9 +140,7 @@ def update_or_create_notebook(meeting: Meeting, overwrite: bool = False):
     validator = TemplateNotebookValidator()
     _, _ = validator.from_meeting(meeting)
 
-    kernel_metadata = Template(
-        open(get_template("seed/meeting") / "kernel-metadata.json.j2", "r").read()
-    )
+    kernel_metadata = load_upkeep_templates("meetings/kernel-metadata.json.j2")
 
     with open(paths.repo_meeting_folder(meeting) / "kernel-metadata.json", "w") as f:
         meeting.optional["kaggle"]["competitions"].insert(
