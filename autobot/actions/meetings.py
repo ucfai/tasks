@@ -10,6 +10,7 @@ from hashlib import sha256
 from typing import List, Dict
 from itertools import product
 from distutils.dir_util import copy_tree
+from autobot import load_upkeep_template
 
 import imgkit
 import requests
@@ -140,7 +141,7 @@ def update_or_create_notebook(meeting: Meeting, overwrite: bool = False):
     validator = TemplateNotebookValidator()
     _, _ = validator.from_meeting(meeting)
 
-    kernel_metadata = load_upkeep_templates("meetings/kernel-metadata.json.j2")
+    kernel_metadata = load_upkeep_template("meetings/kernel-metadata.json.j2")
 
     with open(paths.repo_meeting_folder(meeting) / "kernel-metadata.json", "w") as f:
         meeting.optional["kaggle"]["competitions"].insert(
