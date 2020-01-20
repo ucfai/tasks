@@ -9,24 +9,29 @@ on:
       - master
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
-
     steps:
     - name: "Checkout Latest `master` branch"
       uses: actions/checkout@v2
-    - name: Build and push `autobot-development` container
+      
+    - name: "Set some variables for further use"
       run: |
         VERSION="development-$(date +%s)"
         PKG_URL="docker.pkg.github.com"
         TAGPATH="${PKG_URL}/ucfai/autobot"
+        
+    - name: "Build `autobot-development`"
+      run: |
         docker build docker/container.autobot/ --target development \
           --build-arg org_name=ucfai \
           --build-arg org_name=autobot \
-          --tag ${TAGPATH}:${VERSION} \
-          --tag ${TAGPATH}:development-latest
+          --tag ${TAGPATH}/development:${VERSION} \
+          --tag ${TAGPATH}/development:latest
+           
+    - name: "Push `autobot-development` to docker.pkg.github.com"
+      run: |
         docker login ${PKG_URL} --username ionlights --password ${{ secrets.GITHUB_TOKEN }}
-        docker push ${TAGPATH}:${VERSION}
-        docker push ${TAGPATH}:development-latest
+        docker push ${TAGPATH}/development:${VERSION}
+        docker push ${TAGPATH}/development:latest
         
