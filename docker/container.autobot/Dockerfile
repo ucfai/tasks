@@ -23,18 +23,20 @@ WORKDIR /{{ ORG_NAME }}
 
 ENTRYPOINT [ "/docker/entrypoint" ]
 
-# Using `pip install -e .`
+# TODO split into multiple Dockerfiles to make things clearer
 FROM docker.pkg.github.com/ucfai/bot/env:latest as development
 
 ENV STAGE development
 
+# Using `pip install -e .`
 # TODO properly sort out how to install `autobot` from pip and have it show-up
 #      in the entrypoint (using a local install)
 
-# Using `pip install git+https://github.com/ucfai/bot@master
+# TODO split into multiple Dockerfiles to make things clearer
 FROM docker.pkg.github.com/ucfai/bot/env:latest as production
 
 ENV STAGE production
 
+# Using `pip install git+https://github.com/ucfai/bot@master
 # TODO properly sort out how to install `autobot` from pip and have it show-up
 #      in the entrypoint (using a remote install)
