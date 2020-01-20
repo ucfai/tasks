@@ -1,56 +1,37 @@
-name: "Rebuild containers that allow for a portable `autobot`."
+name: "Rebuild containers to make `autobot` portable."
 
 # TODO migrate repeated steps to a GitHub action
 
 on:
   push:
     paths:
-      - ".github/workflows/*"
-      - "autobot*/"
+      - ".github/workflows/docker.yml"
+      - "autobot/*"
       - "docker/container.autobot/*"
   pull_request:
     paths:
-      - ".github/workflows/*"
-      - "autobot*/"
+      - ".github/workflows/docker.yml"
+      - "autobot/*"
       - "docker/container.autobot/*"
+  # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#onschedule
+  schedule:
+    - cron: "* 3 * * 5"  # run at 3am every Friday
 
 jobs:
   build-env:
     runs-on: ubuntu-latest
 
     env:
-      STAGE: env
-      TARGET: autobotbase
-      ORG_NAME: ucfai
+      STAGE: base
       ENV_NAME: autobot
-      REPO_NAME: bot
       REGISTRY: "docker.pkg.github.com"
 
     steps:
     - name: "Checkout latest `master` branch"
       uses: actions/checkout@v2
 
-    - name: "Set variables to make this semi-dynamic"
-      run: |
-        echo "${STAGE}-$(date +%s)" > VERSION
-        DOCKER_TAG="${REGISTRY}/${ORG_NAME}/${REPO_NAME}/${STAGE}"
-        echo "${DOCKER_TAG}:$(cat VERSION)" > TAG_VERSION
-        echo "${DOCKER_TAG}:latest" > TAG_LATEST
-
-    - name: "Build the container"
-      run: |
-        docker build docker/container.autobot \
-          --target ${TARGET} \
-          --build-arg org_name=${ORG_NAME} \
-          --build-arg env_name=${ENV_NAME} \
-          --tag $(cat TAG_VERSION) \
-          --tag $(cat TAG_LATEST)
-
-    - name: "Push the container to ${REGISTRY}"
-      run: |
-        docker login ${REGISTRY} --username ${ORG_NAME} --password ${{ secrets.GITHUB_TOKEN }}
-        docker push $(cat TAG_VERSION)
-        docker push $(cat TAG_LATEST)
+    - name: "Running build script (builds and pushes container)"
+      run: ./docker/container.autobot/build ${{ github.repository }} ${{ secrets.GITHUB_TOKEN }}
 
   build-development:
     needs: build-env
@@ -59,37 +40,15 @@ jobs:
 
     env:
       STAGE: development
-      TARGET: development
-      ORG_NAME: ucfai
       ENV_NAME: autobot
-      REPO_NAME: bot
       REGISTRY: "docker.pkg.github.com"
 
     steps:
-    - name: "Checkout Latest `master` branch"
+    - name: "Checkout latest `master` branch"
       uses: actions/checkout@v2
 
-    - name: "Set variables to make this semi-dynamic"
-      run: |
-        echo "${STAGE}-$(date +%s)" > VERSION
-        DOCKER_TAG="${REGISTRY}/${ORG_NAME}/${REPO_NAME}/${STAGE}"
-        echo "${DOCKER_TAG}:$(cat VERSION)" > TAG_VERSION
-        echo "${DOCKER_TAG}:latest" > TAG_LATEST
-
-    - name: "Build the container"
-      run: |
-        docker build docker/container.autobot \
-          --target ${TARGET} \
-          --build-arg org_name=${ORG_NAME} \
-          --build-arg env_name=${ENV_NAME} \
-          --tag $(cat TAG_VERSION) \
-          --tag $(cat TAG_LATEST)
-
-    - name: "Push the container to ${REGISTRY}"
-      run: |
-        docker login ${REGISTRY} --username ${ORG_NAME} --password ${{ secrets.GITHUB_TOKEN }}
-        docker push $(cat TAG_VERSION)
-        docker push $(cat TAG_LATEST)
+    - name: "Running build script (builds and pushes container)"
+      run: ./docker/container.autobot/build ${{ github.repository }} ${{ secrets.GITHUB_TOKEN }}
 
   build-production:
     needs: build-env
@@ -98,34 +57,12 @@ jobs:
 
     env:
       STAGE: production
-      TARGET: production
-      ORG_NAME: ucfai
       ENV_NAME: autobot
-      REPO_NAME: bot
       REGISTRY: "docker.pkg.github.com"
 
     steps:
-    - name: "Checkout Latest `master` branch"
+    - name: "Checkout latest `master` branch"
       uses: actions/checkout@v2
 
-    - name: "Set variables to make this semi-dynamic"
-      run: |
-        echo "${STAGE}-$(date +%s)" > VERSION
-        DOCKER_TAG="${REGISTRY}/${ORG_NAME}/${REPO_NAME}/${STAGE}"
-        echo "${DOCKER_TAG}:$(cat VERSION)" > TAG_VERSION
-        echo "${DOCKER_TAG}:latest" > TAG_LATEST
-
-    - name: "Build the container"
-      run: |
-        docker build docker/container.autobot \
-          --target ${TARGET} \
-          --build-arg org_name=${ORG_NAME} \
-          --build-arg env_name=${ENV_NAME} \
-          --tag $(cat TAG_VERSION) \
-          --tag $(cat TAG_LATEST)
-
-    - name: "Push the container to ${REGISTRY}"
-      run: |
-        docker login ${REGISTRY} --username ${ORG_NAME} --password ${{ secrets.GITHUB_TOKEN }}
-        docker push $(cat TAG_VERSION)
-        docker push $(cat TAG_LATEST)
+    - name: "Running build script (builds and pushes container)"
+      run: ./docker/container.autobot/build ${{ github.repository }} ${{ secrets.GITHUB_TOKEN }}

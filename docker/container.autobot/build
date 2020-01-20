@@ -1,0 +1,30 @@
+#!/bin/bash
+
+repopath="$1"
+gh_token="$2"
+
+org_name="${ORG_NAME:-$(echo ${repopath} | cut -d "/" -f 1)}"
+env_name="${ENV_NAME:-autobot}"
+registry="${REGISTRY:-docker.pkg.github.com}"
+
+version="${STAGE}-$(date +%s)"
+pkgname="${registry}/${repopath}/${STAGE}"
+
+tag_version="${pkgname}:${version}"
+tag_latest="${pkgname}:latest"
+
+echo "Building Container ..."
+docker build docker/container.autobot --file Dockerfile.${STAGE} -q \
+    --build-arg org_name=${org_name} \
+    --build-arg env_name=${env_name} \
+    --tag ${tag_version} \
+    --tag ${tag_latest}
+
+echo "Logging into ${registry}..."
+docker login ${registry} --username ${org_name} --password ${gh_token}
+
+echo "Pushing ${tag_version}..."
+docker push ${tag_version}
+
+echo "Pushing ${tag_latest}..."
+docker push ${tag_latest}
