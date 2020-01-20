@@ -1,0 +1,37 @@
+name: "Build and Push `autobot`'s environment in Docker"
+
+on:
+  push:
+    branches: 
+      - master
+  pull_request:
+    branches: 
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    env:
+      STAGE: "env"
+      VERSION: "${STAGE}-$(date +%s)"
+      PKG_URL: docker.pkg.github.com
+      TAGPATH: "${PKG_URL}/ucfai/autobot"
+
+    steps:
+    - name: "Checkout Latest `master` branch"
+      uses: actions/checkout@v2
+        
+    - name: "Build `autobot-env`"
+      run: |
+        docker build docker/container.autobot --target autobotbase \
+          --build-arg org_name=ucfai \
+          --build-arg org_name=autobot \
+          --tag ${TAGPATH}/${STAGE}:${VERSION} \
+          --tag ${TAGPATH}/${STAGE}:latest
+           
+    - name: "Push `autobot-env` to docker.pkg.github.com"
+      run: |
+        docker login ${PKG_URL} --username ionlights --password ${{ secrets.GITHUB_TOKEN }}
+        docker push ${TAGPATH}/${STAGE}:${VERSION}
+        docker push ${TAGPATH}/${STAGE}:latest
