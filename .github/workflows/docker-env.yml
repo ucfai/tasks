@@ -25,7 +25,7 @@ jobs:
     
     - name: "Set variables to make this semi-dynamic"
       run: |
-        echo "${STAGE}-$(date +s)" > VERSION
+        echo "${STAGE}-$(date +%s)" > VERSION
         echo "${REGISTRY}/${STAGE}:$(cat VERSION)" > TAG_VERSION
         echo "${REGISTRY}/${STAGE}:latest" > TAG_LATEST
         
@@ -40,6 +40,6 @@ jobs:
            
     - name: "Push the container to ${REGISTRY}"
       run: |
-        docker login ${REGISTRY} --username ionlights --password ${{ secrets.GITHUB_TOKEN }}
+        docker login ${REGISTRY} --username ${ORG_NAME} --password ${{ secrets.GITHUB_TOKEN }}
         docker push $(cat TAG_VERSION)
         docker push $(cat TAG_LATEST)
