@@ -1,0 +1,32 @@
+name: "Build and Push `autobot-development` in Docker"
+
+on:
+  push:
+    branches: 
+      - master
+  pull_request:
+    branches: 
+      - master
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: "Checkout Latest `master` branch"
+      uses: actions/checkout@v2
+    - name: Build and push `autobot-development` container
+      run: |
+        VERSION="development-$(date +%s)"
+        PKG_URL="docker.pkg.github.com"
+        TAGPATH="${PKG_URL}/ucfai/autobot"
+        docker build ./docker/container.autobot --file Dockerfile --target development \
+          --build-arg org_name=ucfai \
+          --build-arg org_name=autobot \
+          --tag ${TAGPATH}:${VERSION} \
+          --tag ${TAGPATH}:development-latest
+        docker login ${PKG_URL} --username ionlights --password ${{ secrets.GITHUB_TOKEN }}
+        docker push ${TAGPATH}:${VERSION}
+        docker push ${TAGPATH}:development-latest
+        
