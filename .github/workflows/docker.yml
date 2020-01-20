@@ -1,7 +1,5 @@
 name: "Rebuild containers to make `autobot` portable."
 
-# TODO migrate repeated steps to a GitHub action
-
 on:
   push:
     paths:

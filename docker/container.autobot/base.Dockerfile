@@ -19,6 +19,6 @@ RUN conda env create -f /opt/env.yml
 RUN    env_name=$(head -1 /opt/env.yml | cut -d ":" -f 2 | tr -d "[:space:]") \
     && echo "conda activate ${ENV_NAME}" >> ~/.bashrc
 
-WORKDIR /{{ ORG_NAME }}
+WORKDIR /${ORG_NAME}
 
 ENTRYPOINT [ "/docker/entrypoint" ]
