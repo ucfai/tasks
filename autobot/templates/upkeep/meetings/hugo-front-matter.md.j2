@@ -1,0 +1,30 @@
+--- 
+title: "{{ title }}"
+linktitle: "{{ title }}"
+date: "{{ date }}"
+lastmod: "{{ date }}"
+draft: false # Is this a draft? true/false
+toc: true # Show table of contents? true/false
+type: docs # Do not modify.
+
+menu:
+  {{ group }}_{{ cat }}:
+    parent: {{ semester }} {{ year }}
+    weight: 2
+
+weight: 2
+
+authors: [{% for author in authors %}"{{ author }}",{% endfor %}]
+
+urls:
+  youtube: "#"
+  slides:  "#"
+  github:  "#"
+  kaggle:  "#"
+  colab:   "#"
+
+categories: ["{{ cat }}"]
+tags: [{% for tag in tags %}"{{ tag }}",{% endfor %}]
+description: >-
+  {{ description }}
+--- 
