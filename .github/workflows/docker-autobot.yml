@@ -1,4 +1,8 @@
-name: "Rebuild `autobot`'s development and production containers"
+name: "Rebuild development/production containers"
+author: "<@ionlights> John Muchovej"
+description: >-
+  Development containers are basically for local development and testing, while
+  production is for usage when doing validation across each of AI@UCF's groups.
 
 on:
   push:

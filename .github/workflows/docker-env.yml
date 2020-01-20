@@ -1,4 +1,10 @@
-name: "Rebuild `autobot`s base Docker contaienrs"
+name: "Rebuild base container(s)"
+author: "<@ionlights> John Muchovej"
+description: >-
+  To avoid long-running builds on the development and production builds of
+  `autobot`'s docker containers... Rebuilt whenever the
+  `docker/container.autobot/env.yml` file is updated, since this changes the
+  underlying dependencies.
 
 on:
   push:
@@ -10,7 +16,7 @@ on:
     branches:
       - master
     paths:
-      - "docker/container.autobot/env.yml"
+      - "docker/container.autobot"
 
 jobs:
   build-env:
