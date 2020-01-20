@@ -1,0 +1,32 @@
+---
+title: "{{ meeting['title'] }}"
+linktitle: "{{ meeting['title'] }}"
+
+date: "{{ meeting['date'] }}"
+lastmod: "{{ meeting['lastmod'] }}"
+
+draft: false
+toc: true
+type: docs
+
+weight: {{ meeting['weight'] }}
+
+menu:
+  {{ group }}_{{ semester['short'] }}:
+    parent: {{ semester['full'] }}
+    weight: {{ meeting['weight'] }}
+
+authors: [{% for author in meeting['authors'] %}"{{ author }}", {% endfor %}]
+
+urls:
+  youtube: "{{ urls['youtube'] }}"
+  slides:  "{{ urls['slides']  }}"
+  github:  "{{ urls['github']  }}"
+  kaggle:  "{{ urls['kaggle']  }}"
+  colab:   "{{ urls['colab']   }}"
+
+categories: ["{{ semester['short'] }}"]
+tags: [{% for tag in meeting['tags'] %}"{{ tag }}", {% endfor %}]
+description: >-
+  {{ meeting['description'] }}
+---

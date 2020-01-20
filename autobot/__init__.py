@@ -1,8 +1,10 @@
 from pathlib import Path
 from typing import Union
-import os
+
+from jinja2 import Template
 
 ORG_NAME = "ucfai"
+KAGGLE_USERNAME = "ucfaibot"
 
 
 def get_template(s: Union[str, Path], as_str: bool = False):
