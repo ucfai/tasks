@@ -161,7 +161,7 @@ class TemplateNotebookValidator(NotebookExporter):
             nb, resources=resources
         )
 
-        nb.cells.insert(0, self._notebook_heading())
+        notebook.cells.insert(0, self._notebook_heading())
 
         writer = FilesWriter(build_directory=str(paths.repo_meeting_folder(meeting)))
 
