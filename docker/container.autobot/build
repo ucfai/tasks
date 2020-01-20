@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 repopath="$1"
 gh_token="$2"
 
@@ -15,7 +17,7 @@ tag_latest="${pkgname}:latest"
 
 echo "Building Container ..."
 docker build -q \
-    --file Dockerfile.${STAGE} \
+    --file ./Dockerfile.${STAGE} \
     --build-arg org_name=${org_name} \
     --build-arg env_name=${env_name} \
     --tag ${tag_version} \
