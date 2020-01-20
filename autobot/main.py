@@ -9,11 +9,10 @@ import sys
 from jinja2 import Template
 from tqdm import tqdm
 
-from autobot import safety, get_template, ORG_NAME
+from autobot import safety, get_template, ORG_NAME, get_setup_template
 from autobot.apis import kaggle, ucf
 from autobot.concepts import Semester, Group, Meeting, Coordinator, groups
 from autobot.actions import meetings, paths, syllabus
-
 
 def _argparser(**kwargs):
     parser = ArgumentParser(prog="autobot")
@@ -150,7 +149,7 @@ def semester_upkeep(syllabus: List[Meeting], overwrite: bool = False) -> None:
         # Make edit in the group-specific repo
         meetings.update_or_create_notebook(meeting, overwrite=overwrite)
         meetings.download_papers(meeting)
-        kaggle.push_kernel(meeting)
+        # kaggle.push_kernel(meeting)
 
         # Make edits in the ucfai.org repo
         # banners.render_cover(meeting)
