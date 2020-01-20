@@ -21,7 +21,7 @@ jobs:
         VERSION="development-$(date +%s)"
         PKG_URL="docker.pkg.github.com"
         TAGPATH="${PKG_URL}/ucfai/autobot"
-        docker build ./docker/container.autobot --file Dockerfile --target development \
+        docker build docker/container.autobot/ --target development \
           --build-arg org_name=ucfai \
           --build-arg org_name=autobot \
           --tag ${TAGPATH}:${VERSION} \
