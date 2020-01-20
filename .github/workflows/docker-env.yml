@@ -1,4 +1,4 @@
-name: "Build and Push `autobot`'s Docker environment"
+name: "Rebuild `autobot`s base Docker contaienrs"
 
 on:
   push:
@@ -10,18 +10,18 @@ on:
     branches:
       - master
     paths:
-      - "docker/container.autobot"
+      - "docker/container.autobot/env.yml"
 
 jobs:
-  build:
+  build-env:
     runs-on: ubuntu-latest
 
     env:
       STAGE: env
+      TARGET: autobotbase
       ORG_NAME: ucfai
       ENV_NAME: autobot
       REPO_NAME: bot
-      TARGET: autobotbase
       REGISTRY: "docker.pkg.github.com"
 
     steps:
