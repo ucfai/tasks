@@ -69,7 +69,25 @@ class SolutionbookToPostExporter(MarkdownExporter):
         )
 
         # TODO fill out `hugo-front-matter.md.j2` from meeting metadata and concat `notebook` (below) with this
+        # TODO add last modification date 'lastmod' to hugo-front-matter.md.j2 
+        front_matter = Template(
+            open(get_template("upkeep/meetings/hugo-front-matter.md.j2")).read()
+        )
 
+        fm_args = {
+            "title": meeting.required["title"],
+            "date": meeting.meta[0].isoformat(),
+            "authors": meeting.required["instructors"],
+            "tags": meeting.optional["tags"],
+            "cat": meeting.group.semester.shortname,
+            "group": meeting.group.name.lower(), 
+            "semester": meeting.group.semester.name, 
+            "year": meeting.meta[0].year,
+            "description": meeting.required["description"]
+        }
+        rendering = front_matter.render(**fm_args)
+        print(rendering)
+        
         # the notebook is output as a string, so treat it as such when concatenating
         notebook, resources = super(MarkdownExporter, self).from_filename(
             str(notebook_path)
@@ -87,7 +105,7 @@ class SolutionbookToPostExporter(MarkdownExporter):
         writer.write(notebook, resources, meeting.required["filename"])
 
         return notebook, resources
-
+    
 
 class SolutionbookToWorkbookExporter(NotebookExporter):
     def __init__(self, config=None, **kwargs):
@@ -138,7 +156,7 @@ class TemplateNotebookValidator(NotebookExporter):
 
     def _notebook_heading(self) -> nbformat.NotebookNode:
         tpl_heading = Template(
-            open(get_template("notebooks/nb-heading.html.j2")).read()
+            open(get_template("upkeep/meetings/notebook-heading.html.j2")).read()
         )
 
         tpl_args = {
