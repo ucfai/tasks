@@ -16,6 +16,7 @@ jobs:
       STAGE: env
       ORG_NAME: ucfai
       ENV_NAME: autobot
+      REPO_NAME: bot
       TARGET: autobotbase
       REGISTRY: "docker.pkg.github.com"
 
@@ -26,8 +27,9 @@ jobs:
     - name: "Set variables to make this semi-dynamic"
       run: |
         echo "${STAGE}-$(date +%s)" > VERSION
-        echo "${REGISTRY}/${STAGE}:$(cat VERSION)" > TAG_VERSION
-        echo "${REGISTRY}/${STAGE}:latest" > TAG_LATEST
+        DOCKER_TAG="${REGISTRY}/${ORG_NAME}/${REPO_NAME}/${STAGE}"
+        echo "${DOCKER_TAG}:$(cat VERSION)" > TAG_VERSION
+        echo "${DOCKER_TAG}:latest" > TAG_LATEST
         
     - name: "Build the container"
       run: |
