@@ -17,7 +17,7 @@ jobs:
       ORG_NAME: ucfai
       ENV_NAME: autobot
       TARGET: autobotbase
-      REGISTRY: "docker.pkg.gihtub.com"
+      REGISTRY: "docker.pkg.github.com"
 
     steps:
     - name: "Checkout latest `master` branch"
