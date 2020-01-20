@@ -70,6 +70,7 @@ class SolutionbookToPostExporter(MarkdownExporter):
 
         # TODO fill out `hugo-front-matter.md.j2` from meeting metadata and concat `notebook` (below) with this
         # TODO add last modification date 'lastmod' to hugo-front-matter.md.j2 
+        # TODO concatenate front matter to notebook output
         front_matter = Template(
             open(get_template("upkeep/meetings/hugo-front-matter.md.j2")).read()
         )
