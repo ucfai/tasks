@@ -16,13 +16,14 @@ tag_version="${pkgname}:${version}"
 tag_latest="${pkgname}:latest"
 
 echo "Building Container ..."
+cd docker/container.autobot
 docker build \
     --file ${STAGE}.Dockerfile \
     --build-arg org_name=${org_name} \
     --build-arg env_name=${env_name} \
     --tag ${tag_version} \
     --tag ${tag_latest} \
-    ./docker/container.autobot/
+    .
 
 echo "Logging into ${registry}..."
 docker login ${registry} --username ${org_name} --password ${gh_token}
