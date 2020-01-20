@@ -1,17 +1,21 @@
-name: "Build and Push `autobot`'s environment in Docker"
+name: "Build and Push `autobot`'s Docker environment"
 
 on:
   push:
-    branches: 
+    branches:
       - master
+    paths:
+      - "docker/container.autobot"
   pull_request:
-    branches: 
+    branches:
       - master
+    paths:
+      - "docker/container.autobot"
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     env:
       STAGE: env
       ORG_NAME: ucfai
@@ -23,14 +27,14 @@ jobs:
     steps:
     - name: "Checkout latest `master` branch"
       uses: actions/checkout@v2
-    
+
     - name: "Set variables to make this semi-dynamic"
       run: |
         echo "${STAGE}-$(date +%s)" > VERSION
         DOCKER_TAG="${REGISTRY}/${ORG_NAME}/${REPO_NAME}/${STAGE}"
         echo "${DOCKER_TAG}:$(cat VERSION)" > TAG_VERSION
         echo "${DOCKER_TAG}:latest" > TAG_LATEST
-        
+
     - name: "Build the container"
       run: |
         docker build docker/container.autobot \
@@ -39,7 +43,7 @@ jobs:
           --build-arg env_name=${ENV_NAME} \
           --tag $(cat TAG_VERSION) \
           --tag $(cat TAG_LATEST)
-           
+
     - name: "Push the container to ${REGISTRY}"
       run: |
         docker login ${REGISTRY} --username ${ORG_NAME} --password ${{ secrets.GITHUB_TOKEN }}

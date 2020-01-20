@@ -24,7 +24,7 @@ WORKDIR /{{ ORG_NAME }}
 ENTRYPOINT [ "/docker/entrypoint" ]
 
 # Using `pip install -e .`
-from autobotbase as development
+FROM docker.pkg.github.com/ucfai/bot/env:latest as development
 
 ENV STAGE development
 
@@ -33,7 +33,7 @@ ENV STAGE development
 #     && pip install -e /autobot
 
 # Using `pip install git+https://github.com/ucfai/bot@master
-from autobotbase as production
+FROM docker.pkg.github.com/ucfai/bot/env:latest as production
 
 ENV STAGE production
 
