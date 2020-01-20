@@ -1,4 +1,4 @@
-FROM docker.pkg.github.com/ucfai/bot/env:latest
+FROM docker.pkg.github.com/ucfai/bot/base:latest
 
 ENV STAGE development
 
