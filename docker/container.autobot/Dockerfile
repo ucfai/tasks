@@ -28,14 +28,13 @@ FROM docker.pkg.github.com/ucfai/bot/env:latest as development
 
 ENV STAGE development
 
-# RUN    git clone https://github.com/${ORG_NAME}/bot /autobot \
-#     && conda activate ${env_name} \
-#     && pip install -e /autobot
+# TODO properly sort out how to install `autobot` from pip and have it show-up
+#      in the entrypoint (using a local install)
 
 # Using `pip install git+https://github.com/ucfai/bot@master
 FROM docker.pkg.github.com/ucfai/bot/env:latest as production
 
 ENV STAGE production
 
-# RUN    conda activate ${env_name} \
-#     && pip install git+https://github.com/${ORG_NAME}/bot
+# TODO properly sort out how to install `autobot` from pip and have it show-up
+#      in the entrypoint (using a remote install)
