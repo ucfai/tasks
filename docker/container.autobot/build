@@ -17,7 +17,7 @@ tag_latest="${pkgname}:latest"
 
 echo "Building Container ..."
 docker build \
-    --file ./Dockerfile.${STAGE} \
+    --file ${STAGE}.Dockerfile \
     --build-arg org_name=${org_name} \
     --build-arg env_name=${env_name} \
     --tag ${tag_version} \
