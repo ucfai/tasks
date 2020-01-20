@@ -5,14 +5,14 @@ name: "Rebuild containers that allow for a portable `autobot`."
 on:
   push:
     paths:
-      - ".github/workflows/"
-      - "autobot/"
-      - "docker/container.autobot/"
+      - ".github/workflows/*"
+      - "autobot*/"
+      - "docker/container.autobot/*"
   pull_request:
     paths:
-      - ".github/workflows/"
-      - "autobot/"
-      - "docker/container.autobot/"
+      - ".github/workflows/*"
+      - "autobot*/"
+      - "docker/container.autobot/*"
 
 jobs:
   build-env:
