@@ -1,18 +1,18 @@
-from argparse import ArgumentParser
-from distutils.dir_util import copy_tree
-from pathlib import Path
-from typing import List, Dict
+from typing import List
 import logging
 import os
 import sys
+from argparse import ArgumentParser
+from distutils.dir_util import copy_tree
 
 from jinja2 import Template
 from tqdm import tqdm
 
-from autobot import safety, get_template, ORG_NAME, get_setup_template
-from autobot.apis import kaggle, ucf
-from autobot.concepts import Semester, Group, Meeting, Coordinator, groups
+from autobot import ORG_NAME, get_setup_template
 from autobot.actions import meetings, paths, syllabus
+from autobot.apis import ucf
+from autobot.concepts import Group, Meeting, Semester, groups
+
 
 def _argparser(**kwargs):
     parser = ArgumentParser(prog="autobot")

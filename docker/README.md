@@ -65,6 +65,7 @@ This makes heavy use of `docker-compose`.
    > Execute this to make sure you destroy the containers and network, so that the next time you start things up it will work as expected.
 
 4. Check that you're on the expected branches within each of the repositories in `groups/` and in the `ucfai.org/` repository (found in this folder).
+
 5. Setup complete!
 
 ### Actually spinning up the containers

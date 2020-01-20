@@ -1,30 +1,32 @@
---- 
-title: "{{ title }}"
-linktitle: "{{ title }}"
-date: "{{ date }}"
-lastmod: "{{ date }}"
-draft: false # Is this a draft? true/false
-toc: true # Show table of contents? true/false
-type: docs # Do not modify.
+---
+title: "{{ meeting['title'] }}"
+linktitle: "{{ meeting['title'] }}"
+
+date: "{{ meeting['date'] }}"
+lastmod: "{{ meeting['lastmod'] }}"
+
+draft: false
+toc: true
+type: docs
+
+weight: {{ meeting['weight'] }}
 
 menu:
-  {{ group }}_{{ cat }}:
-    parent: {{ semester }} {{ year }}
-    weight: 2
+  {{ group }}_{{ semester['short'] }}:
+    parent: {{ semester['full'] }}
+    weight: {{ meeting['weight'] }}
 
-weight: 2
-
-authors: [{% for author in authors %}"{{ author }}",{% endfor %}]
+authors: [{% for author in meeting['authors'] %}"{{ author }}", {% endfor %}]
 
 urls:
-  youtube: "#"
-  slides:  "#"
-  github:  "#"
-  kaggle:  "#"
-  colab:   "#"
+  youtube: "{{ urls['youtube'] }}"
+  slides:  "{{ urls['slides']  }}"
+  github:  "{{ urls['github']  }}"
+  kaggle:  "{{ urls['kaggle']  }}"
+  colab:   "{{ urls['colab']   }}"
 
-categories: ["{{ cat }}"]
-tags: [{% for tag in tags %}"{{ tag }}",{% endfor %}]
+categories: ["{{ semester['short'] }}"]
+tags: [{% for tag in meeting['tags'] %}"{{ tag }}", {% endfor %}]
 description: >-
-  {{ description }}
---- 
+  {{ meeting['description'] }}
+---

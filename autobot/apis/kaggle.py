@@ -1,18 +1,17 @@
 import os
-import subprocess
-from pathlib import Path
-from hashlib import sha256
 import shutil
+import subprocess
+from hashlib import sha256
+from pathlib import Path
 
 from tqdm import tqdm
 
-from autobot import ORG_NAME
+from autobot import ORG_NAME, KAGGLE_USERNAME
 from autobot.actions import paths
 from autobot.concepts import Meeting
 
 from .nbconvert import FileExtensions
 
-KAGGLE_USERNAME = "ucfaibot"
 KAGGLE_CONFIG_DIR = Path(__file__).parent.parent.parent
 
 
@@ -29,7 +28,13 @@ def pull_kernel(meeting: Meeting) -> None:
     _configure_environment()
 
     subprocess.run(
-        f"kaggle k pull -p {paths.tmp_meeting_folder(meeting)} {KAGGLE_USERNAME}/{slug_kernel(meeting)}",
+        " ".join(
+            [
+                "kaggle k pull",
+                f"-p { paths.tmp_meeting_folder(meeting) }",
+                f"{KAGGLE_USERNAME}/{ slug_kernel(meeting) }",
+            ]
+        ),
         shell=True,
         stdout=subprocess.DEVNULL,
     )
@@ -74,9 +79,12 @@ def slug_kernel(meeting: Meeting) -> str:
     """Generates Kaggle Kernel slugs of the form: `<group>-<semester>-<filename>`
     e.g. if looking at the Fall 2019 Computational Cognitive Neuroscience
     lecture, the slug would be: `core-fa19-ccn`."""
-    return (
-        f"{repr(meeting.group)}-{repr(meeting.group.semester)}-"
-        f"{meeting.required['filename']}"
+    return "-".join(
+        [
+            repr(meeting.group),  # Group name
+            repr(meeting.group.semester),  # Semester shortname
+            meeting.required["filename"],
+        ]
     )
 
 
@@ -84,4 +92,4 @@ def slug_competition(meeting: Meeting) -> str:
     """Since Kaggle InClass competitions are listed under general competitions,
     we take the `slug_kernel` of the meeting, and prepend `ORG_NAME`, which
     for AI@UCF, would be `ucfai`."""
-    return f"{ORG_NAME}-{slug_kernel(meeting)}"
+    return "-".join([ORG_NAME, slug_kernel(meeting)])
