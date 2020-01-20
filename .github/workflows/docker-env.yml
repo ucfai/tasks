@@ -14,9 +14,8 @@ jobs:
     
     env:
       STAGE: "env"
-      VERSION: "${STAGE}-$(date +%s)"
-      PKG_URL: docker.pkg.github.com
-      TAGPATH: "${PKG_URL}/ucfai/autobot"
+      VERSION: "env-$(date +%s)"  # tags the format: ${STAGE}-$(date +%s), but ${STAGE} isn't set yet.
+      TAGPATH: "docker.pkg.github.com/ucfai/bot"
 
     steps:
     - name: "Checkout Latest `master` branch"
@@ -32,6 +31,6 @@ jobs:
            
     - name: "Push `autobot-env` to docker.pkg.github.com"
       run: |
-        docker login ${PKG_URL} --username ionlights --password ${{ secrets.GITHUB_TOKEN }}
+        docker login docker.pkg.github.com --username ionlights --password ${{ secrets.GITHUB_TOKEN }}
         docker push ${TAGPATH}/${STAGE}:${VERSION}
         docker push ${TAGPATH}/${STAGE}:latest
