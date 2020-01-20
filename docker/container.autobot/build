@@ -19,7 +19,6 @@ echo "Logging into ${registry}..."
 docker login ${registry} --username ${org_name} --password ${gh_token}
 
 echo "Building Container ..."
-cd docker/container.autobot
 docker build -q \
     --file ${STAGE}.Dockerfile \
     --build-arg org_name=${org_name} \

@@ -18,51 +18,43 @@ on:
     - cron: "* 3 * * 5"  # run at 3am every Friday
 
 jobs:
-  build-env:
+  build-base:
     runs-on: ubuntu-latest
-
     env:
       STAGE: base
-      ENV_NAME: autobot
-      REGISTRY: "docker.pkg.github.com"
-
     steps:
     - name: "Checkout latest `master` branch"
       uses: actions/checkout@v2
 
     - name: "Running build script (builds and pushes container)"
-      run: ./docker/container.autobot/build ${{ github.repository }} ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        cd docker/container.autobot
+        ./build ${{ github.repository }} ${{ secrets.GITHUB_TOKEN }}
 
   build-development:
-    needs: build-env
-
+    needs: build-base
     runs-on: ubuntu-latest
-
     env:
       STAGE: development
-      ENV_NAME: autobot
-      REGISTRY: "docker.pkg.github.com"
-
     steps:
     - name: "Checkout latest `master` branch"
       uses: actions/checkout@v2
 
     - name: "Running build script (builds and pushes container)"
-      run: ./docker/container.autobot/build ${{ github.repository }} ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        cd docker/container.autobot
+        ./build ${{ github.repository }} ${{ secrets.GITHUB_TOKEN }}
 
   build-production:
-    needs: build-env
-
+    needs: build-base
     runs-on: ubuntu-latest
-
     env:
       STAGE: production
-      ENV_NAME: autobot
-      REGISTRY: "docker.pkg.github.com"
-
     steps:
     - name: "Checkout latest `master` branch"
       uses: actions/checkout@v2
 
     - name: "Running build script (builds and pushes container)"
-      run: ./docker/container.autobot/build ${{ github.repository }} ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        cd docker/container.autobot
+        ./build ${{ github.repository }} ${{ secrets.GITHUB_TOKEN }}
