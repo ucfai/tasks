@@ -40,6 +40,6 @@ jobs:
            
     - name: "Push the container to ${REGISTRY}"
       run: |
-        docker login ${REGIRSTRY} --username ionlights --password ${{ secrets.GITHUB_TOKEN }}
+        docker login ${REGISTRY} --username ionlights --password ${{ secrets.GITHUB_TOKEN }}
         docker push $(cat TAG_VERSION)
         docker push $(cat TAG_LATEST)
