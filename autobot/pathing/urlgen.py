@@ -10,22 +10,26 @@ from . import repositories
 def youtube(meeting: Meeting):
     # YouTube URLs take the following form:
     #   https://www.youtube.com/watch?v=dQw4w9WgXcQ
+    #   https://youtu.be/dQw4w9WgXcQ
 
     try:
         url = meeting.optional["urls"]["youtube"]
     except KeyError:
         return ""
 
-    #   YouTube IDs are likely to state 11-characters, but we'll see:
+    #   YouTube IDs are likely to stay 11-characters, but we'll see:
     #   https://stackoverflow.com/a/6250619
-    if len(url) > 11 and "youtube" in url:
+    if len(url) > 11 and "youtu" in url:
         # remove the protocol, www, and YouTube's domain name
-        yt_base_url = "(?:https?://)?(?:www\.)?youtube.com"
+        proto = "(?:https?://)?"
+        ln_old = "(?:www\.)?youtube.com/watch?v="
+        ln_new = "youtu.be"
+        yt_full = f"{proto}(?:{ln_old}|{ln_new})"
 
         # "...|$" returns the empty string if not a match
-        url = re.sub(f"{yt_base_url}|$", "", url)
-        url = re.search("(?<=/watch?v=)([A-Za-z0-9-_]{11})", url).group(0)
-        url = f"https://youtube.com/watch?v={url}"
+        url = re.sub(f"{yt_full}|$", "", url)
+        url = re.search("([A-Za-z0-9-_]{11})", url).group(0)
+        url = f"https://youtu.be/{url}"
         if requests.get(url).status_code == requests.codes.ALL_OK:
             return url
 
@@ -46,7 +50,7 @@ def slides(meeting: Meeting):
         docs_base_url = "(?:https?://)?docs.google.com/presentation/d/"
 
         # "...|$" returns the empty string if not a match
-        url = re.rub(f"{docs_base_url}|$", "", url)
+        url = re.sub(f"{docs_base_url}|$", "", url)
         url = url.split("/", maxsplit=1)[0]
         url = f"https://docs.google.com/presentation/d/{url}"
         if requests.get(url).status_code == requests.codes.ALL_OK:

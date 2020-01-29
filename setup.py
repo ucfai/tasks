@@ -37,6 +37,5 @@ setup(
         "PyYAML",
         "requests",
         "nbconvert",
-        "pygithub",
     ],
 )

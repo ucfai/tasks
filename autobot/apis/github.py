@@ -1,8 +1,8 @@
+from github.GithubException import GithubException
+from github.MainClass import Github
 from github.NamedUser import NamedUser as User
 from github.Organization import Organization as Org
 from github.Team import Team
-from github.MainClass import Github
-from github.GithubException import GithubException
 
 from autobot import ORG_NAME
 from autobot.concepts import Group

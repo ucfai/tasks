@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from autobot.concepts import Group
+from autobot.concepts import Coordinator, Group, Meeting
 
 CONTENT_ROOT = Path("content/")
 

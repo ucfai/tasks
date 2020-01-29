@@ -9,9 +9,9 @@ services:
       - ./docker/volume.ucfai.org/:/ucfai.org/
       - ./docker/container.autobot:/docker
 
-  autobot-production:
-    container_name: autobot-production
-    image: docker.pkg.github.com/ucfai/bot/production:latest
+        #  autobot-production:
+        #    container_name: autobot-production
+        #    image: docker.pkg.github.com/ucfai/bot/production:latest
 
   autobot-hugo:
     image: jojomi/hugo:0.60.0
@@ -20,6 +20,11 @@ services:
       - HUGO_THEME=academic
       - HUGO_WATCH=true
       # - HUGO_BASEURL=
+    command:
+      - /run.sh  # from Dockerfile
+      - --buildFuture
+      - --disableFastRender
+      - --verbose
     volumes:
       - ./docker/volume.ucfai.org:/src
       # use the volume mount below to inspect the hugo output, IFF needed

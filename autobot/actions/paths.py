@@ -1,5 +1,5 @@
-from pathlib import Path
 import os
+from pathlib import Path
 
 from autobot import ORG_NAME
 from autobot.concepts import Group, Meeting
