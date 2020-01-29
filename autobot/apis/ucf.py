@@ -1,13 +1,11 @@
 from collections import OrderedDict
-from typing import List, Dict
+from datetime import datetime
+from typing import Dict, List
 
 import pandas as pd
 import requests
-from datetime import datetime
 
-from autobot.concepts import MeetingMeta
-from autobot.concepts import Group, Semester
-
+from autobot.concepts import Group, MeetingMeta, Semester
 
 # it's unlikely this URL will change, but should be occassionally checked
 CALENDAR_URL = "https://calendar.ucf.edu"
@@ -18,10 +16,13 @@ OBS_HOLIDAYS = {
     "fall": ["Veterans Day", "Labor Day", "Thanksgiving"],
 }
 
+# NOTE make sure to consider 0-indexing here
+SEMESTER_LEN = {"spring": 14, "summer": 10, "fall": 15}
+
 
 def day2index(s: str) -> int:
-    weekdays = "Mon Tue Wed Thu Fri".split()
-    return weekdays.index(s)
+    weekdays = "Mon Tue Wed Thu Fri Sat Sun".lower().split()
+    return weekdays.index(s.lower())
 
 
 def make_schedule(group: Group, schedule: Dict):
@@ -33,7 +34,8 @@ def make_schedule(group: Group, schedule: Dict):
 
     # generate meeting dates, on a weekly basis
     meeting_dates = pd.Series(date_range)
-    meeting_start = (offset - 1) * 7 + day2index(wday)
+    meeting_start = offset * 7 + day2index(wday)
+
     # TODO: support non-standard dates for groups, e.g. like "Supplementary"
     meeting_dates = meeting_dates[meeting_start::7]
     if holidays is not None:

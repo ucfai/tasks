@@ -8,11 +8,14 @@ log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
 
 
+# https://pyyaml.org/wiki/PyYAMLDocumentation#constructors-representers-resolvers
 class Group:
     def __init__(self, name: str, sem_meta: Semester) -> None:
         self.name = name
         self.semester = sem_meta
         self.coords = None
+        self.push_kaggle = True
+        self.make_notebooks = True
 
     def __str__(self) -> str:
         return f"{self.name} Group"

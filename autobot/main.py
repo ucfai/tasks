@@ -2,16 +2,16 @@ from typing import List
 import logging
 import os
 import sys
+import shutil
 from argparse import ArgumentParser
-from distutils.dir_util import copy_tree
 
-from jinja2 import Template
 from tqdm import tqdm
 
-from autobot import ORG_NAME, get_setup_template
+from autobot import ORG_NAME
 from autobot.actions import meetings, paths, syllabus
-from autobot.apis import ucf
+from autobot.apis import ucf, kaggle
 from autobot.concepts import Group, Meeting, Semester, groups
+from autobot.pathing import templates, repositories
 
 
 def _argparser(**kwargs):
@@ -57,7 +57,16 @@ def main():
     if args.action == "semester-setup":
         semester_setup(group)
     elif args.action == "semester-upkeep":
+        try:
+            syllabus.init(group)
+            print("Done generating syllabus. Exiting.")
+            exit(0)
+        except AssertionError as e:
+            pass
+
+        syllabus.sort(group)
         meetings = syllabus.parse(group)
+
         if not args.all:
             meeting = None
             if args.date:
@@ -89,31 +98,30 @@ def semester_setup(group: Group) -> None:
     3. Performs a similar setup with Google Drive & Google Forms.
     4. Generates skeleton for the login/management system.
     """
-    if paths.repo_group_folder(group).exists():
-        logging.warning(f"{paths.repo_group_folder(group)} exists! Tread carefully.")
+    path = repositories.local_semester_root(group)
+    if path.exists():
+        logging.warning(f"{path} exists! Tread carefully.")
         overwrite = input(
             "The following actions **are destructive**. " "Continue? [y/N] "
         )
         if overwrite.lower() not in ["y", "yes"]:
             return
 
+    path.mkdir()
+
     # region 1. Copy base `yml` files.
     #   1. env.yml
     #   2. overhead.yml
-    #   3. syllabus.yml
-    # strong preference to use `shutil`, but can't use with existing dirs
-    # shutil.copytree("autobot/templates/seed/meeting", path.parent)
-    copy_tree(get_setup_template("group"), str(paths.repo_group_folder(group)))
-
-    env_yml = paths.repo_group_folder(group) / "env.yml"
-    env = Template(open(env_yml, "r").read())
-
-    with open(env_yml, "w") as f:
+    env = templates.load("group/env.yml.j2")
+    (path / "env.yml").touch()
+    with open(path / "env.yml", "w") as f:
         f.write(
             env.render(
                 org_name=ORG_NAME, group_name=repr(group), semester=repr(group.semester)
             )
         )
+
+    shutil.copy(str(templates.get("group/overhead.yml")), str(path / "overhead.yml"))
     # endregion
 
     # region 2. Setup Website for this semester
@@ -144,12 +152,12 @@ def semester_upkeep(syllabus: List[Meeting], overwrite: bool = False) -> None:
         tqdm.write(f"{repr(meeting)} ~ {str(meeting)}")
 
         # Perform initial directory checks/clean-up
-        # meetings.update_or_create_folders_and_files(meeting)
+        meetings.update_or_create_folders_and_files(meeting)
 
         # Make edit in the group-specific repo
         meetings.update_or_create_notebook(meeting, overwrite=overwrite)
         meetings.download_papers(meeting)
-        # kaggle.push_kernel(meeting)
+        kaggle.push_kernel(meeting)
 
         # Make edits in the ucfai.org repo
         # banners.render_cover(meeting)

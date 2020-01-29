@@ -2,7 +2,6 @@
 new group!"""
 from autobot.concepts import Semester
 
-
 from .group import Group
 
 

@@ -1,18 +1,24 @@
+import json
 import os
 import shutil
 import subprocess
 from hashlib import sha256
 from pathlib import Path
+from typing import Union
 
 from tqdm import tqdm
+import requests
 
 from autobot import ORG_NAME, KAGGLE_USERNAME
 from autobot.actions import paths
 from autobot.concepts import Meeting
+from autobot.pathing import repositories
 
 from .nbconvert import FileExtensions
 
 KAGGLE_CONFIG_DIR = Path(__file__).parent.parent.parent
+if os.environ.get("IN_DOCKER", False):
+    KAGGLE_CONFIG_DIR = "/autobot"
 
 
 def _configure_environment() -> None:
@@ -24,9 +30,15 @@ def _configure_environment() -> None:
         tqdm.write(f"Found `KAGGLE_CONFIG_DIR = {os.environ['KAGGLE_CONFIG_DIR']}`")
 
 
-def pull_kernel(meeting: Meeting) -> None:
-    _configure_environment()
+def pull_kernel(meeting: Meeting) -> Union[None, Path]:
+    test_existence = requests.get(
+        f"https://kaggle.com/{ KAGGLE_USERNAME }/{ slug_kernel(meeting) }"
+    )
 
+    if test_existence.status_code != requests.codes.OK:
+        return None
+
+    _configure_environment()
     subprocess.run(
         " ".join(
             [
@@ -47,17 +59,20 @@ def local_and_remote_kernels_diff(meeting: Meeting) -> bool:
     _configure_environment()
     remote_kernel = pull_kernel(meeting)
 
-    local_kernel = (paths.repo_meeting_folder(meeting) / repr(meeting)).with_suffix(
-        FileExtensions.Workbook
+    if not remote_kernel:
+        return True
+
+    local_kernel = repositories.local_meeting_root(meeting) / "".join(
+        [repr(meeting), FileExtensions.Workbook]
     )
 
-    remote_kernel_hash = sha256(open(remote_kernel, "rb").read()).hexdigest()
-    local_kernel_hash = sha256(open(local_kernel, "rb").read()).hexdigest()
+    remote_kernel_json = json.dumps(json.load(open(remote_kernel, "r"))).encode("utf-8")
+    local_kernel_json = json.dumps(json.load(open(local_kernel, "r"))).encode("utf-8")
 
-    if str(remote_kernel).startswith(str(paths.repo_meeting_folder(meeting))):
-        shutil.rmtree(remote_kernel.parent)
-    else:
-        os.remove(remote_kernel)
+    remote_kernel_hash = sha256(bytes(remote_kernel_json)).hexdigest()
+    local_kernel_hash = sha256(bytes(local_kernel_json)).hexdigest()
+
+    remote_kernel.unlink()  # clean-up after diff
 
     return remote_kernel_hash != local_kernel_hash
 
@@ -69,7 +84,7 @@ def push_kernel(meeting: Meeting) -> None:
         subprocess.run(
             f"kaggle k push -p {paths.repo_meeting_folder(meeting)}",
             shell=True,
-            stdout=subprocess.DEVNULL,
+            # stdout=subprocess.DEVNULL,
         )
     else:
         tqdm.write("  - Kernels are the same. Skipping.")

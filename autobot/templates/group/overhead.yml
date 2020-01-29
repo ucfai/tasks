@@ -16,4 +16,4 @@ meetings:
   wday: ""  # what day of the week? (Mon, Tue, Wed, Thu, Fri, Sat, Sun)
   time: ""  # military time (e.g. 1800-2000)
   room: ""  # e.g. HEC 119
-  start_offset: 3  # how many weeks into the semester should we start?
+  start_offset: 2  # what week of the semester should we start? (0-indexed)

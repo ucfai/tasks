@@ -14,10 +14,14 @@ class Coordinator:
 
     @staticmethod
     def parse_yaml(d: Dict) -> Dict:
-        if "coordinators" in d:
-            d = d["coordinators"]
+        assert (
+            "directors" in d and "coordinators" in d
+        ), "Currently, we need both director and coordinator sections"
 
-        return {c["github"].lower(): Coordinator(**c) for c in d}
+        ls = []
+        ls += d["directors"] + d["coordinators"]
+
+        return {c.lower(): Coordinator(c.lower(), "Coordinator") for c in ls}
 
     # def _github_request(self) -> None:
     #     user = get_github_user(self.github)

@@ -1,16 +1,16 @@
 import os
 import re
+import signal
 import sys
 from datetime import datetime
-from time import sleep
 from getpass import getpass
-import signal
 from pathlib import Path
+from time import sleep
+
+import pandas as pd
+import requests
 
 from termcolor import colored, cprint
-
-import requests
-import pandas as pd
 
 __author__ = "John Muchovej"
 

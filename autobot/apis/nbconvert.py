@@ -4,17 +4,14 @@ import json
 import nbformat
 from nbconvert.exporters import MarkdownExporter, NotebookExporter
 from nbconvert.exporters.exporter import ResourcesDict
-from nbconvert.preprocessors import (
-    Preprocessor,
-    TagRemovePreprocessor,
-)
+from nbconvert.preprocessors import Preprocessor, TagRemovePreprocessor
 from nbconvert.writers import FilesWriter
 from nbformat import NotebookNode
 from nbgrader.preprocessors import ClearOutput, ClearSolutions
 
 from autobot.actions import paths
 from autobot.concepts import Meeting
-from autobot.pathing import templates, urlgen
+from autobot.pathing import templates, urlgen, repositories
 
 
 class FileExtensions:
@@ -26,7 +23,7 @@ class FileExtensions:
 
 
 def read_notebook(meeting: Meeting, suffix: str = FileExtensions.Solutionbook):
-    notebook_path = paths.repo_meeting_folder(meeting) / repr(meeting)
+    notebook_path = repositories.local_meeting_root(meeting) / repr(meeting)
     if not notebook_path.with_suffix(suffix).exists():
         return nbformat.v4.new_notebook()
     else:
@@ -39,7 +36,7 @@ class SolutionbookToPostExporter(MarkdownExporter):
     """
 
     def __init__(self, config=None, **kwargs):
-        self.template_path = [str(templates.get_upkeep("meetings"))]
+        self.template_path = [str(templates.get("meeting"))]
         self.template_file = "to-post.md"
         self.template_extension = ".j2"
 
@@ -71,12 +68,12 @@ class SolutionbookToPostExporter(MarkdownExporter):
         # self.register_filter("highlight_code", Highlight2HTML(parent=self))
 
     def from_meeting(self, meeting: Meeting):
-        notebook_path = paths.repo_meeting_folder(meeting) / "".join(
+        notebook_path = repositories.local_meeting_root(meeting) / "".join(
             [repr(meeting), FileExtensions.Solutionbook]
         )
 
         # TODO concatenate front matter to notebook output
-        front_matter = templates.load_upkeep("meetings/hugo-front-matter.md.j2")
+        front_matter = templates.load("meeting/hugo-front-matter.md.j2")
         front_matter = front_matter.render(
             **{
                 "group": repr(meeting.group),
@@ -89,6 +86,8 @@ class SolutionbookToPostExporter(MarkdownExporter):
                     "tags": meeting.optional["tags"],
                     "description": meeting.required["description"],
                     "weight": meeting.number,
+                    "room": meeting.meta.room,
+                    "cover": meeting.required["cover"],
                 },
                 "semester": {
                     "full": str(meeting.group.semester),
@@ -136,8 +135,12 @@ class SolutionbookToWorkbookExporter(NotebookExporter):
         resources = {"output_extension": FileExtensions.Workbook}
         notebook, resources = super().from_notebook_node(nb, resources)
 
-        writer = FilesWriter(build_directory=str(paths.repo_meeting_folder(meeting)))
-        writer.write(json.dumps(notebook), resources, repr(meeting))
+        # writer = FilesWriter(build_directory=str(paths.repo_meeting_folder(meeting)))
+        # writer.write(json.dumps(notebook), resources, repr(meeting))
+        filename = (
+            repositories.local_meeting_root(meeting) / repr(meeting)
+        ).with_suffix(FileExtensions.Workbook)
+        open(filename, "w").write(notebook)
 
         return notebook, resources
 
@@ -157,20 +160,25 @@ class TemplateNotebookValidator(NotebookExporter):
         nb = read_notebook(meeting)
 
         resources = {"output_extension": FileExtensions.Solutionbook}
-        notebook, resources = super(NotebookExporter, self).from_notebook_node(
-            nb, resources=resources
-        )
 
+        # NotebookExporter.from_notebook_node returns a notebook as a string
+        notebook, resources = super().from_notebook_node(nb, resources=resources)
+
+        # to operate over the notebook, we need it to be a NotebookNode
+        notebook = nbformat.reads(notebook, as_version=4)
         notebook.cells.insert(0, self._notebook_heading())
 
-        writer = FilesWriter(build_directory=str(paths.repo_meeting_folder(meeting)))
-
-        writer.write(json.dumps(notebook), resources, repr(meeting))
+        # to write to disk, it now needs to be a string
+        notebook = nbformat.writes(notebook)
+        filename = (
+            repositories.local_meeting_root(meeting) / repr(meeting)
+        ).with_suffix(FileExtensions.Solutionbook)
+        open(filename, "w").write(notebook)
 
         return notebook, resources
 
     def _notebook_heading(self) -> nbformat.NotebookNode:
-        tpl_heading = templates.load_upkeep("meetings/notebook-heading.html.j2")
+        tpl_heading = templates.load("meeting/notebook-heading.html.j2")
 
         tpl_args = {
             "group_sem": paths.repo_meeting_folder(self.meeting),

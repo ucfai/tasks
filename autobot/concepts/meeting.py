@@ -1,26 +1,24 @@
+import copy
+import datetime as dt
 import io
 import os
-import copy
-import datetime
 import shutil
 import subprocess
-from pathlib import Path
-from hashlib import sha256
-from typing import List, Dict
-from itertools import product
 from distutils.dir_util import copy_tree
+from hashlib import sha256
+from itertools import product
+from pathlib import Path
+from typing import Dict, List
 
 import imgkit
+import nbconvert as nbc
+import nbformat as nbf
+import pandas as pd
 import requests
 import yaml
-from PIL import Image
-import pandas as pd
 from jinja2 import Template
-import nbformat as nbf
-import nbconvert as nbc
-from nbgrader.preprocessors import ClearSolutions, ClearOutput
-
-from autobot import ORG_NAME
+from nbgrader.preprocessors import ClearOutput, ClearSolutions
+from PIL import Image
 
 from . import MeetingMeta
 from .coordinator import Coordinator
@@ -29,9 +27,20 @@ from .group import Group
 src_dir = Path(__file__).parent.parent
 
 
+# https://pyyaml.org/wiki/PyYAMLDocumentation#constructors-representers-resolvers
 class Meeting:
-    def __init__(self, group: Group, meeting_dict: Dict, meta: MeetingMeta):
+    def __init__(
+        self,
+        group: Group,
+        meeting_dict: Dict,
+        tmpname: str = None,
+        meta: MeetingMeta = None,
+    ):
         assert set(["required", "optional"]).intersection(set(meeting_dict.keys()))
+        self.number = 0
+        if tmpname:
+            self.number = int(tmpname.replace("meeting", ""))
+        self.number += 1
 
         self.group = group
         self.required = meeting_dict["required"]
@@ -39,6 +48,8 @@ class Meeting:
 
         if "date" in self.optional and self.optional["date"]:
             date = self.optional["date"]
+            # mm, dd = self.optional["date"].split("-")
+            # date = dt.date(int(self.group.semester.year), int(mm), int(dd))
         else:
             date = meta.date
 
@@ -47,14 +58,17 @@ class Meeting:
         else:
             room = meta.room
 
-        self.meta = MeetingMeta(date, room)
+        self.meta = MeetingMeta(pd.to_datetime(date), room)
 
         self.required["instructors"] = [x.lower() for x in self.required["instructors"]]
 
-        for key in self.required.keys():
-            assert self.required[
-                key
-            ], f"You haven't specified `{key}` for this meeting..."
+        self.required["filename"] = self.required["filename"] or tmpname
+        self.required["title"] = self.required["title"] or tmpname
+
+        # for key in self.required.keys():
+        #    assert self.required[
+        #        key
+        #    ], f"You haven't specified `{key}` for this meeting..."
 
     def write_yaml(self) -> Dict:
         """This prepares the dict to write each entry in `syllabus.yml`."""

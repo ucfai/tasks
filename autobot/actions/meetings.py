@@ -1,39 +1,18 @@
-import io
-import os
-import copy
-import datetime
-import shutil
-import subprocess
-import warnings
-from pathlib import Path
-from hashlib import sha256
-from typing import List, Dict
-from itertools import product
-from distutils.dir_util import copy_tree
-from autobot import load_upkeep_template
+import json
 
-import imgkit
 import requests
-import yaml
-from PIL import Image
-import pandas as pd
-import numpy as np
-from jinja2 import Template
-import nbformat as nbf
-import nbconvert as nbc
-from nbgrader.preprocessors import ClearSolutions, ClearOutput
+from tqdm import tqdm
 
-from autobot import get_template
-from autobot.concepts import Meeting
 from autobot.actions import paths
 from autobot.apis import kaggle
 from autobot.apis.nbconvert import (
     SolutionbookToPostExporter,
     SolutionbookToWorkbookExporter,
     TemplateNotebookValidator,
-    ValidateNBGraderPreprocessor,
     FileExtensions,
 )
+from autobot.concepts import Meeting
+from autobot.pathing import templates, repositories
 
 
 def update_or_create_folders_and_files(meeting: Meeting):
@@ -58,7 +37,37 @@ def update_or_create_folders_and_files(meeting: Meeting):
     # TODO allow for meetings to be moved – this intuitively makes sense to resolve
     #      with the `filename` parameter, but may also need to consider the `date` (you
     #      can get all this from `repr(meeting)`)
-    raise NotImplementedError()
+    path = repositories.local_meeting_root(meeting)
+
+    root = repositories.local_semester_root(meeting)
+
+    local_neighbors = list(root.iterdir())
+
+    for d in local_neighbors:
+        date, name = d.stem[:10], d.stem[11:]
+
+        # remove placeholder
+        # rename by date
+        shares_meet = ("meeting" in name and int(name[-2:]) == meeting.number - 1)
+        shares_date = (date == repr(meeting)[:10])
+        if d.stem != repr(meeting) and (shares_meet or shares_date):
+            old_path = d
+            old_soln = d / "".join([d.stem, FileExtensions.Solutionbook])
+
+            new_path = old_path.with_name(repr(meeting))
+            new_soln = old_path / "".join([repr(meeting), FileExtensions.Solutionbook])
+
+            # NOTE: rename internal files before renaming the folder
+            tqdm.write(f"renaming: {old_soln} -> {new_soln}")
+            old_soln.rename(new_soln)
+            tqdm.write(f"renaming: {old_path} -> {new_path}")
+            old_path.rename(new_path)
+            return
+        # TODO: handle meeting swaps (e.g. meeting02 with meeting 06, etc.)
+        # TODO: handle meeting renames with swaps
+        # TODO: allow for renaming to propagate through to platforms like Kaggle
+
+    path.mkdir(exist_ok=True, parents=True)
 
 
 """ Use the following as "inspiration", this feels like it's far too complex to understand
@@ -141,18 +150,24 @@ def update_or_create_notebook(meeting: Meeting, overwrite: bool = False):
     validator = TemplateNotebookValidator()
     _, _ = validator.from_meeting(meeting)
 
-    kernel_metadata = load_upkeep_template("meetings/kernel-metadata.json.j2")
+    kernel_metadata = templates.load("meeting/kernel-metadata.json.j2")
 
-    with open(paths.repo_meeting_folder(meeting) / "kernel-metadata.json", "w") as f:
-        meeting.optional["kaggle"]["competitions"].insert(
-            0, kaggle.slug_competition(meeting)
-        )
-        text = kernel_metadata.render(
+    meeting.optional["kaggle"]["competitions"].insert(
+        0, kaggle.slug_competition(meeting)
+    )
+
+    # TODO get this sorted into proper JSON and templating
+    text = (
+        kernel_metadata.render(
             slug=kaggle.slug_kernel(meeting),
             notebook=repr(meeting),
             kaggle=meeting.optional["kaggle"],
         )
-        f.write(text.replace("'", '"'))  # JSON doesn't like single-quotes
+        .replace("'", '"')  # JSON doesn't like single-quoted strings
+        .lower()
+    )
+
+    open(paths.repo_meeting_folder(meeting) / "kernel-metadata.json", "w").write(text)
 
     # Converts a "Solutionbook" (`.solution.ipynb`) to a "Workbook" (`.ipynb`).
     #   Makes use of Preprocessors and FileWriters to place generate and write the

@@ -25,8 +25,11 @@ urls:
   kaggle:  "{{ urls['kaggle']  }}"
   colab:   "{{ urls['colab']   }}"
 
+location: "{{ meeting['room'] }}"
+cover: "{{ meeting['cover'] }}"
+
 categories: ["{{ semester['short'] }}"]
 tags: [{% for tag in meeting['tags'] %}"{{ tag }}", {% endfor %}]
-description: >-
+abstract: >-
   {{ meeting['description'] }}
 ---
