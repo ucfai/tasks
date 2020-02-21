@@ -6,7 +6,7 @@ repopath="$1"
 gh_token="$2"
 
 org_name="${ORG_NAME:-$(echo ${repopath} | cut -d "/" -f 1)}"
-env_name="${ENV_NAME:-autobot}"
+env_name="${ENV_NAME:-automation}"
 registry="${REGISTRY:-docker.pkg.github.com}"
 
 version="${STAGE}-$(date +%s)"
