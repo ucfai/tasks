@@ -12,8 +12,8 @@ on:
       - "autobot/*"
       - "docker/container.autobot/*"
   # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#onschedule
-  schedule:
-    - cron: "* 3 * * 5"  # run at 3am every Friday
+  # schedule:
+  #   - cron: "* 3 * * 5"  # run at 3am every Friday
 
 jobs:
   build-base:
