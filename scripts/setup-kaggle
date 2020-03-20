@@ -1,4 +1,0 @@
-#!/bin/sh
-
-gpg kaggle.json.gpg
-chmod 600 kaggle.json
