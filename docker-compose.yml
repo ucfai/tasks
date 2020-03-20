@@ -1,0 +1,45 @@
+version: "3.4"
+services:
+  autobot-development:
+    container_name: autobot-development
+    image: docker.pkg.github.com/ucfai/bot/development:latest
+    volumes:
+      - .:/autobot
+      - ./docker/volume.groups/:/ucfai/
+      - ./docker/volume.ucfai.org/:/ucfai.org/
+      - ./docker/container.autobot:/docker
+
+        #  autobot-production:
+        #    container_name: autobot-production
+        #    image: docker.pkg.github.com/ucfai/bot/production:latest
+
+  autobot-hugo:
+    image: jojomi/hugo:0.60.0
+    container_name: autobot-hugo
+    environment:
+      - HUGO_THEME=academic
+      - HUGO_WATCH=true
+      # - HUGO_BASEURL=
+    command:
+      - /run.sh  # from Dockerfile
+      - --buildFuture
+      - --disableFastRender
+      - --verbose
+    volumes:
+      - ./docker/volume.ucfai.org:/src
+      # use the volume mount below to inspect the hugo output, IFF needed
+      # - ./build:/output
+    ports:
+      - 8234:1313
+
+  # TODO this currently works *_only_* on a Linux host, b/c of `evdev`. Figure out if
+  #      there's a way to get around that limitation.
+  # autobot-reader:
+  #   container_name: autobot-reader
+  #   build:
+  #     context: ./docker/container.reader
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - .:/autobot
+  #     - ./docker/container.reader:/docker
+  #     - ./docker/volume.reader:/reader
