@@ -1,0 +1,21 @@
+#!/bin/bash
+
+source ~/.bashrc
+
+git_url="https://github.com/ucfai"
+
+if [[ ! "$(command -v autobot)" ]]; then
+    echo "Initial installation..."
+    case ${STAGE} in
+        "development") pip install -e /autobot ;;
+        "production")  pip install git+${git_url}/bot ;;
+        *) exit -1
+    esac
+fi
+
+cd /reader
+
+case $1 in
+    "") autobot reader ;;
+    "bash") /bin/bash ;;
+esac

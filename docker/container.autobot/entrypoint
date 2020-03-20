@@ -1,0 +1,63 @@
+#!/bin/bash
+
+cd /
+source ~/.bashrc
+
+git_url="https://github.com/ucfai"
+
+if [[ ! "$(command -v autobot)" ]]; then
+    echo "Initial installation..."
+    case ${STAGE} in
+        "development") pip install -e /autobot ;;
+        "production")  pip install git+${git_url}/bot ;;
+        *) exit -1
+    esac
+fi
+
+function git_interact {
+    folder=$1
+
+    # assert the folder exists (by creating it) and enter
+    mkdir -p ${folder}
+    cd ${folder}
+
+    if [ -d ".git" ]; then
+        gdiff=$(git diff origin/master)
+        status=$([ ${#gdiff} -eq 0 ] && echo "skipping" || echo "pulling")
+    else
+        status="cloning"
+        [ -f .gitkeep ] && rm .gitkeep
+    fi
+
+    echo "${folder} -> ${status}"
+
+    case ${status} in
+        "skipping") ;;
+        "pulling") git pull ;;
+        "cloning") git clone ${git_url}/$(basename ${folder}) . ;;
+    esac
+
+    touch .gitkeep
+
+}
+
+# Check if we have copies of the group repositories
+echo "Cloning groups..."
+[ -f ".gitkeep" ] && rm .gitkeep  # remove .gitkeep if it's present
+groups=("core" "intelligence" "data-science" "supplementary" "gbm")
+for group in ${groups[@]}; do
+    git_interact "/ucfai/${group}"
+done
+
+# Check if we have a copy of the website
+git_interact "/ucfai.org"
+git submodule update --init --recursive
+echo "  - updated submodules"
+
+cd /ucfai
+
+case $1 in
+    "") autobot --wait core ;;
+    "bash") /bin/bash ;;
+    *) autobot "$@" ;;
+esac
