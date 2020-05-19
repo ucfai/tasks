@@ -47,15 +47,15 @@ jobs:
       run: |
         cd ${{ env.GROUP }}
         semester=$(grep -i "seemster" invoke.yml | cut -d ":" -f 2)
-        git config --local user.name "AI@UCF"
-        git config --local user.email "45113372+ucfaibot@users.noreply.github.com"
+        git config --local user.name "John Muchovej"
+        git config --local user.email "ionlights@users.noreply.github.com"
         git add -A
         git commit -m "Seeding \`${semester}\` Semester"
 
     - name: "Push new semester to `${{ env.GROUP }}`"
       uses: ad-m/github-push-action@master
       with:
-        github_token: ${{ secrets.UCFAIBOT_TOKEN }}
+        github_token: ${{ secrets.MY_TOKEN }}
         repository: ionlights/ucfai-${{ env.GROUP }}
         # branch: new-semester-${{ env.GROUP }}
         directory: ${{ env.GROUP }}
