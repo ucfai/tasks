@@ -38,7 +38,8 @@ jobs:
     - name: "Begin Seeding Core"
       shell: bash -l {0}
       run: |
-        inv semester.seed core
+        pwd
+        inv semester.seed
 
     - name: "Commit new entries to Core"
       run: |
