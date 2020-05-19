@@ -48,7 +48,7 @@ jobs:
         cd ${{ env.GROUP }}
         semester=$(grep -i "seemster" invoke.yml | cut -d ":" -f 2)
         git config --local user.name "AI@UCF"
-        git config --local user.email "git@ucfai.org"
+        git config --local user.email "action@github.com"
         git add -A
         git commit -m "Seeding \`${semester}\` Semester"
 
