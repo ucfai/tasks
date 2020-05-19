@@ -32,11 +32,20 @@ jobs:
         repository: ionlights/ucfai-tasks
         path: tasks
 
-    - name: "Setup Miniconda Environment"
-      uses: goanpeca/setup-miniconda@v1
+    - name: "Cache Anaconda Environment"
+      uses: actions/cache@v1
+      env:
+        CACHE_NUMBER: 0
       with:
-        environment-file: tasks/env/macos.yml
+        path: ~/conda_pkgs_dir
+        key: ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-${{ hashFiles('tasks/env/macos.yml') }}
+
+    - name: "Setup Miniconda Environment"
+      uses: goanpeca/setup-miniconda@check-casche
+      with:
         activate-environment: ucfai-tasks
+        environment-file: tasks/env/macos.yml
+        use-only-tar-bz2: true
 
     - name: "Begin Seeding `${{ env.GROUP }}`"
       shell: bash -l {0}
