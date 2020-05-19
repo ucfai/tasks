@@ -32,7 +32,7 @@ jobs:
     - name: "Setup Miniconda Environment"
       uses: goanpeca/setup-miniconda@v1
       with:
-        environment-file: env/macos.yml
+        environment-file: tasks/env/macos.yml
         activate-environment: ucfai-tasks
 
     - name: "Begin Seeding Core"
