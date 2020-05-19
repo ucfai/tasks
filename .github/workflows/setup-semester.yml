@@ -46,7 +46,7 @@ jobs:
     - name: "Commit new entries to `${{ env.GROUP }}`"
       run: |
         cd ${{ env.GROUP }}
-        semester=$(grep -i "semester" invoke.yml | cut -d ":" -f 2)
+        semester=$(grep -i "semester" invoke.yml | cut -d " " -f 2)
         git branch setup-${{ env.GROUP }}-${semester}
         git config --local user.name "John Muchovej"
         git config --local user.email "ionlights@users.noreply.github.com"
