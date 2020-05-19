@@ -82,6 +82,7 @@ def touch(ctx):
             with open(meeting / ".metadata", "w") as f:
                 f.write(sha)
             created += 1
+            ondisk[sha] = meeting
 
     if created / len(syllabus) > 0.5:
         status.success("Created syllabus's meeting directories.")
