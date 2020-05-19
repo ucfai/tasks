@@ -46,9 +46,10 @@ jobs:
     - name: "Commit new entries to `${{ env.GROUP }}`"
       run: |
         cd ${{ env.GROUP }}
-        semester=$(grep -i "seemster" invoke.yml | cut -d ":" -f 2)
+        semester=$(grep -i "semester" invoke.yml | cut -d ":" -f 2)
         git config --local user.name "John Muchovej"
         git config --local user.email "ionlights@users.noreply.github.com"
+        git checkout -b setup-${{ env.GROUP }}-${semester}
         git add -A
         git commit -m "Seeding \`${semester}\` Semester"
         git remote set-url origin https://x-access-token:${{ secrets.MY_TOKEN }}@github.com/ionlights/ucfai-${{ env.GROUP }}
