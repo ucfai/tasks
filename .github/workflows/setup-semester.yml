@@ -57,5 +57,5 @@ jobs:
       with:
         github_token: ${{ secrets.MY_TOKEN }}
         repository: ionlights/ucfai-${{ env.GROUP }}
-        branch: new-semester-${{ env.GROUP }}
+        # branch: new-semester-${{ env.GROUP }}
         directory: ${{ env.GROUP }}
