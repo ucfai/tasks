@@ -36,6 +36,7 @@ jobs:
         activate-environment: ucfai-tasks
 
     - name: "Begin Seeding Core"
+      shell: bash -l {0}
       run: |
         inv semester.seed core
 
