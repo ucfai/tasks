@@ -41,7 +41,7 @@ jobs:
     - name: "Begin Seeding `${{ env.GROUP }}`"
       shell: bash -l {0}
       run: |
-        inv semester.seed -g ${{ env.GROUP }}
+        inv semester.seed -g ${{ env.GROUP }} fa20
 
     - name: "Commit new entries to `${{ env.GROUP }}`"
       run: |
