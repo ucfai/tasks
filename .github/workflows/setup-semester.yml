@@ -41,7 +41,7 @@ jobs:
         key: ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-${{ hashFiles('tasks/env/macos.yml') }}
 
     - name: "Setup Miniconda Environment"
-      uses: goanpeca/setup-miniconda@check-casche
+      uses: goanpeca/setup-miniconda@check-cache
       with:
         activate-environment: ucfai-tasks
         environment-file: tasks/env/macos.yml
