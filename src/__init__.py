@@ -26,7 +26,8 @@ def configure_context(ctx, group: str = "", semester: str = ""):
         semester = ctx["semester"]
 
     try:
-        group = yaml.load(open(Path(group) / semester / "overhead.yml", "r"))
+        if not isinstance(group, Group):
+            group = yaml.load(open(Path(group) / semester / "overhead.yml", "r"))
     except FileNotFoundError:
         if not semester:
             from .tools import ucfcal
