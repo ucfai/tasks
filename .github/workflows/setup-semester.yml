@@ -10,6 +10,9 @@ on:
     # - cron: "* */6 * 5 *"  # run for the Summer semester
     - cron: "0 */6 * 8 *" # run for the Fall semester
 
+env:
+  GROUP: core
+
 jobs:
   build:
     name: Seed Group Repository
@@ -17,11 +20,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: "Checkout `ucfai/core`"
+    - name: "Checkout `ucfai/${{ env.GROUP }}`"
       uses: actions/checkout@v2
       with:
-        repository: ionlights/ucfai-core
-        path: core
+        repository: ionlights/ucfai-${{ env.GROUP }}
+        path: ${{ env.GROUP }}
 
     - name: "Checkout `ucfai/tasks`"
       uses: actions/checkout@v2
@@ -35,22 +38,21 @@ jobs:
         environment-file: tasks/env/macos.yml
         activate-environment: ucfai-tasks
 
-    - name: "Begin Seeding Core"
+    - name: "Begin Seeding `${{ env.GROUP }}`"
       shell: bash -l {0}
       run: |
-        pwd
-        inv semester.seed
+        inv semester.seed -g ${{ env.GROUP }}
 
-    - name: "Commit new entries to Core"
+    - name: "Commit new entries to `${{ env.GROUP }}`"
       run: |
-        cd core
+        cd ${{ env.GROUP }}
         semester=$(grep -i "seemster" invoke.yml | cut -d ":" -f 2)
         git config --local user.name "AI@UCF"
         git config --local user.email "git@ucfai.org"
         git commit -a -m "Seeding \`${semester}\` Semester"
 
-    - name: "Push new seemster to Core"
+    - name: "Push new semester to `${{ env.GROUP }}`"
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.MY_TOKEN }}
-        repository: ionlights/ucfai-core
+        repository: ionlights/ucfai-${{ env.GROUP }}
