@@ -2,52 +2,18 @@ name: "Rebuild containers to make `autobot` portable."
 
 on:
   push:
-    paths:
-      - ".github/workflows/docker.yml"
-      - "autobot/*"
-      - "docker/container.autobot/*"
+    path:
+      - "*"
   pull_request:
-    paths:
-      - ".github/workflows/docker.yml"
-      - "autobot/*"
-      - "docker/container.autobot/*"
+    path:
+      - "*"
   # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#onschedule
   schedule:
     - cron: "* 3 * * 5"  # run at 3am every Friday
 
 jobs:
-  build-base:
+  build:
     runs-on: ubuntu-latest
-    env:
-      STAGE: base
-    steps:
-    - name: "Checkout latest `master` branch"
-      uses: actions/checkout@v2
-
-    - name: "Running build script (builds and pushes container)"
-      run: |
-        cd docker/container.autobot
-        ./build ${{ github.repository }} ${{ secrets.GITHUB_TOKEN }}
-
-  build-development:
-    needs: build-base
-    runs-on: ubuntu-latest
-    env:
-      STAGE: development
-    steps:
-    - name: "Checkout latest `master` branch"
-      uses: actions/checkout@v2
-
-    - name: "Running build script (builds and pushes container)"
-      run: |
-        cd docker/container.autobot
-        ./build ${{ github.repository }} ${{ secrets.GITHUB_TOKEN }}
-
-  build-production:
-    needs: build-base
-    runs-on: ubuntu-latest
-    env:
-      STAGE: production
     steps:
     - name: "Checkout latest `master` branch"
       uses: actions/checkout@v2

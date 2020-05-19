@@ -1,0 +1,26 @@
+# NOTE: don't put a trailing slash on URLs
+# NOTE: Institutions provide different calendar mechanisms. This needs to be
+#   rewritten for every institution. Take a look at `tasks/apis/calendar.py`
+
+org_name: ucfai
+
+apis:
+  kaggle:
+    username: "ucfaibot"
+  hugo:
+    theme: academic
+    repo: "ucfai.org/content"
+    site_url: "https://ucfai.org"
+    banner_url: "https://ucfai.org/groups/{{ group.name }}/{{ group.semester }}/{{ meeting.filename }}/banners/event.png"
+  youtube:
+    username: "ucfai"
+  github:
+    username: "ucfaibot"
+    org_name: "ucfai"
+  version-control:
+    platform: "https://github.com"
+    repo_owner: "https://github.com/ucfai"
+
+suffixes:
+  solutionbook: .solution.ipynb
+  workbook: .ipynb

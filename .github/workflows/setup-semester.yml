@@ -1,0 +1,54 @@
+name: "Monitors dates to setup semeseter."
+
+on:
+  push:
+    branches:
+      - pyinvoke-migration
+  # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#onschedule
+  schedule:
+    - cron: "0 */6 * 12 *"  # run for the Spring semester
+    # - cron: "* */6 * 5 *"  # run for the Summer semester
+    - cron: "0 */6 * 8 *" # run for the Fall semester
+
+jobs:
+  build:
+    name: Seed Group Repository
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: "Checkout `ucfai/core`"
+      uses: actions/checkout@v2
+      with:
+        repository: ionlights/ucfai-core
+        path: core
+
+    - name: "Checkout `ucfai/tasks`"
+      uses: actions/checkout@v2
+      with:
+        repository: ionlights/ucfai-tasks
+        path: tasks
+
+    - name: "Setup Miniconda Environment"
+      uses: goanpeca/setup-miniconda@v1
+      with:
+        environment-file: env.yml
+        activate-environment: ucfai-tasks
+
+    - name: "Begin Seeding Core"
+      run: |
+        inv semester.seed core
+
+    - name: "Commit new entries to Core"
+      run: |
+        cd core
+        semester=$(grep -i "seemster" invoke.yml | cut -d ":" -f 2)
+        git config --local user.name "AI@UCF"
+        git config --local user.email "git@ucfai.org"
+        git commit -a -m "Seeding \`${semester}\` Semester"
+
+    - name: "Push new seemster to Core"
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        repository: ionlights/ucfai-core
