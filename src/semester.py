@@ -118,7 +118,7 @@ def seed(ctx, group, semester=""):
     inv = inv.render(group=group.name, semester=group.semester)
     inv = yaml.load(inv)
 
-    schedule = ucfcal.temp_schedule(group.name)
+    schedule = ucfcal.temp_schedule(group.semester)
     group.startdate = str(schedule[0])
 
     files_to_write = {
