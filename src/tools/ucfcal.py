@@ -52,8 +52,9 @@ def make_schedule(group_or_shortname: Union[str, Group]):
     # Assume a once-a-week meeting basis and build the schedule accordingly.
     meeting_dates = pd.Series(dates)
 
-    # Removes Holidays, if the array is non-empty.
-    if holidays is not None:
+    if holidays:
+        holidays = pd.concat(holidays)
+        # Removes Holidays, if the array is non-empty.
         meeting_dates = meeting_dates[~meeting_dates.isin(holidays)]
 
     schedule = list(meeting_dates.apply(pd.to_datetime))
@@ -91,10 +92,6 @@ def parse_calendar(shortname: str) -> tuple:
         beg = day2remove["dtstart"][:-1]
         end = day2remove["dtend"][:-1] if day2remove["dtend"] else beg
         holidays.append(pd.Series(pd.date_range(start=beg, end=end)))
-
-    # Checking array nullity requires "... is not None" rather than ducktyping
-    if holidays is not None:
-        holidays = pd.concat(holidays)
 
     return date_range, holidays
 
