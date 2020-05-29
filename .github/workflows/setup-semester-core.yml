@@ -20,7 +20,7 @@ jobs:
     - name: "Set $GROUP"
       run: |
         filename=$(basename ${{ github.workflow }} | cut -d "." -f 1)
-        group=$(echo $filename | sed "s|setup-semester-")
+        group=$(echo $filename | sed "s|setup-semester-||g")
         echo ::set-output name=GROUP::$group
 
     - name: "Checkout `ucfai/${{ env.GROUP }}`"
