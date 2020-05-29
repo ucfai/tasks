@@ -8,9 +8,13 @@ inputs:
   commands:
     required: true
     description: "Commands for Autobot to execute (with arguments pre-specified)."
+
 outputs:
   status:
     description: "Commit message with status."
+  semester:
+    description: "Semester Name"
+
 runs:
   using: "docker"
   image: docker.pkg.github.com/ionlights/ucfai-tasks/autobot
