@@ -31,7 +31,7 @@ jobs:
         repository: ionlights/ucfai-${{ env.GROUP }}
 
     - name: "Use `autobot` Action to Seed Semester"
-      uses: ionlights/autobot
+      uses: ionlights/autobot@master
       id: autobot
       with:
         workdir: ${{ github.workspace }}
