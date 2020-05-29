@@ -30,7 +30,7 @@ jobs:
 
     - name: Get release version
       id: get_version
-      run: echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF:10})
+      run: echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF/refs\/tags\//})
 
     - name: Build Dockerfile
       uses: elgohr/Publish-Docker-Github-Action@2.16
@@ -41,4 +41,4 @@ jobs:
         registry: ${{ env.REGISTRY }}
         workdir: .github/actions/autobot
         buildargs: TASK_REPO
-        tags: latest,${{ env.RELEASE_VERSION }}
+        tags: latest
