@@ -23,52 +23,30 @@ jobs:
       run: |
         filename=$(basename ${{ github.workflow }} | cut -d "." -f 1)
         group=$(echo $filename | sed "s|setup-semester-||g")
-        echo ::set-output name=GROUP::$group
+        echo ::set-env name=GROUP::$group
 
     - name: "Checkout `ucfai/${{ env.GROUP }}`"
       uses: actions/checkout@v2
       with:
         repository: ionlights/ucfai-${{ env.GROUP }}
-        path: ${{ env.GROUP }}
 
-    - name: "Checkout `ucfai/tasks`"
-      uses: actions/checkout@v2
+    - name: "Use `autobot` Action to Seed Semester"
+      uses: ./autobot
+      id: autobot
       with:
-        repository: ionlights/ucfai-tasks
-        path: tasks
-        ref: pyinvoke-migration
+        workdir: ${{ github.workspace }}
+        commands: >- 
+          semester.seed -g ${{ env.GROUP }}
 
-    - name: "Cache Anaconda Environment"
-      uses: actions/cache@v1
-      env:
-        CACHE_NUMBER: 0
-      with:
-        path: ~/conda_pkgs_dir
-        key: ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-${{ hashFiles('${{ env.CONDA }}') }}
-
-    - name: "Setup Miniconda Environment"
-      uses: goanpeca/setup-miniconda@v1.3.1
-      with:
-        activate-environment: ucfai-tasks
-        environment-file: ${{ env.CONDA }}
-        use-only-tar-bz2: true
-
-    - name: "Begin Seeding `${{ env.GROUP }}`"
-      id: seed
-      shell: bash -l {0}
-      run: |
-        echo ::set-output name=status::$(inv semester.seed -g ${{ env.GROUP }})
-        echo ::set-env name=SEMESTER::$(grep -i semester ${{ env.GROUP }}/invoke.yml | cut -d " " -f 2)
-
-    - name: "Commit & submit PR for `${{ env.SEMESTER }}` Semester"
+    - name: "Commit & submit PR for `${{ steps.autobot.outputs.semester }}` Semester"
       uses: peter-evans/create-pull-request@v2
       with:
         path: ${{ env.GROUP }}
         token: ${{ secrets.UCFAIBOT_TOKEN }}
-        title: "Seeding ${{ env.SEMESTER }} Semester"
-        commit-message: "Seed `${{ env.SEMESTER }}` Semester"
+        title: "Seeding ${{ steps.autobot.outputs.semester }} Semester"
+        commit-message: "Seed `${{ steps.autobot.outputs.semester }}` Semester"
         author: "AI@UCF <ucfaibot@users.noreply.github.com>"
         committer: "AI@UCF <ucfaibot@users.noreply.github.com>"
-        branch: "setup-${{ env.GROUP }}-${{ env.SEMESTER }}"
+        branch: "setup-${{ env.GROUP }}-${{ steps.autobot.outputs.semester }}"
         body: |
-            ${{ steps.seed.outputs.status }}
+            ${{ steps.autobot.outputs.status }}
