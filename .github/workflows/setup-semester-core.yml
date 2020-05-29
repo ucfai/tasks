@@ -1,8 +1,8 @@
 on:
-  push:
-    branches:
-      - master
-      - pyinvoke-migration
+  # push:
+  #   branches:
+  #     - master
+  #     - pyinvoke-migration
   # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#onschedule
   schedule:
     - cron: "0 */6 * 12 *"  # run for the Spring semester
@@ -10,13 +10,15 @@ on:
     - cron: "0 */6 * 8 *" # run for the Fall semester
 
 env:
-  GROUP: core
+  CONDA: tasks/env/macos.yml
 
 jobs:
   build:
     name: "Seed new Semester's contents"
     runs-on: ubuntu-latest
     steps:
+    # NOTE: If you use the Group's repository, replace the ${{ github.worflow }}
+    #   with the ${{ github.repository }} context and split on the "/"
     - name: "Set $GROUP"
       run: |
         filename=$(basename ${{ github.workflow }} | cut -d "." -f 1)
@@ -42,13 +44,13 @@ jobs:
         CACHE_NUMBER: 0
       with:
         path: ~/conda_pkgs_dir
-        key: ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-${{ hashFiles('tasks/env/macos.yml') }}
+        key: ${{ runner.os }}-conda-${{ env.CACHE_NUMBER }}-${{ hashFiles('${{ env.CONDA }}') }}
 
     - name: "Setup Miniconda Environment"
       uses: goanpeca/setup-miniconda@v1.3.1
       with:
         activate-environment: ucfai-tasks
-        environment-file: tasks/env/macos.yml
+        environment-file: ${{ env.CONDA }}
         use-only-tar-bz2: true
 
     - name: "Begin Seeding `${{ env.GROUP }}`"
@@ -61,7 +63,6 @@ jobs:
     - name: "Commit & submit PR for `${{ env.SEMESTER }}` Semester"
       uses: peter-evans/create-pull-request@v2
       with:
-        repository: ${{ env.GROUP }}
         path: ${{ env.GROUP }}
         token: ${{ secrets.UCFAIBOT_TOKEN }}
         title: "Seeding ${{ env.SEMESTER }} Semester"

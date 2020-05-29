@@ -1,0 +1,44 @@
+name: "Build Docker image for autobot"
+
+on:
+  push:
+    paths:
+      - ".github/actions/autobot/*"
+      - ".github/workflows/docker.yml"
+      - "src/*"
+      - "tests/*"
+  pull_request:
+    paths:
+      - ".github/actions/autobot/*"
+      - ".github/workflows/docker.yml"
+      - "src/*"
+      - "tests/*"
+
+env:
+  REGISTRY: docker.pkg.github.com
+  TASK_REPO: ionlights/ucfai-tasks
+
+jobs:
+  build:
+    name: Build Docker Container
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout tasks repository
+      uses: actions/checkout@v2
+
+    - name: Get release version
+      id: get_version
+      run: echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF:10})
+
+    - name: Build Dockerfile
+      uses: elgohr/Publish-Docker-Github-Action@2.16
+      with:
+        name: ${{ github.repository }}/autobot
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: ${{ env.REGISTRY }}
+        workdir: .github/actions/autobot
+        buildargs: TASK_REPO
+        tags: latest,${{ env.RELEASE_VERSION }}
