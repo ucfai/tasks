@@ -1,8 +1,7 @@
-name: "Monitors dates to setup semeseter."
-
 on:
   push:
     branches:
+      - master
       - pyinvoke-migration
   # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#onschedule
   schedule:
@@ -15,11 +14,13 @@ env:
 
 jobs:
   build:
-    name: Seed Group Repository
-
+    name: "Seed new Semester's contents"
     runs-on: ubuntu-latest
-
     steps:
+    - name: "Set $GROUP"
+      run: |
+        echo ::set-output name=GROUP::$(basename ${{ github.workflow }} | cut -d "." -f 1)
+
     - name: "Checkout `ucfai/${{ env.GROUP }}`"
       uses: actions/checkout@v2
       with:
@@ -31,6 +32,7 @@ jobs:
       with:
         repository: ionlights/ucfai-tasks
         path: tasks
+        ref: pyinvoke-migration
 
     - name: "Cache Anaconda Environment"
       uses: actions/cache@v1
@@ -48,26 +50,22 @@ jobs:
         use-only-tar-bz2: true
 
     - name: "Begin Seeding `${{ env.GROUP }}`"
+      id: seed
       shell: bash -l {0}
       run: |
-        inv semester.seed -g ${{ env.GROUP }} -s fa20
+        echo ::set-output name=status::$(inv semester.seed -g ${{ env.GROUP }})
+        echo ::set-env name=SEMESTER::$(grep -i semester ${{ env.GROUP }}/invoke.yml | cut -d " " -f 2)
 
-    - name: "Commit new entries to `${{ env.GROUP }}`"
-      run: |
-        cd ${{ env.GROUP }}
-        semester=$(grep -i "semester" invoke.yml | cut -d " " -f 2)
-        git checkout -b setup-${{ env.GROUP }}-${semester}
-        git config --local user.name "John Muchovej"
-        git config --local user.email "ionlights@users.noreply.github.com"
-        git add -A
-        git commit -m "Seeding \`${semester}\` Semester"
-        git remote set-url origin https://x-access-token:${{ secrets.MY_TOKEN }}@github.com/ionlights/ucfai-${{ env.GROUP }}
-        git push origin setup-${{ env.GROUP }}-${semester}
-
-    # - name: "Push new semester to `${{ env.GROUP }}`"
-    #   uses: ad-m/github-push-action@master
-    #   with:
-    #     github_token: ${{ secrets.MY_TOKEN }}
-    #     repository: ionlights/ucfai-${{ env.GROUP }}
-    #     branch: new-semester-${{ env.GROUP }}
-    #     directory: ${{ env.GROUP }}
+    - name: "Commit & submit PR for `${{ env.SEMESTER }}` Semester"
+      uses: peter-evans/create-pull-request@v2
+      with:
+        repository: ${{ env.GROUP }}
+        path: ${{ env.GROUP }}
+        token: ${{ secrets.UCFAIBOT_TOKEN }}
+        title: "Seeding ${{ env.SEMESTER }} Semester"
+        commit-message: "Seed `${{ env.SEMESTER }}` Semester"
+        author: "AI@UCF <ucfaibot@users.noreply.github.com>"
+        committer: "AI@UCF <ucfaibot@users.noreply.github.com>"
+        branch: "setup-${{ env.GROUP }}-${{ env.SEMESTER }}"
+        body: |
+            ${{ steps.seed.outputs.status }}
