@@ -19,7 +19,9 @@ jobs:
     steps:
     - name: "Set $GROUP"
       run: |
-        echo ::set-output name=GROUP::$(basename ${{ github.workflow }} | cut -d "." -f 1)
+        filename=$(basename ${{ github.workflow }} | cut -d "." -f 1)
+        group=$(echo $filename | sed "s|setup-semester-")
+        echo ::set-output name=GROUP::$group
 
     - name: "Checkout `ucfai/${{ env.GROUP }}`"
       uses: actions/checkout@v2
