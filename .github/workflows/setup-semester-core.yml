@@ -17,6 +17,12 @@ jobs:
     name: "Seed new Semester's contents"
     runs-on: ubuntu-latest
     steps:
+    - name: "Docker Login"
+      uses: azure/docker-login@v1
+      with:
+        registry: docker.pkg.github.com
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     # NOTE: If you use the Group's repository, replace the ${{ github.worflow }}
     #   with the ${{ github.repository }} context and split on the "/"
     - name: "Set $GROUP"
@@ -38,7 +44,7 @@ jobs:
         commands: >- 
           semester.seed -g ${{ env.GROUP }}
 
-    - name: "Commit & submit PR for `${{ steps.autobot.outputs.semester }}` Semester"
+    - name: "Commit & submit PR@master for `${{ steps.autobot.outputs.semester }}` Semester"
       uses: peter-evans/create-pull-request@v2
       with:
         path: ${{ env.GROUP }}
